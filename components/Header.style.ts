@@ -36,4 +36,4 @@ svg {
     fill: var(--text-base);
   }
 }
-`
+`;

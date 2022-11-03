@@ -1,9 +1,15 @@
-import { ProfileContainer, ProfileDesc, ProfileTitle, ProfileMainDesc, ProfileSubDesc, ProfileImage } from './Profile.style'
+import {
+  ProfileContainer,
+  ProfileDesc,
+  ProfileTitle,
+  ProfileMainDesc,
+  ProfileSubDesc,
+  ProfileImage,
+} from './Profile.style';
 import Image from 'next/image';
 import metadata from '../data/metadata';
 
 const Profile = () => {
-
   return (
     <ProfileContainer>
       <ProfileDesc>
@@ -20,7 +26,7 @@ const Profile = () => {
         />
       </ProfileImage>
     </ProfileContainer>
-  )
-}
+  );
+};
 
 export default Profile;

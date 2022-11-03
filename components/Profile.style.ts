@@ -14,9 +14,9 @@ export const ProfileDesc = styled.div`
   margin-right: 50px;
 `;
 export const ProfileSubDesc = styled.div`
-    margin-top: 0.5em;
-    font-size: 16px;
-    opacity: 0.6;
+  margin-top: 0.5em;
+  font-size: 16px;
+  opacity: 0.6;
 `;
 export const ProfileTitle = styled.div`
   display: inline-block;

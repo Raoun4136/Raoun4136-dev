@@ -1,5 +1,5 @@
 const BlogPostPage = () => {
+  return;
+};
 
-}
-
-export default BlogPostPage
+export default BlogPostPage;

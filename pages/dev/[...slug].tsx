@@ -1,5 +1,5 @@
 const DevPostPage = () => {
+  return;
+};
 
-}
-
-export default DevPostPage
+export default DevPostPage;

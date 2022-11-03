@@ -4,4 +4,4 @@ export type posts = {
   description: string;
   url: string;
   image: string;
-}
+};
