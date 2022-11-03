@@ -22,7 +22,6 @@ export const ProfileTitle = styled.div`
   display: inline-block;
   color: var(--text-base);
   font-size: 38px;
-  font-family: 'SecularOne';
   text-transform: capitalize;
 `;
 export const ProfileMainDesc = styled.div`
