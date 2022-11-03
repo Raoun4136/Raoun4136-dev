@@ -9,8 +9,7 @@ const metadata = {
   home: {
     name: 'SeongOh Park',
     description: 'Be Full-Stack Developer',
-    subDescription:
-      'Just Do It',
+    subDescription: 'Just Do It',
     image: '/home/profile.jpg',
   },
   social: {

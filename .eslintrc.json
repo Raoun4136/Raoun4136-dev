@@ -13,6 +13,7 @@
     "plugin:prettier/recommended"
   ],
   "ignorePatterns": [
-    "next.config.js"
+    "next.config.js",
+    "trouble/*"
   ]
 }

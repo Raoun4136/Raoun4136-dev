@@ -2,9 +2,9 @@ import React from 'react';
 import Head from 'next/head';
 import Footer from './Footer';
 import Header from './Header';
+import Profile from './Profile';
 
 import { ParentContainer, Main } from './Container.style';
-import Profile from './Profile';
 
 const Container = ({ children }: { children?: React.ReactNode }) => {
   return (
