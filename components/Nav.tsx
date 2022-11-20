@@ -4,9 +4,11 @@ import { NavContainer } from './Nav.style';
 const Nav = () => {
   return (
     <NavContainer>
-      <Link href="/blog">Blog</Link>
-      <Link href="/dev">WoowaCourse</Link>
-      <Link href="/test">Test</Link>
+      <Link href="/dev">Dev</Link>
+      <Link href="/daily">Daily</Link>
+      <Link href="https://raoun4136.notion.site/Raoun-022bd0edfdf24844b709de09b554629e">
+        Portfolio
+      </Link>
     </NavContainer>
   );
 };

@@ -14,7 +14,7 @@ export const ProfileDesc = styled.div`
   margin-right: 50px;
 `;
 export const ProfileSubDesc = styled.div`
-  margin-top: 0.5em;
+  margin-top: 1em;
   font-size: 16px;
   opacity: 0.6;
 `;
@@ -25,7 +25,7 @@ export const ProfileTitle = styled.div`
   text-transform: capitalize;
 `;
 export const ProfileMainDesc = styled.div`
-  margin-top: 4px;
+  margin-top: 10px;
   font-size: 16px;
   font-weight: 400;
 `;
@@ -35,4 +35,10 @@ export const ProfileImage = styled.div`
   display: block;
   min-width: 180px;
   height: 180px;
+  border-radius: 70%;
+  overflow: hidden;
+
+  image {
+    object-fit: cover;
+  }
 `;

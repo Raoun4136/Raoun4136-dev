@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -14,7 +15,7 @@ const withMDX = require('@next/mdx')({
     remarkPlugins: [],
     rehypePlugins: [],
     // If you use `MDXProvider`, uncomment the following line.
-    // providerImportSource: "@mdx-js/react",
+    providerImportSource: '@mdx-js/react',
   },
 });
 
@@ -24,3 +25,8 @@ module.exports = withMDX({
   // Append the default value with md extensions
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 });
+
+//contentlayer
+const { withContentlayer } = require('next-contentlayer');
+
+module.exports = withContentlayer({});

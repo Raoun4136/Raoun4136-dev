@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import Footer from './Footer';
 import Header from './Header';
-import Profile from './Profile';
 
 import { ParentContainer, Main } from './Container.style';
 
@@ -17,7 +16,6 @@ const Container = ({ children }: { children?: React.ReactNode }) => {
       </Head>
       <Header />
       <Main>
-        <Profile />
         <div>{children}</div>
       </Main>
       <Footer />

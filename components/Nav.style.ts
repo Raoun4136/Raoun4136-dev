@@ -7,4 +7,8 @@ export const NavContainer = styled.div`
   a {
     margin-left: 50px;
   }
+
+  &:active {
+    opacity: 1;
+  }
 `;

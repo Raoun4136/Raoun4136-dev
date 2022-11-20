@@ -1,17 +1,17 @@
-import Container from 'components/Container';
 import { NextSeo } from 'next-seo';
 import metadata from '../data/metadata';
-import { allDevs, Dev } from 'contentlayer/generated';
+import { allDailies, Daily } from 'contentlayer/generated';
+import Container from 'components/Container';
 import RecentPosts from './../components/RecentPosts';
 
-export default function DevPage({ posts }: { posts: Dev[] }): JSX.Element {
+export default function DailyPage({ posts }: { posts: Daily[] }): JSX.Element {
   return (
     <>
       <NextSeo
-        title="Dev"
-        description="프로그래밍"
-        canonical={`${metadata.meta.url}/dev`}
-        openGraph={{ url: `${metadata.meta.url}/dev` }}
+        title="Daily"
+        description="일상이야기"
+        canonical={`${metadata.meta.url}/daily`}
+        openGraph={{ url: `${metadata.meta.url}/daily` }}
       />
       <Container>
         <RecentPosts posts={posts} />
@@ -21,7 +21,7 @@ export default function DevPage({ posts }: { posts: Dev[] }): JSX.Element {
 }
 
 export const getStaticProps = async () => {
-  const posts = allDevs.sort(
+  const posts = allDailies.sort(
     (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
   );
   return {

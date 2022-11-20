@@ -32,8 +32,6 @@ svg {
     transition: all 0.2s ease;
 }
 &:hover {
-  svg path {
-    fill: var(--text-base);
-  }
+  cursor:pointer;
 }
 `;

@@ -1,13 +1,16 @@
-import { allDevs } from 'contentlayer/generated';
+import { allDailies } from 'contentlayer/generated';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
-import DevLayout from './../../layouts/dev';
+import { useMDXComponent } from 'next-contentlayer/hooks';
+import DailyLayout from 'layouts/daily';
 
-const DevPage = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  return <DevLayout post={post} />;
+const DailyPage = ({
+  post,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  return <DailyLayout post={post} />;
 };
 
 export const getStaticPaths = async () => {
-  const paths = allDevs.map((post: { slug: any }) => ({
+  const paths = allDailies.map((post: { slug: any }) => ({
     params: { slug: [post.slug] },
   }));
   return {
@@ -17,10 +20,10 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const post = allDevs.find(
+  const post = allDailies.find(
     (post: { slug: string | string[] | undefined }) => post.slug == params!.slug
   );
   return { props: { post } };
 };
 
-export default DevPage;
+export default DailyPage;

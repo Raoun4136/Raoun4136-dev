@@ -5,15 +5,20 @@
     "project": "./tsconfig.json"
   },
   "env": {
-    "node": true
+    "node": true,
+    "es6": true
   },
   "extends": [
     "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:mdx/recommended"
   ],
-  "ignorePatterns": [
-    "next.config.js",
-    "trouble/*"
-  ]
+  "ignorePatterns": ["next.config.js", "contentlayer.config.ts", "trouble/*"],
+  "settings": {
+    "mdx/code-blocks": false,
+    // optional, if you want to disable language mapper, set it to `false`
+    // if you want to override the default language mapper inside, you can provide your own
+    "mdx/language-mapper": {}
+  }
 }
