@@ -15,30 +15,26 @@ const RecentPosts = ({ posts }: { posts: Daily[] | Dev[] }) => {
         <>
           <RecentInfo>최신 일기</RecentInfo>
           {posts.map((post, idx) => (
-            <>
-              <Link key={idx} href={`${post._raw.flattenedPath}`}>
-                <RecentCard>
-                  <RecentTitle>{post.title}</RecentTitle>
-                  <RecentDesc>{post.description}</RecentDesc>
-                  <RecentDate>{post.date}</RecentDate>
-                </RecentCard>
-              </Link>
-            </>
+            <Link key={idx} href={`${post._raw.flattenedPath}`}>
+              <RecentCard>
+                <RecentTitle>{post.title}</RecentTitle>
+                <RecentDesc>{post.description}</RecentDesc>
+                <RecentDate>{post.date}</RecentDate>
+              </RecentCard>
+            </Link>
           ))}
         </>
       ) : (
         <>
           <RecentInfo>최신 포스트</RecentInfo>
           {posts.map((post, idx) => (
-            <>
-              <Link key={idx} href={`/dev/${post.slug}`}>
-                <RecentCard>
-                  <RecentTitle>{post.title}</RecentTitle>
-                  <RecentDesc>{post.description}</RecentDesc>
-                  <RecentDate>{post.date}</RecentDate>
-                </RecentCard>
-              </Link>
-            </>
+            <Link key={idx} href={`/dev/${post.slug}`}>
+              <RecentCard>
+                <RecentTitle>{post.title}</RecentTitle>
+                <RecentDesc>{post.description}</RecentDesc>
+                <RecentDate>{post.date}</RecentDate>
+              </RecentCard>
+            </Link>
           ))}
         </>
       )}

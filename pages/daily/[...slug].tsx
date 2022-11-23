@@ -1,6 +1,5 @@
 import { allDailies } from 'contentlayer/generated';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
-import { useMDXComponent } from 'next-contentlayer/hooks';
 import DailyLayout from 'layouts/daily';
 
 const DailyPage = ({
@@ -10,7 +9,7 @@ const DailyPage = ({
 };
 
 export const getStaticPaths = async () => {
-  const paths = allDailies.map((post: { slug: any }) => ({
+  const paths = allDailies.map((post: { slug: unknown }) => ({
     params: { slug: [post.slug] },
   }));
   return {
@@ -21,7 +20,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post = allDailies.find(
-    (post: { slug: string | string[] | undefined }) => post.slug == params!.slug
+    (post: { slug: string | string[] | undefined }) => post.slug == params?.slug
   );
   return { props: { post } };
 };

@@ -18,7 +18,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const post = allDevs.find(
-    (post: { slug: string | string[] | undefined }) => post.slug == params!.slug
+    (post: { slug: string | string[] | undefined }) => post.slug == params?.slug
   );
   return { props: { post } };
 };
