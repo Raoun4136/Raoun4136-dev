@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   AboutHeaderTitle,
   AboutNav,
@@ -10,9 +11,15 @@ const AboutHeader = () => {
     <AboutHeaderContainer>
       <AboutHeaderTitle>ABOUTS</AboutHeaderTitle>
       <AboutNav>
-        <AboutLink href="/posts/all">ALL</AboutLink>
-        <AboutLink href="/posts/dev">이력</AboutLink>
-        <AboutLink href="/posts/daily">TECH</AboutLink>
+        <AboutLink>
+          <Link href="">ALL</Link>
+        </AboutLink>
+        <AboutLink>
+          <Link href="">ALL</Link>
+        </AboutLink>
+        <AboutLink>
+          <Link href="">ALL</Link>
+        </AboutLink>
       </AboutNav>
     </AboutHeaderContainer>
   );

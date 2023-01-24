@@ -4,18 +4,21 @@ import {
   HeaderContainer,
   InnerHeader,
   HeaderLogo,
-  InnerTheme,
+  SearchImg,
 } from './Header.style';
-import day from 'public/home/day.svg';
-import night from 'public/home/night.svg';
 import search_night from 'public/home/search_night.svg';
 import search_day from 'public/home/search_day.svg';
 import Image from 'next/image';
+import Theme from './Theme';
+import { useEffect } from 'react';
 
 const Header = () => {
   //TODO: theme day | night
-  const theme = night;
-  const search = search_night;
+  let search;
+  useEffect(() => {
+    //search = document.body.dataset.theme
+    search = window.localStorage.getItem('theme');
+  }, []);
   return (
     <HeaderContainer>
       <InnerHeader>
@@ -23,12 +26,14 @@ const Header = () => {
           <HeaderLogo>Raoun.dev</HeaderLogo>
         </Link>
         <Nav />
-        <InnerTheme>
-          <Image src={theme} width={30} height={30}></Image>
-        </InnerTheme>
-        <InnerTheme>
-          <Image src={search} width={30} height={30}></Image>
-        </InnerTheme>
+        <Theme />
+        <SearchImg>
+          <Image
+            src={search == 'light' ? search_day : search_night}
+            width={30}
+            height={30}
+          ></Image>
+        </SearchImg>
       </InnerHeader>
     </HeaderContainer>
   );

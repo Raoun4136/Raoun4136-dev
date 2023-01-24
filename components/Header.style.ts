@@ -6,7 +6,6 @@ export const HeaderContainer = styled.header`
   top: 0;
   width: 100%;
   backdrop-filter: blur(7px);
-  background-color: var(--header-bg);
   z-index: 100;
 `;
 
@@ -16,7 +15,7 @@ export const InnerHeader = styled.div`
   padding: 0.5rem 0;
   align-items: center;
 `;
-export const InnerTheme = styled.div`
+export const SearchImg = styled.div`
   margin-left: 2rem;
   img {
     color: var(--text-base);

@@ -8,7 +8,8 @@ export const AboutNav = styled.div`
   margin-top: 75px;
 `;
 
-export const AboutLink = styled.a`
+export const AboutLink = styled.div`
+  display: inline-block;
   margin-right: 70px;
   opacity: 0.6;
   color: var(--text-base);

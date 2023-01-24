@@ -8,7 +8,8 @@ export const PostNav = styled.div`
   margin-top: 75px;
 `;
 
-export const PostLink = styled.a`
+export const PostLink = styled.div`
+  display: inline-block;
   margin-right: 70px;
   opacity: 0.6;
   color: var(--text-base);
@@ -20,4 +21,9 @@ export const PostLink = styled.a`
 
 export const PostHeaderContainer = styled.div`
   margin: 60px 0 40px 0;
+  .active {
+    opacity: 1;
+    color: var(--accent);
+    font-weight: 800;
+  }
 `;
