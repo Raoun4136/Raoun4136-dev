@@ -14,7 +14,7 @@
     "plugin:prettier/recommended",
     "plugin:mdx/recommended"
   ],
-  "ignorePatterns": ["next.config.js", "contentlayer.config.ts", "trouble/*"],
+  "ignorePatterns": ["trouble/*"],
   "settings": {
     "mdx/code-blocks": false,
     // optional, if you want to disable language mapper, set it to `false`

@@ -8,7 +8,7 @@ const metadata = {
   author: 'Raoun4136',
   home: {
     name: 'SeongOh Park',
-    description: 'Be Full-Stack Developer',
+    description: 'Be A Good Developer',
     subDescription: 'Just Do It',
     image: '/home/profile.jpg',
   },

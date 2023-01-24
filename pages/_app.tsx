@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { Normalize } from 'styled-normalize';
 
 import * as gtag from '../lib/gtag';
 
@@ -43,6 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
           `,
         }}
       />
+      <Normalize />
       <DefaultSeo {...SEO} />
       <Component {...pageProps} />
     </>

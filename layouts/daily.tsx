@@ -3,6 +3,7 @@ import Container from '../components/Container';
 import metadata from '../data/metadata';
 import { Daily } from 'contentlayer/generated';
 import { useMDXComponent } from 'next-contentlayer/hooks';
+import MDXdaily from './../components/daily/MDXdaily';
 
 const DailyLayout = ({ post }: { post: Daily }) => {
   const MDXComponent = useMDXComponent(post.body.code);
@@ -21,7 +22,9 @@ const DailyLayout = ({ post }: { post: Daily }) => {
             },
           }}
         />
-        <MDXComponent />
+        <MDXdaily>
+          <MDXComponent />
+        </MDXdaily>
       </>
     </Container>
   );

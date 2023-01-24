@@ -1,14 +1,16 @@
 import styled from '@emotion/styled';
 
 export const NavContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
   width: 100%;
-  margin: 0 auto;
+  gap: 3rem;
 
   a {
-    margin-left: 50px;
-  }
-
-  &:active {
-    opacity: 1;
+    &:hover {
+      text-decoration: underline;
+      color: #2f78bc;
+      transition: 0.3s;
+    }
   }
 `;

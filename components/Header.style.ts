@@ -5,33 +5,34 @@ export const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
   width: 100%;
-  backdrop-filter: blur(7px); 
+  backdrop-filter: blur(7px);
   background-color: var(--header-bg);
   z-index: 100;
-
-  
-}
 `;
 
 export const InnerHeader = styled.div`
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 22px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  padding: 0.5rem 0;
   align-items: center;
-  box-sizing: content-box;
+`;
+export const InnerTheme = styled.div`
+  margin-left: 2rem;
+  img {
+    color: var(--text-base);
+    display: block;
+    &:hover {
+      cursor: pointer;
+    }
+`;
 
-svg {
-  color: var(--text-base);
-  display: block;
-  width: 60px; 
-  height: 60px ;
-  path {
-    fill: var(--text - base - 70);
-    transition: all 0.2s ease;
-}
-&:hover {
-  cursor:pointer;
-}
+export const HeaderLogo = styled.h1`
+  font-weight: 800;
+  &:hover {
+    cursor: pointer;
+    color: #2f78bc;
+    transition: 0.3s;
+  }
+  &:action {
+  }
 `;

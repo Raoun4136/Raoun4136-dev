@@ -23,8 +23,11 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
+    "**/*.js",
+    "**/*.mjs",
     "**/*.tsx",
-    ".contentlayer/generated"
+    ".contentlayer/generated",
+    ".eslintrc.json"
   ],
   "exclude": ["node_modules"]
 }
