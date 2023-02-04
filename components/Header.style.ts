@@ -3,30 +3,26 @@ import styled from '@emotion/styled';
 export const HeaderContainer = styled.header`
   display: block;
   position: sticky;
+  padding: 1rem 1.5rem;
   top: 0;
   width: 100%;
   backdrop-filter: blur(7px);
   z-index: 100;
+  background-color: var(--header-bg);
 `;
 
 export const InnerHeader = styled.div`
+  max-width: 1200px;
   display: flex;
   flex-direction: row;
-  padding: 0.5rem 0;
+  height: 3rem;
+  margin: 0 auto;
   align-items: center;
-`;
-export const SearchImg = styled.div`
-  margin-left: 2rem;
-  img {
-    color: var(--text-base);
-    display: block;
-    &:hover {
-      cursor: pointer;
-    }
 `;
 
 export const HeaderLogo = styled.h1`
   font-weight: 800;
+  font-size: 1.6rem;
   &:hover {
     cursor: pointer;
     color: #2f78bc;

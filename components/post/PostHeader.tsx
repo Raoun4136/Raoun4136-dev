@@ -11,16 +11,18 @@ const PostHeader = () => {
   const router = useRouter();
   return (
     <PostHeaderContainer>
-      <PostHeaderTitle>POSTS</PostHeaderTitle>
+      <PostHeaderTitle>Posts</PostHeaderTitle>
       <PostNav>
         <PostLink>
           <Link href="/posts/all">
             <a
               className={
-                router.asPath.includes('posts/all') ? 'active' : 'nonActive'
+                router.asPath.includes('posts/all') || router.asPath == '/posts'
+                  ? 'active'
+                  : 'nonActive'
               }
             >
-              ALL
+              All
             </a>
           </Link>
         </PostLink>
@@ -31,7 +33,7 @@ const PostHeader = () => {
                 router.asPath.includes('/dev') ? 'active' : 'nonActive'
               }
             >
-              DEV
+              Dev
             </a>
           </Link>
         </PostLink>
@@ -42,7 +44,7 @@ const PostHeader = () => {
                 router.asPath.includes('/daily') ? 'active' : 'nonActive'
               }
             >
-              DAILY
+              Daily
             </a>
           </Link>
         </PostLink>

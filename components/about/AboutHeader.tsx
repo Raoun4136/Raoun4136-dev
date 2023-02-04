@@ -9,18 +9,7 @@ import {
 const AboutHeader = () => {
   return (
     <AboutHeaderContainer>
-      <AboutHeaderTitle>ABOUTS</AboutHeaderTitle>
-      <AboutNav>
-        <AboutLink>
-          <Link href="">ALL</Link>
-        </AboutLink>
-        <AboutLink>
-          <Link href="">ALL</Link>
-        </AboutLink>
-        <AboutLink>
-          <Link href="">ALL</Link>
-        </AboutLink>
-      </AboutNav>
+      <AboutHeaderTitle>About</AboutHeaderTitle>
     </AboutHeaderContainer>
   );
 };

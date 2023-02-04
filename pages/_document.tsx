@@ -1,18 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import { useEffect } from 'react';
 
 export default function Document() {
-  const setThemeMode = `
-    function getThemeMode() {
-        const theme = window.localStorage.getItem('theme')
-        return theme ? theme : 'dark'
-    }
-    document.body.dataset.theme = getThemeMode()
-  `;
-  useEffect(() => {
-    setThemeMode;
-  }, []);
-
   return (
     <Html>
       <Head />
@@ -26,6 +14,11 @@ export default function Document() {
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
+                        function getThemeMode() {
+                          const theme = window.localStorage.getItem('theme')
+                          return theme ? theme : 'dark'
+                        }
+                        document.body.dataset.theme = getThemeMode()
                         `,
           }}
         />

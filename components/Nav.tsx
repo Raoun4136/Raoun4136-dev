@@ -1,34 +1,31 @@
 import Link from 'next/link';
 import { NavContainer } from './Nav.style';
 import { useRouter } from 'next/router';
+import navLinks from './../data/navLinks';
+import { useState } from 'react';
 
 const Nav = () => {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <NavContainer>
-      <Link href="/about">
-        <a
-          className={
-            router.pathname.includes('/about') ? 'active' : 'nonActive'
-          }
-        >
-          About
-        </a>
-      </Link>
-      <Link href="/posts/all">
-        <a
-          className={
-            router.pathname.includes('/posts') ? 'active' : 'nonActive'
-          }
-        >
-          Posts
-        </a>
-      </Link>
-      <Link href="https://raoun4136.notion.site/Raoun-022bd0edfdf24844b709de09b554629e">
-        <a target="_blank" rel="noopener noreferrer">
-          Portfolio
-        </a>
-      </Link>
+      <ul>
+        {navLinks.map((link: any) => (
+          <li key={link.title}>
+            <Link href={link.link}>
+              <a
+                className={
+                  router.asPath.includes(`${link.link}`)
+                    ? 'active'
+                    : 'nonActive'
+                }
+              >
+                {link.title}
+              </a>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </NavContainer>
   );
 };

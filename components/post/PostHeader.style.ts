@@ -20,7 +20,7 @@ export const PostLink = styled.div`
 `;
 
 export const PostHeaderContainer = styled.div`
-  margin: 60px 0 40px 0;
+  margin: 20px 0 40px 0;
   .active {
     opacity: 1;
     color: var(--accent);

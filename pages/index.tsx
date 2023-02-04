@@ -1,46 +1,27 @@
-import Container from '../components/Container';
-import {
-  allDevs,
-  Dev,
-  allDailies,
-  Daily,
-  allDocuments,
-  DocumentTypes,
-} from 'contentlayer/generated';
-import RecentPosts from '../components/RecentPosts';
-import Profile from 'components/Profile';
+import { allDocuments, DocumentTypes } from 'contentlayer/generated';
+import RecentPosts from 'components/home/RecentPosts';
+import Intro from 'components/home/Intro';
+import Projects from 'components/home/Projects';
+import HomeContainer from './../components/home/HomeContainer';
 
 export default function Home({
-  dailies,
-  devs,
   documents,
 }: {
-  dailies: Daily[];
-  devs: Dev[];
   documents: DocumentTypes[];
 }): JSX.Element {
   return (
-    <Container>
-      {documents.map((el) => (
-        <div>{el.title}</div>
-      ))}
-    </Container>
+    <HomeContainer>
+      <Intro />
+      <RecentPosts posts={documents} />
+    </HomeContainer>
   );
 }
 export const getStaticProps = async () => {
-  const devs = allDevs.sort(
-    (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
-  );
-  const dailies = allDailies.sort(
-    (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
-  );
   const documents = allDocuments.sort(
     (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
   );
   return {
     props: {
-      devs,
-      dailies,
       documents,
     },
   };

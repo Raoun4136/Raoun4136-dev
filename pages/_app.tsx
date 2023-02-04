@@ -44,9 +44,10 @@ export default function App({ Component, pageProps }: AppProps) {
           `,
         }}
       />
-      <Normalize />
       <DefaultSeo {...SEO} />
       <Component {...pageProps} />
     </>
   );
 }
+
+//  <Normalize />

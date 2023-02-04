@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 
 export const ParentContainer = styled.div`
-  max-width: 720px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 22px;
   justify-content: space-between;
   align-items: center;
   box-sizing: content-box;

@@ -1,19 +1,16 @@
 import styled from '@emotion/styled';
 
-export const ThemeContainer = styled.div`
+export const SearchContainer = styled.div`
   line-height: 0;
-  margin-left: 1.5rem;
+  margin-left: 1rem;
 `;
 
-export const ToggleButton = styled.button`
-  background: var(--toggle-bg);
+export const SearchButton = styled.button`
+  background: var(--bg);
   padding-top: 3px;
   border-radius: 10px;
   border: 2px solid transparent;
   width: max-content;
-
-  img {
-  }
   svg {
     width: 20px;
     height: 20px;

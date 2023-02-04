@@ -23,7 +23,8 @@ export const getStaticPaths = async () => {
   const paths = typeArray.map((type) => ({
     params: { slug: [type] },
   }));
-  paths.push({ params: { slug: ['all'] } });
+  paths.push({ params: { slug: ['all'] } }); //all object
+  paths.push({ params: { slug: [''] } }); //empty object
   return {
     paths,
     fallback: false,
@@ -32,7 +33,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   let posts;
-  if (params?.slug == 'all') {
+  if (params?.slug == 'all' || !params?.slug) {
     posts = allDocuments;
   } else {
     posts = allDocuments.filter(

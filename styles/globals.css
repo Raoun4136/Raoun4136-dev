@@ -248,7 +248,11 @@ a {
 }
 
 body {
+  transition: 0.3s;
   background: var(--bg);
+  width: 100%;
+  word-break: keep-all;
+  word-wrap: break-word;
 }
 
 /* variables */
@@ -299,4 +303,19 @@ body[data-theme='dark'] {
   --mdx-border: #dfe2e535;
   --mdx-icon-color: #dfdfdf70;
   --mdx-icon-bg: #eeeefb20;
+}
+
+/* custom scroll-bar */
+body::-webkit-scrollbar {
+  width: 6px; /* 스크롤바의 너비 */
+}
+
+body::-webkit-scrollbar-thumb {
+  height: 8px; /* 스크롤바의 길이 */
+  border-radius: 2px;
+  background: var(--text-base-70);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--bg); /*스크롤바 뒷 배경 색상*/
 }

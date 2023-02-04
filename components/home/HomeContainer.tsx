@@ -1,10 +1,13 @@
 import React from 'react';
 import Head from 'next/head';
-import Footer from './Footer';
-import Header from './Header';
-import { ParentContainer, Main, InnerContainer } from './Container.style';
+import Footer from '../Footer';
+import Header from '../Header';
 
-const Container = ({ children }: { children?: React.ReactNode }) => {
+import { ParentContainer, Main, InnerContainer } from './HomeContainer.style';
+import { useRouter } from 'next/router';
+
+const HomeContainer = ({ children }: { children?: React.ReactNode }) => {
+  const router = useRouter();
   return (
     <ParentContainer>
       <InnerContainer>
@@ -24,4 +27,4 @@ const Container = ({ children }: { children?: React.ReactNode }) => {
   );
 };
 
-export default Container;
+export default HomeContainer;
