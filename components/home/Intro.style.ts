@@ -6,7 +6,6 @@ export const IntroContainer = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: var(--accent);
   height: calc(400px);
   padding: 0 1.5rem;
   width: 100%;
@@ -14,7 +13,7 @@ export const IntroContainer = styled.div`
 `;
 
 export const IntroInnerContainer = styled.div`
-  width: 1200px;
+  width: 100%;
   margin: 0 auto;
 `;
 

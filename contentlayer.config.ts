@@ -4,8 +4,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
-import rehypePrism from 'rehype-prism-plus';
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+import rehypeHighlight from 'rehype-highlight';
 
 export const urlFromFilePath = (doc: DocumentGen): string => {
   return doc._raw.flattenedPath.replace(/pages\/?/, '');
@@ -85,9 +84,15 @@ export default makeSource({
     rehypePlugins: [
       rehypeSlug,
       rehypeCodeTitles,
-      rehypePrism,
-      rehypeAutolinkHeadings,
-      rehypeAccessibleEmojis,
+      rehypeHighlight,
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ['anchor'],
+          },
+        },
+      ],
     ],
   },
 });

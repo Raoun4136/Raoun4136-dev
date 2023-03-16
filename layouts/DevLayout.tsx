@@ -1,11 +1,11 @@
 import { NextSeo } from 'next-seo';
 import Container from '../components/Container';
 import metadata from '../data/metadata';
-import { Daily } from 'contentlayer/generated';
+import { Dev } from 'contentlayer/generated';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import MDXdaily from './../components/daily/MDXdaily';
+import MDXDev from 'components/dev/MDXDev';
 
-const DailyLayout = ({ post }: { post: Daily }) => {
+const DevLayout = ({ post }: { post: Dev }) => {
   const MDXComponent = useMDXComponent(post.body.code);
   return (
     <Container>
@@ -13,21 +13,25 @@ const DailyLayout = ({ post }: { post: Daily }) => {
         <NextSeo
           title={`${post.title}`}
           description={post.description}
-          canonical={`${metadata.meta.url}/daily/${post.slug}`}
+          canonical={`${metadata.meta.url}/dev/${post.slug}`}
           openGraph={{
             type: 'article',
-            url: `${metadata.meta.url}/daily/${post.slug}`,
+            url: `${metadata.meta.url}/dev/${post.slug}`,
             article: {
               publishedTime: new Date(post.date).toISOString(),
             },
           }}
         />
-        <MDXdaily>
+        <MDXDev
+          title={post.title}
+          date={post.date}
+          path={`${metadata.meta.url}/blog/${post.slug}`}
+        >
           <MDXComponent />
-        </MDXdaily>
+        </MDXDev>
       </>
     </Container>
   );
 };
 
-export default DailyLayout;
+export default DevLayout;

@@ -9,7 +9,7 @@ export const FooterContainer = styled.footer`
 
 export const FooterInnerContainer = styled.div`
   display: flex;
-  max-width: 1200px;
+  max-width: 768px;
   align-items: center;
   height: 5rem;
   margin: 0 auto;
@@ -18,12 +18,13 @@ export const FooterInnerContainer = styled.div`
 export const FooterInfoContainer = styled.div``;
 
 export const BlogInfo = styled.div`
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: var(--logo-font-size);
+  font-weight: var(--logo-font-weight);
 `;
 
 export const BlogLink = styled.a`
-  font-size: 0.8rem;
+  font-size: var(--link-font-size);
+  font-weight: var(--link-font-weight);
   color: var(--text-base);
   opacity: 0.6;
   &:hover {
@@ -31,6 +32,7 @@ export const BlogLink = styled.a`
     text-decoration: underline;
   }
 `;
+
 export const BlogContantContainer = styled.div`
   display: flex;
   flex: 1 1 0;

@@ -1,8 +1,5 @@
 import { allDocuments, DocumentTypes } from 'contentlayer/generated';
-import RecentPosts from 'components/home/RecentPosts';
-import Intro from 'components/home/Intro';
-import Projects from 'components/home/Projects';
-import HomeContainer from './../components/home/HomeContainer';
+import { Intro, Projects, Container, RecentPosts } from 'components';
 
 export default function Home({
   documents,
@@ -10,10 +7,10 @@ export default function Home({
   documents: DocumentTypes[];
 }): JSX.Element {
   return (
-    <HomeContainer>
+    <Container>
       <Intro />
-      <RecentPosts posts={documents} />
-    </HomeContainer>
+      <Projects />
+    </Container>
   );
 }
 export const getStaticProps = async () => {

@@ -7,27 +7,25 @@ export const HeaderContainer = styled.header`
   top: 0;
   width: 100%;
   backdrop-filter: blur(7px);
-  z-index: 100;
+  z-index: 1000;
   background-color: var(--header-bg);
 `;
 
 export const InnerHeader = styled.div`
-  max-width: 1200px;
+  max-width: 768px;
   display: flex;
   flex-direction: row;
-  height: 3rem;
+  height: 2rem;
   margin: 0 auto;
   align-items: center;
 `;
 
 export const HeaderLogo = styled.h1`
-  font-weight: 800;
-  font-size: 1.6rem;
+  font-weight: var(--logo-font-weight);
+  font-size: var(--logo-font-size);
   &:hover {
     cursor: pointer;
-    color: #2f78bc;
+    color: var(--accent);
     transition: 0.3s;
-  }
-  &:action {
   }
 `;

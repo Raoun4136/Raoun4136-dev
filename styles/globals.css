@@ -191,6 +191,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -305,6 +306,15 @@ body[data-theme='dark'] {
   --mdx-icon-bg: #eeeefb20;
 }
 
+body {
+  --logo-font-size: 1.4rem;
+  --logo-font-weight: 800;
+  --nav-font-size: 1rem;
+  --nav-font-weight: 500;
+  --link-font-size: 0.8rem;
+  --link-font-weight: 500;
+}
+
 /* custom scroll-bar */
 body::-webkit-scrollbar {
   width: 6px; /* 스크롤바의 너비 */
@@ -318,4 +328,12 @@ body::-webkit-scrollbar-thumb {
 
 body::-webkit-scrollbar-track {
   background: var(--bg); /*스크롤바 뒷 배경 색상*/
+}
+
+/*TODO: rem사이즈 다르게 하기*/
+body {
+  font-size: 16px;
+  @media screen and (max-width: 700px) {
+    font-size: 14px;
+  }
 }

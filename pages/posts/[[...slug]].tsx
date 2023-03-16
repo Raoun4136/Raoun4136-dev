@@ -1,6 +1,4 @@
-import Container from 'components/Container';
-import PostList from 'components/post/PostList';
-import PostHeader from 'components/post/PostHeader';
+import { Container, PostList, PostHeader } from 'components';
 import { allDocuments } from 'contentlayer/generated';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
 

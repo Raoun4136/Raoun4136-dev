@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import { NavContainer } from './Nav.style';
 import { useRouter } from 'next/router';
-import navLinks from './../data/navLinks';
-import { useState } from 'react';
+import navLinks from 'data/navLinks';
 
 const Nav = () => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <NavContainer>
       <ul>

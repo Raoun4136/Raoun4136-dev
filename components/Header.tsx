@@ -1,7 +1,5 @@
 import Link from 'next/link';
-import Nav from './Nav';
-import Theme from './Theme';
-import Search from './Search';
+import { Nav, Theme, Search } from 'components';
 import { HeaderContainer, InnerHeader, HeaderLogo } from './Header.style';
 
 const Header = () => {

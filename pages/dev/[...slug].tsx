@@ -1,6 +1,6 @@
 import { allDevs } from 'contentlayer/generated';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
-import DevLayout from './../../layouts/dev';
+import { DevLayout } from 'layouts';
 
 //TODO: devPage가 아닌 posts로 옮길것
 const DevPage = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {

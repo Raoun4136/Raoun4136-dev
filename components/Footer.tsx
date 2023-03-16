@@ -1,4 +1,4 @@
-import metadata from '../data/metadata';
+import metadata from 'data/metadata';
 import Image from 'next/image';
 import githubImg from 'public/social/github.png';
 import mailImg from 'public/social/mail.png';

@@ -1,35 +1,35 @@
 import {
-  MDXDailyContainer,
-  MDXDailyHead,
+  MDXDevContainer,
+  MDXDevHead,
   ClipboardCopyBtn,
-  MDXDailySection,
-  MDXDailyURL,
-  MDXDailyDate,
-  MDXDailyTitle,
-  MDXDailyContent,
-} from './MDXDaily.style';
-import { MDXDailyProps } from 'lib/types';
+  MDXDevSection,
+  MDXDevURL,
+  MDXDevDate,
+  MDXDevTitle,
+  MDXDevContent,
+} from './MDXDev.style';
+import { MDXDevProps } from 'lib/types';
 import type { PropsWithChildren } from 'react';
 import convertDateUs from 'lib/convertDateUs';
-const MDXDaily = ({
+const MDXDev = ({
   title,
   date,
   children,
   url,
   path,
-}: PropsWithChildren<MDXDailyProps>) => {
+}: PropsWithChildren<MDXDevProps>) => {
   return (
-    <MDXDailyContainer>
-      <MDXDailyHead>
+    <MDXDevContainer>
+      <MDXDevHead>
         {url && (
-          <MDXDailyURL>
+          <MDXDevURL>
             <a href={url} target="_blank" rel="noreferrer">
               문제 바로가기
             </a>
-          </MDXDailyURL>
+          </MDXDevURL>
         )}
-        {date && <MDXDailyDate>{convertDateUs(date)}</MDXDailyDate>}
-        <MDXDailyTitle>{title}</MDXDailyTitle>
+        {date && <MDXDevDate>{convertDateUs(date)}</MDXDevDate>}
+        <MDXDevTitle>{title}</MDXDevTitle>
         {path && (
           <ClipboardCopyBtn
             onClick={() => path && navigator.clipboard.writeText(path)}
@@ -44,12 +44,12 @@ const MDXDaily = ({
             </svg>
           </ClipboardCopyBtn>
         )}
-      </MDXDailyHead>
-      <MDXDailySection>
-        <MDXDailyContent>{children}</MDXDailyContent>
-      </MDXDailySection>
-    </MDXDailyContainer>
+      </MDXDevHead>
+      <MDXDevSection>
+        <MDXDevContent>{children}</MDXDevContent>
+      </MDXDevSection>
+    </MDXDevContainer>
   );
 };
 
-export default MDXDaily;
+export default MDXDev;

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import mq from 'styles/utils/mq';
 
-export const MDXDailyContainer = styled.div`
+export const MDXDevContainer = styled.div`
   position: relative;
   width: 100%;
   font-size: 16px;
@@ -341,9 +341,9 @@ export const MDXDailyContainer = styled.div`
   }
 `;
 
-export const MDXDailySection = styled.section``;
+export const MDXDevSection = styled.section``;
 
-export const MDXDailyHead = styled.div`
+export const MDXDevHead = styled.div`
   position: relative;
 `;
 
@@ -416,14 +416,14 @@ export const ClipboardCopyBtn = styled.button`
   }
 `;
 
-export const MDXDailyTitle = styled.h1`
+export const MDXDevTitle = styled.h1`
   font-size: 30px !important;
   margin-top: 0 !important;
   word-break: keep-all;
   text-align: center;
 `;
 
-export const MDXDailyURL = styled.div`
+export const MDXDevURL = styled.div`
   margin-bottom: 14px;
   text-align: center;
   line-height: 2em;
@@ -436,7 +436,7 @@ export const MDXDailyURL = styled.div`
   }
 `;
 
-export const MDXDailyDate = styled.div`
+export const MDXDevDate = styled.div`
   margin-bottom: 14px;
   font-size: 14px;
   text-align: center;
@@ -444,6 +444,6 @@ export const MDXDailyDate = styled.div`
   opacity: 0.5;
 `;
 
-export const MDXDailyContent = styled.div`
+export const MDXDevContent = styled.div`
   margin-top: 36px;
 `;

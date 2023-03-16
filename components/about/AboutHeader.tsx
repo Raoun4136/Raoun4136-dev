@@ -1,10 +1,4 @@
-import Link from 'next/link';
-import {
-  AboutHeaderTitle,
-  AboutNav,
-  AboutLink,
-  AboutHeaderContainer,
-} from './AboutHeader.style';
+import { AboutHeaderTitle, AboutHeaderContainer } from './AboutHeader.style';
 
 const AboutHeader = () => {
   return (

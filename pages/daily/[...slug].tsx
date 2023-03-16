@@ -1,6 +1,6 @@
 import { allDailies } from 'contentlayer/generated';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
-import DailyLayout from 'layouts/daily';
+import { DailyLayout } from 'layouts';
 
 //TODO: dailyPage가 아닌 posts로 옮길것
 

@@ -8,7 +8,7 @@ import {
   RecentMore,
   RecentHeader,
 } from './RecentPosts.style';
-import Post from 'components/post/Post';
+import { Post } from 'components';
 
 const RecentPosts = ({ posts }: { posts: DocumentTypes[] }) => {
   return (

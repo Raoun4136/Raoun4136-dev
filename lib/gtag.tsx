@@ -1,4 +1,4 @@
-import metadata from '../data/metadata';
+import metadata from 'data/metadata';
 
 export const GA_TRACKING_ID = metadata.analytics.google;
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import Footer from './Footer';
-import Header from './Header';
+import { Footer, Header } from 'components';
 import { ParentContainer, Main, InnerContainer } from './Container.style';
 
 const Container = ({ children }: { children?: React.ReactNode }) => {

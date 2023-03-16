@@ -1,8 +1,6 @@
 import { NextSeo } from 'next-seo';
-import metadata from '../data/metadata';
-import Container from 'components/Container';
-import AboutHeader from 'components/about/AboutHeader';
-import Profile from 'components/Profile';
+import metadata from 'data/metadata';
+import { Container, AboutHeader, Profile } from 'components';
 
 export default function DailyPage(): JSX.Element {
   return (

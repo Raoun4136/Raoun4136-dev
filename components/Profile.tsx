@@ -7,7 +7,7 @@ import {
   ProfileImage,
 } from './Profile.style';
 import Image from 'next/image';
-import metadata from '../data/metadata';
+import metadata from 'data/metadata';
 
 const Profile = () => {
   return (

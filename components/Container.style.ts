@@ -6,14 +6,14 @@ export const Main = styled.main`
   padding: 1rem 1.5rem;
   justify-content: center;
   align-text: center;
-  box-sizing: content-box;
+  box-sizing: border-box;
 
   min-height: 100vh;
 
   .contents {
     display: block;
     width: 100%;
-    max-width: 1200px;
+    max-width: 768px;
     margin: 0 auto;
   }
 `;

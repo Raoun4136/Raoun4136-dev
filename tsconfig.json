@@ -4,7 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -17,15 +17,22 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "contentlayer/generated": ["./.contentlayer/generated"]
+      "contentlayer/generated": ["./.contentlayer/generated"],
+      "pages/*": ["pages/*"],
+      "styles/*": ["styles/*"],
+      "components/*": ["components/*"],
+      "lib/*": ["lib/*"],
+      "layouts/*": ["layouts/*"],
+      "data/*": ["data/*"],
+      "public/*": ["public/*"],
+      "stores/*": ["stores/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.js",
-    "**/*.mjs",
     "**/*.tsx",
+    "**/*.js",
     ".contentlayer/generated",
     ".eslintrc.json"
   ],

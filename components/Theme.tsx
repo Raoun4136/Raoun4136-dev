@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
 import { ThemeContainer, ToggleButton } from './Theme.style';
-import day from 'public/home/day.svg';
-import night from 'public/home/night.svg';
-import Image from 'next/image';
 
 const Theme = () => {
-  //TODO: document.body.dataset.theme으로 setState해야함
-  //TODO: 일시적으로만 토글됨
   const [themeMode, setThemeMode] = useState<string>('dark');
+
+  useEffect(() => {
+    setThemeMode(
+      typeof window !== 'undefined'
+        ? window.localStorage.getItem('theme') ?? 'dark'
+        : 'dark'
+    );
+  }, []);
 
   useEffect(() => {
     document.body.dataset.theme = themeMode;
     window.localStorage.setItem('theme', themeMode);
   }, [themeMode]);
 
-  const themeModeHandle = () => {
+  const themeModeHandle = (e) => {
+    e.preventDefault();
     setThemeMode(themeMode === 'dark' ? 'light' : 'dark');
   };
 

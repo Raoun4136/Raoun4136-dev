@@ -5,3 +5,17 @@ export type posts = {
   url: string;
   image: string;
 };
+
+export type MDXDevProps = {
+  title: string;
+  date?: string;
+  url?: string;
+  path?: string;
+};
+
+export type MDXDailyProps = {
+  title: string;
+  date?: string;
+  url?: string;
+  path?: string;
+};

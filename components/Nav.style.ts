@@ -6,15 +6,15 @@ export const NavContainer = styled.div`
   ul {
     justify-content: flex-end;
     display: flex;
-    gap: 3rem;
+    gap: 2rem;
     opacity: 1;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: var(--nav-font-size);
+    font-weight: var(--nav-font-weight);
   }
   li {
     &:hover {
       opacity: 1;
-      text-decoration: underline;
+      color: var(--accent);
       transition: 0.3s;
     }
   }
