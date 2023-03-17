@@ -1,20 +1,38 @@
 import Link from 'next/link';
 import { Nav, Theme, Search } from 'components';
-import { HeaderContainer, InnerHeader, HeaderLogo } from './Header.style';
+import {
+  HeaderContainer,
+  HeaderLogo,
+  DesktopHeader,
+  MobileHeader,
+  IconContainer,
+} from './Header.style';
+import { useStore } from 'stores/store';
+import { Menu } from 'components';
 
 const Header = () => {
-  //TODO: theme day | night
+  const { menu_modal } = useStore();
 
   return (
     <HeaderContainer>
-      <InnerHeader>
+      <DesktopHeader>
         <Link href="/">
           <HeaderLogo>Raoun.dev</HeaderLogo>
         </Link>
         <Nav />
-        <Theme />
-        <Search />
-      </InnerHeader>
+        <IconContainer>
+          <Theme />
+          <Search />
+        </IconContainer>
+      </DesktopHeader>
+      <MobileHeader className={menu_modal ? 'open' : 'close'}>
+        <Menu />
+        {menu_modal ? <Nav /> : null}
+        <IconContainer className={menu_modal ? 'open' : 'close'}>
+          <Theme />
+          <Search />
+        </IconContainer>
+      </MobileHeader>
     </HeaderContainer>
   );
 };

@@ -309,6 +309,8 @@ body[data-theme='dark'] {
 body {
   --logo-font-size: 1.4rem;
   --logo-font-weight: 800;
+  --mobile-logo-font-size: 1rem;
+  --mobile-logo-font-weight: 600;
   --nav-font-size: 1rem;
   --nav-font-weight: 500;
   --link-font-size: 0.8rem;
@@ -328,12 +330,4 @@ body::-webkit-scrollbar-thumb {
 
 body::-webkit-scrollbar-track {
   background: var(--bg); /*스크롤바 뒷 배경 색상*/
-}
-
-/*TODO: rem사이즈 다르게 하기*/
-body {
-  font-size: 16px;
-  @media screen and (max-width: 700px) {
-    font-size: 14px;
-  }
 }

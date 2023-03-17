@@ -20,6 +20,11 @@ export const FooterInfoContainer = styled.div``;
 export const BlogInfo = styled.div`
   font-size: var(--logo-font-size);
   font-weight: var(--logo-font-weight);
+
+  @media screen and (max-width: 480px) {
+    font-size: var(--mobile-logo-font-size);
+    font-weight: var(--mobile-logo-font-weight);
+  }
 `;
 
 export const BlogLink = styled.a`

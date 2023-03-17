@@ -22,4 +22,11 @@ export const NavContainer = styled.div`
     opacity: 1;
     color: var(--accent);
   }
+
+  @media screen and (max-width: 600px) {
+    ul {
+      flex-direction: column;
+      margin-left: 0.5rem;
+    }
+  }
 `;
