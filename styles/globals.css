@@ -207,7 +207,7 @@ section {
   display: block;
 }
 body {
-  line-height: 1;
+  line-height: 1.4;
 }
 ol,
 ul {
@@ -315,6 +315,10 @@ body {
   --nav-font-weight: 500;
   --link-font-size: 0.8rem;
   --link-font-weight: 500;
+  --intro-font-size: 1.2rem;
+  --intro-font-weight: 500;
+  --text-font-size: 1rem;
+  --text-font-weight: 400;
 }
 
 /* custom scroll-bar */

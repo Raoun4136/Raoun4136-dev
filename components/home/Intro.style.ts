@@ -4,12 +4,13 @@ export const IntroContainer = styled.div`
   transition: 0.3s;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: center;
-  height: calc(400px);
-  padding: 0 1.5rem;
+  padding: 3rem 0;
   width: 100%;
-  overflow: hidden;
+
+  @media screen and (max-width: 600px) {
+    padding: 1rem 0;
+  } ;
 `;
 
 export const IntroInnerContainer = styled.div`
@@ -18,28 +19,30 @@ export const IntroInnerContainer = styled.div`
 `;
 
 export const IntroTitle = styled.h1`
-  font-size: 4rem;
-  font-weight: 1000;
+  font-size: var(--intro-font-size);
+  font-weight: var(--intro-font-weight);
   margin-top: 1rem;
 `;
 
 export const IntroDetail = styled.h2`
-  font-weight: 500;
-  font-size: 1.7rem;
-  margin-top: 1rem;
+  font-size: var(--text-font-size);
+  font-weight: var(--text-font-weight);
+  color: var(--text-base-90);
+  margin-top: 0.5rem;
 `;
 
 export const IntroButton = styled.button`
-  width: max-content;
+  font-size: var(--link-font-size);
+  font-weight: var(--link-font-weight);
+  color: var(--text-base-70);
   border: none;
-  font-size: 1.2rem;
-  opacity: 0.6;
-  padding: 0.4rem 0.1rem;
-  background: 0;
+  padding: 0;
+  background: none;
   text-decoration: underline;
+  margin-top: 1.5rem;
 
   &:hover {
-    opacity: 1;
+    color: var(--accent);
+    cursor: pointer;
   }
 `;
-export const IntroAbout = styled.link``;

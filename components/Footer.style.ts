@@ -13,6 +13,10 @@ export const FooterInnerContainer = styled.div`
   align-items: center;
   height: 5rem;
   margin: 0 auto;
+
+  @media screen and (max-width: 480px) {
+    height: 3rem;
+  }
 `;
 
 export const FooterInfoContainer = styled.div``;

@@ -8,8 +8,6 @@ export const Main = styled.main`
   align-text: center;
   box-sizing: border-box;
 
-  min-height: 100vh;
-
   .contents {
     display: block;
     width: 100%;
