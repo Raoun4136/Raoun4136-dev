@@ -1,13 +1,30 @@
 /** @type {import('next').NextConfig} */
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { withContentlayer } = require('next-contentlayer');
 
-const nextConfig = withContentlayer({
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+};
+
+// mdx
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {
+    // If you use remark-gfm, you'll need to use next.config.mjs
+    // as the package is ESM only
+    // https://github.com/remarkjs/remark-gfm#install
+    remarkPlugins: [],
+    rehypePlugins: [],
+    // If you use `MDXProvider`, uncomment the following line.
+    providerImportSource: '@mdx-js/react',
+  },
 });
 
 module.exports = nextConfig;
+
+module.exports = withMDX({
+  // Append the default value with md extensions
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+});
 
 module.exports = {
   webpack(config) {
@@ -37,32 +54,9 @@ module.exports = {
 
     return config;
   },
-
-  // ...other config
 };
 
-/**
-// mdx
-const withMDX = createMDX({
-  extension: /\.mdx?$/,
-  options: {
-    // If you use remark-gfm, you'll need to use next.config.mjs
-    // as the package is ESM only
-    // https://github.com/remarkjs/remark-gfm#install
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [
-      rehypeSlug,
-      rehypeCodeTitles,
-      rehypePrism,
-      rehypeAutolinkHeadings,
-      rehypeAccessibleEmojis,
-    ],
-    // If you use `MDXProvider`, uncomment the following line.
-    providerImportSource: '@mdx-js/react',
-  },
-});
-module.exports = withMDX({ nextConfig });
-
 //contentlayer
-export default withContentlayer({});
-*/
+const { withContentlayer } = require('next-contentlayer');
+
+module.exports = withContentlayer({});
