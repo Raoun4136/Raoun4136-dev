@@ -75,3 +75,9 @@ export const ProjectDate = styled.h3`
   flex-shrink: 0;
   color: var(--text-base-90);
 `;
+
+export const ProjectImg = styled.div`
+  img {
+    border-radius: 0.5rem;
+  }
+`;
