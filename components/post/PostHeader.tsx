@@ -2,7 +2,7 @@ import {
   PostHeaderTitle,
   PostNav,
   PostLink,
-  PostHeaderContainer,
+  PostHeaderSection,
 } from './PostHeader.style';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -10,8 +10,8 @@ import { useRouter } from 'next/router';
 const PostHeader = () => {
   const router = useRouter();
   return (
-    <PostHeaderContainer>
-      <PostHeaderTitle>Posts</PostHeaderTitle>
+    <PostHeaderSection>
+      <PostHeaderTitle>My Posts</PostHeaderTitle>
       <PostNav>
         <PostLink>
           <Link href="/posts/all">
@@ -49,7 +49,7 @@ const PostHeader = () => {
           </Link>
         </PostLink>
       </PostNav>
-    </PostHeaderContainer>
+    </PostHeaderSection>
   );
 };
 export default PostHeader;

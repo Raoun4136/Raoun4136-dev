@@ -325,6 +325,8 @@ body {
   --intro-font-weight: 600;
   --text-font-size: 1rem;
   --text-font-weight: 400;
+  --header-font-size: 1.6rem;
+  --header-font-weight: 600;
 }
 
 /* custom scroll-bar */

@@ -1,24 +1,37 @@
 import styled from '@emotion/styled';
 
-export const AboutHeaderTitle = styled.div`
-  font-size: 3rem;
-  font-weight: 800;
-`;
-export const AboutNav = styled.div`
-  margin-top: 75px;
-`;
+export const AboutHeaderSection = styled.section`
+  padding: 4rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
-export const AboutLink = styled.div`
-  display: inline-block;
-  margin-right: 70px;
-  opacity: 0.6;
-  color: var(--text-base);
-  &:hover {
-    opacity: 1;
-    text-decoration: underline;
+  @media screen and (max-width: 600px) {
+    padding: 2rem 0;
   }
 `;
 
-export const AboutHeaderContainer = styled.div`
-  margin: 60px 0 40px 0;
+export const AboutHeaderWelcome = styled.div`
+  font-size: var(--logo-font-size);
+  font-weight: var(--text-font-weight);
+
+  @media screen and (max-width: 600px) {
+    font-size: var(--logo-font-size);
+    font-weight: var(--text-font-weight);
+  }
+`;
+
+export const AboutHeaderTitle = styled.div`
+  font-size: var(--header-font-size);
+  font-weight: var(--header-font-weight);
+
+  span {
+    color: var(--accent);
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: var(--logo-font-size);
+    font-weight: var(--mobile-logo-font-weight);
+  }
 `;

@@ -1,5 +1,5 @@
 import {
-  ProfileContainer,
+  ProfileSection,
   ProfileDesc,
   ProfileTitle,
   ProfileMainDesc,
@@ -11,21 +11,21 @@ import metadata from 'data/metadata';
 
 const Profile = () => {
   return (
-    <ProfileContainer>
+    <ProfileSection>
+      <ProfileImage>
+        <Image
+          src={metadata.home.image}
+          width={160}
+          height={160}
+          alt={metadata.home.name}
+        />
+      </ProfileImage>
       <ProfileDesc>
         <ProfileTitle>{metadata.home.name}</ProfileTitle>
         <ProfileMainDesc>{metadata.home.description}</ProfileMainDesc>
         <ProfileSubDesc>{metadata.home.subDescription}</ProfileSubDesc>
       </ProfileDesc>
-      <ProfileImage>
-        <Image
-          src={metadata.home.image}
-          width={180}
-          height={180}
-          alt={metadata.home.name}
-        />
-      </ProfileImage>
-    </ProfileContainer>
+    </ProfileSection>
   );
 };
 
