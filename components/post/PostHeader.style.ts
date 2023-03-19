@@ -1,18 +1,17 @@
 import styled from '@emotion/styled';
 
 export const PostHeaderTitle = styled.div`
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: var(--logo-font-size);
+  font-weight: var(--logo-font-weight);
 `;
 export const PostNav = styled.div`
-  margin-top: 75px;
+  padding: 4rem 0;
 `;
 
 export const PostLink = styled.div`
   display: inline-block;
-  margin-right: 70px;
-  opacity: 0.6;
-  color: var(--text-base);
+  margin-right: 3rem;
+  color: var(--text-base-70);
   &:hover {
     opacity: 1;
     text-decoration: underline;

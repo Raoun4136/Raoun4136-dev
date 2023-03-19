@@ -1,32 +1,37 @@
 import { DocumentTypes } from 'contentlayer/generated';
 import Link from 'next/link';
 import {
-  RecentContainer,
+  RecentSection,
   RecentInnerContainer,
   RecentTitle,
-  RecentPost,
   RecentMore,
   RecentHeader,
 } from './RecentPosts.style';
-import { Post } from 'components';
+import { PostList } from 'components';
+import { useEffect, useState } from 'react';
 
 const RecentPosts = ({ posts }: { posts: DocumentTypes[] }) => {
+  // hydration failed
+  const [mounted, setMounted] = useState<boolean>(false);
+  useEffect(() => {
+    setMounted(true);
+    console.log(posts);
+  }, []);
+
   return (
-    <RecentContainer>
-      <RecentInnerContainer>
-        <RecentHeader>
-          <RecentTitle>최근 포스트</RecentTitle>
-          <RecentMore>
-            <Link href="/posts">더보기</Link>
-          </RecentMore>
-        </RecentHeader>
-        <RecentPost>
-          {posts.map((post, idx) => (
-            <Post key={idx} post={post} />
-          ))}
-        </RecentPost>
-      </RecentInnerContainer>
-    </RecentContainer>
+    mounted && (
+      <RecentSection>
+        <RecentInnerContainer>
+          <RecentHeader>
+            <RecentTitle>최근 포스트</RecentTitle>
+            <RecentMore>
+              <Link href="/posts">더보기</Link>
+            </RecentMore>
+          </RecentHeader>
+          <PostList posts={posts} />
+        </RecentInnerContainer>
+      </RecentSection>
+    )
   );
 };
 

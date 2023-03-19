@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-export const ProjectsContainer = styled.div`
-  transition: 0.3s;
+export const ProjectsSection = styled.section`
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   gap: 2rem;
   padding: 2rem 0;
@@ -31,7 +31,7 @@ export const ProjectSection = styled.section`
 
   @media screen and (max-width: 600px) {
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 0.4rem;
   }
 `;
 
@@ -39,7 +39,7 @@ export const ProjectInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: 0.8rem;
+  gap: 1rem;
 
   a {
     font-size: var(--link-font-size);
@@ -52,7 +52,7 @@ export const ProjectInfo = styled.div`
   }
 
   @media screen and (max-width: 600px) {
-    gap: 0.4rem;
+    gap: 0.8rem;
   }
 `;
 

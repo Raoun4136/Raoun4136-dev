@@ -10,6 +10,7 @@ export default function Home({
     <Container>
       <Intro />
       <Projects />
+      <RecentPosts posts={documents.splice(0, 4)} />
     </Container>
   );
 }

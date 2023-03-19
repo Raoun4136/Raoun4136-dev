@@ -1,5 +1,5 @@
 import {
-  ProjectsContainer,
+  ProjectsSection,
   ProjectInnerContainer,
   ProjectSection,
   ProjectTitle,
@@ -43,7 +43,7 @@ const projectList: {
 ];
 const Projects = () => {
   return (
-    <ProjectsContainer>
+    <ProjectsSection>
       <h2>프로젝트</h2>
       <ProjectInnerContainer>
         {projectList.map((project, idx) => (
@@ -59,7 +59,7 @@ const Projects = () => {
           </ProjectSection>
         ))}
       </ProjectInnerContainer>
-    </ProjectsContainer>
+    </ProjectsSection>
   );
 };
 

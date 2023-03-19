@@ -1,14 +1,14 @@
 import { DocumentTypes } from 'contentlayer/generated';
-import { PostsContainer } from './PostList.style';
+import { PostsSection } from './PostList.style';
 import { Post } from 'components';
 
 const PostList = ({ posts }: { posts: DocumentTypes[] }) => {
   return (
-    <PostsContainer>
+    <PostsSection>
       {posts.map((post, idx) => (
         <Post post={post} key={idx} />
       ))}
-    </PostsContainer>
+    </PostsSection>
   );
 };
 

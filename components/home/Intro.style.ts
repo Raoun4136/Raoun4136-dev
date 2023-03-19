@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 
-export const IntroContainer = styled.div`
+export const IntroSection = styled.section`
   transition: 0.3s;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 3rem 0;
+  padding: 4rem 0;
   width: 100%;
-
+  align-items: flex-start;
   @media screen and (max-width: 600px) {
-    padding: 1rem 0;
+    padding: 2rem 0;
   } ;
 `;
 
@@ -21,7 +21,6 @@ export const IntroInnerContainer = styled.div`
 export const IntroTitle = styled.h1`
   font-size: var(--intro-font-size);
   font-weight: var(--intro-font-weight);
-  margin-top: 1rem;
 `;
 
 export const IntroDetail = styled.h2`

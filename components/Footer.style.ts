@@ -19,7 +19,10 @@ export const FooterInnerContainer = styled.div`
   }
 `;
 
-export const FooterInfoContainer = styled.div``;
+export const FooterInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const BlogInfo = styled.div`
   font-size: var(--logo-font-size);
@@ -29,15 +32,19 @@ export const BlogInfo = styled.div`
     font-size: var(--mobile-logo-font-size);
     font-weight: var(--mobile-logo-font-weight);
   }
+
+  @media screen and (max-width: 350px) {
+    font-size: var(--fold-logo-font-size);
+    font-weight: var(--fold-logo-font-weight);
+  }
 `;
 
 export const BlogLink = styled.a`
   font-size: var(--link-font-size);
   font-weight: var(--link-font-weight);
-  color: var(--text-base);
-  opacity: 0.6;
+  color: var(--text-base-90);
   &:hover {
-    opacity: 0.8;
+    color: var(--text-base);
     text-decoration: underline;
   }
 `;
@@ -47,6 +54,10 @@ export const BlogContantContainer = styled.div`
   flex: 1 1 0;
   gap: 0.6rem;
   justify-content: flex-end;
+
+  @media screen and (max-width: 480px) {
+    gap: 0.2rem;
+  }
 `;
 
 export const BlogContact = styled.a`

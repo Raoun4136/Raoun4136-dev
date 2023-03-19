@@ -279,6 +279,8 @@ body {
   --mdx-border: #2c3e5040;
   --mdx-icon-color: #2c3e5070;
   --mdx-icon-bg: #dfdfdf4d;
+  --post-shadow: #00000033;
+  --post-shadow-hover: #00000066;
 }
 
 body[data-theme='dark'] {
@@ -304,6 +306,8 @@ body[data-theme='dark'] {
   --mdx-border: #dfe2e535;
   --mdx-icon-color: #dfdfdf70;
   --mdx-icon-bg: #eeeefb20;
+  --post-shadow: #ffffff22;
+  --post-shadow-hover: #ffffff44;
 }
 
 body {
@@ -311,12 +315,14 @@ body {
   --logo-font-weight: 800;
   --mobile-logo-font-size: 1rem;
   --mobile-logo-font-weight: 600;
+  --fold-logo-font-size: 0.8rem;
+  --fold-logo-font-weight: 600;
   --nav-font-size: 1rem;
   --nav-font-weight: 500;
   --link-font-size: 0.8rem;
   --link-font-weight: 500;
   --intro-font-size: 1.2rem;
-  --intro-font-weight: 500;
+  --intro-font-weight: 600;
   --text-font-size: 1rem;
   --text-font-weight: 400;
 }

@@ -1,11 +1,7 @@
 import styled from '@emotion/styled';
 
-export const PostsContainer = styled.div`
-  transition: 0.3s;
+export const PostsSection = styled.section`
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 2rem 1rem;
-  width: 100%;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 1rem;
 `;
