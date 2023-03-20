@@ -259,7 +259,7 @@ body {
 /* variables */
 body {
   --bg: #fff;
-  --accent: #2f78bc;
+  --accent: #7d5fad;
   --shadow: #2c3e5015;
   --text-base: #000;
   --text-base-20: #2c3e5020;
@@ -286,7 +286,7 @@ body {
 body[data-theme='dark'] {
   --bg: rgb(23, 23, 23);
   --bg: #292929;
-  --accent: #2f78bc;
+  --accent: #8a6fb6;
   --shadow: #13161640;
   --text-base: #dfdfdf;
   --text-base-20: #dfdfdf20;

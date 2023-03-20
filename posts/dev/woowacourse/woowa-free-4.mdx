@@ -1,0 +1,49 @@
+---
+title: 우테코 프리코스 4주차
+description: 우테코 4주차 회고록 입니다.
+type: Dev
+date: 2022-11-22
+tags: ['javascript', 'github']
+---
+
+## 주의사항
+
+기능을 구현하기 전에 기능 목록을 만들기
+기능 단위로 커밋하기
+기능 요구 사항에 기재되지 않은 내용은 스스로 판단하여 구현한다.
+
+요구 사항에 명시된 출력값 형식을 지키자.
+npm test시 모든 테스트가 성공했는지 확인한다.
+
+node 14버전
+프로그램 종료 시 process.exit() 호출 X
+파일, 패키지 이름을 수정하거나 이동하지 않는다.
+
+JS Naming Conventions
+소스의 변수명, 클래스명 등에는 영문 이외의 언어를 사용하지 않습니다.
+클래스, 메서드 등의 이름에는 특수 문자를 사용하지 않습니다.
+상수명은 SNAKE_CASE로 작성합니다.
+
+## 이외의 Conventions 들은 AirbnbStyleGuide를 참고한다.
+
+---
+
+## 우아한테크코스 웹 프론트엔드 5기 프리코스 4주차 소감문
+
+- ### **[객체 분리 연습]**
+
+  - MVC 패턴을 적용해보기위해 먼저 BridgeGameController를 만들어 구현하기 시작했습니다. 실제로 제 커밋의 처음에는 controller가 있는 코드를 볼 수 있고, 그 다음 기능의 controller와 service를 구분하려 하자 같은 기능을 하는 중복되는 코드들이 많아졌습니다. 이는 코드의 가독성을 낮추고 작은 단위의 프로젝트 단위에선 굳이 필요하지 않다고 생각하여 controller부분을 빼고 BridgeGame 클라스를 모델로 사용하고 View(input/output)만 분리하여 개발하였습니다.
+  - 하지만 제출 날 BridgeGame에서 InputView를 사용하지 않는다는 것을 뒤늦게 알았고, 다시 Controller를 붙이기엔 시간이 너무 부족한 것을 깨달았습니다.
+
+- ### **[단위테스트]**
+
+  - 이번 과제에선 단위테스트를 도메인 로직으로 분리하는데 힘썼습니다. 먼저 공통 피드백으로 주었던 예외 처리 Test를 먼저 구현하였고, 조건들을 테스트 할 때, terminate condition이나 rightDirection인지 check하는 로직들을 분리하여 테스트코드를 구현했습니다.
+    예외문을 테스트 하기위해 InputView에서 try & catch를 하는 것이 아닌 BridgeGame과 BridgeMaker에서 try & catch를 함으로써 test를 하기위해 BridgeMaker의 인스턴스로 테스트를 할 수 있게 구현했습니다. 이는 View에서 validate를 넣는 것이 아니라 Controller라고 생각한 BridgeGame에서 validate를 해줌으로써 View를 분리하려는 노력을 했습니다.
+
+- ### **[함수의 10줄제한]**
+
+  - 함수의 길이를 10라인으로 줄인 경험은 기능 별로 함수를 나누는데 있어서 좋은 경험이였습니다. 특히나 map을 출력하는 printMap과 printResult에서는 Map을 2차원 배열로 만들어 Up과 Down을 구분했고 printResult에서 bridge와 stack을 받아온뒤 printMap을 다시 사용해서 출력하는 방식으로 한가지의 기능을 할 수 있는 함수로 빼기 위해 노력했습니다.
+
+- ### **[View에서의 비동기 프로그래밍]**
+
+  - MVC패턴에서는 View가 Model이나 Controller를 몰라야 했지만, View에서 Console.readLine을 받아오는 도중에 Controller에서 비동기로 처리되어 동기적으로 처리해줘야 했습니다. 하지만 BridgeGame에서 this를 넘겨줌으로써 View와 BridgeGame을 같이 동기적으로 처리하였습니다. 나중에서야 View에서 Controller로 보낼때 Promise나 async await을 적용하면 처리할 수 있다는 것을 깨달았고, 앞에서 말했듯 BridgeGame에서 InputView를 부르면 안됐지만, 마지막 과제라 더 성장한 코드를 보여줄 수 없는 것이 아쉽고 비동기 프로그래밍과 테스트코드에 대해 깊은 이해를 할 수 있어서 좋은 경험이였습니다.

@@ -1,16 +1,11 @@
 import styled from '@emotion/styled';
-import mq from 'styles/utils/mq';
 
 export const MDXDailyContainer = styled.div`
   position: relative;
   width: 100%;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.75;
   font-weight: 400;
-
-  ${mq({
-    maxWidth: ['100%', '100%', '100%'],
-  })}
 
   * {
     color: var(--text-base);
@@ -347,103 +342,19 @@ export const MDXDailyHead = styled.div`
   position: relative;
 `;
 
-export const ClipboardCopyBtn = styled.button`
-  position: relative;
-  display: block;
-  height: 38px;
-  width: 38px;
-  margin: 20px auto;
-  border-radius: 20%;
-  transition: all 0.1s ease;
-
-  svg {
-    fill: var(--mdx-icon-color);
-    width: 20px;
-    height: 38px;
-    transition: all 0.2s ease;
-  }
-
-  &:after {
-    content: 'copy';
-    position: absolute;
-    top: 50%;
-    left: calc(100% + 10px);
-    padding: 4px 8px 6px;
-    color: var(--bg);
-    font-size: 14px;
-    line-height: 1;
-    border-radius: 4px;
-    background: var(--text-base);
-    transform: translateY(-50%);
-    pointer-events: none;
-    opacity: 0;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    width: 0;
-    height: 0;
-    border-bottom: 4px solid transparent;
-    border-top: 4px solid transparent;
-    border-left: 4px solid transparent;
-    border-right: 6px solid var(--text-base);
-    transform: translateY(-50%);
-    pointer-events: none;
-    opacity: 0;
-    z-index: 10;
-  }
-
-  &:hover {
-    background: var(--mdx-icon-bg);
-    svg {
-      fill: var(--text-base);
-    }
-
-    &:before,
-    &:after {
-      opacity: 1;
-    }
-  }
-
-  &:active {
-    svg {
-      transform: scale(0.9);
-      fill: var(--accent);
-    }
-  }
-`;
-
 export const MDXDailyTitle = styled.h1`
-  font-size: 30px !important;
-  margin-top: 0 !important;
+  font-size: 2rem !important;
   word-break: keep-all;
   text-align: center;
-`;
-
-export const MDXDailyURL = styled.div`
-  margin-bottom: 14px;
-  text-align: center;
-  line-height: 2em;
-  color: var(--text-base);
-  a {
-    font-size: 14px;
-    &:hover {
-      opacity: 1;
-    }
-  }
 `;
 
 export const MDXDailyDate = styled.div`
-  margin-bottom: 14px;
-  font-size: 14px;
+  font-size: 1rem;
   text-align: center;
   word-break: keep-all;
-  opacity: 0.5;
+  color: var(--text-base-70);
 `;
 
 export const MDXDailyContent = styled.div`
-  margin-top: 36px;
+  margin-top: 3rem;
 `;

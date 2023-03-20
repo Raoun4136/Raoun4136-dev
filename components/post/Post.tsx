@@ -31,7 +31,7 @@ const Post = ({ post }: { post: DocumentTypes }) => {
         </PostInfo>
         <PostImg>
           <Image
-            src={`/posts/${post._raw.flattenedPath}/thumbnail.jpg`}
+            src={`/posts/${post._raw.flattenedPath}.jpg`}
             layout="fill"
             objectFit="cover"
             objectPosition="50% 50%"
