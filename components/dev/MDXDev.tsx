@@ -9,13 +9,7 @@ import {
 import { MDXDevProps } from 'lib/types';
 import type { PropsWithChildren } from 'react';
 import convertDateUs from 'lib/convertDateUs';
-const MDXDev = ({
-  title,
-  date,
-  children,
-  url,
-  path,
-}: PropsWithChildren<MDXDevProps>) => {
+const MDXDev = ({ title, date, children }: PropsWithChildren<MDXDevProps>) => {
   return (
     <MDXDevContainer>
       <MDXDevHead>

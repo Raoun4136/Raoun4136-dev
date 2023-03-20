@@ -13,8 +13,6 @@ const MDXDaily = ({
   title,
   date,
   children,
-  url,
-  path,
 }: PropsWithChildren<MDXDailyProps>) => {
   return (
     <MDXDailyContainer>

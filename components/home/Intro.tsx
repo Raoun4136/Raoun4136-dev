@@ -1,6 +1,5 @@
 import {
   IntroSection,
-  IntroInnerContainer,
   IntroTitle,
   IntroDetail,
   IntroButton,
