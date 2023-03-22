@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 //TODO: height 반응형으로 만들기
 export const PostCard = styled.div`
   width: 100%;
-  height: 10rem;
+  height: 9.5rem;
   position: relative;
   box-shadow: 0 0 0.2rem var(--post-shadow);
   border-radius: 0.5rem;
@@ -16,9 +16,9 @@ export const PostCard = styled.div`
     cursor: pointer;
     box-shadow: 0 0 0.4rem var(--post-shadow-hover);
 
-    span {
+    span img {
       transition: 0.2s;
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
   }
 
@@ -65,11 +65,16 @@ export const PostInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
+  padding-right: 0.5rem;
+
+  @media screen and (max-width: 600px) {
+    padding-right: 0;
+  }
 `;
 
 //TODO: height 반응형으로 만들기
 export const PostImg = styled.div`
-  width: 30%;
+  width: 13rem;
   height: 100%;
   position: relative;
   flex-shrink: 0;
