@@ -5,7 +5,7 @@ export const ParentContainer = styled.div``;
 export const Main = styled.main`
   padding: 1rem 1.5rem;
   justify-content: center;
-  align-text: center;
+  align-items: center;
   box-sizing: border-box;
 
   min-height: 100vh;

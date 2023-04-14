@@ -339,6 +339,7 @@ export const MDXDevContainer = styled.div`
 export const MDXDevSection = styled.section``;
 
 export const MDXDevHead = styled.div`
+  margin-top: 2rem;
   position: relative;
 `;
 

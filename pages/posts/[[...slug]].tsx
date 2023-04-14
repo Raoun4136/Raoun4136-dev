@@ -8,7 +8,7 @@ const PostPage = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container>
-      <PostHeader></PostHeader>
+      <PostHeader />
       <PostList posts={posts}></PostList>
     </Container>
   );
@@ -32,11 +32,16 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   let posts;
   if (params?.slug == 'all' || !params?.slug) {
-    posts = allDocuments;
-  } else {
-    posts = allDocuments.filter(
-      (post: { type: string }) => post.type.toLocaleLowerCase() == params?.slug
+    posts = allDocuments.sort(
+      (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
     );
+  } else {
+    posts = allDocuments
+      .filter(
+        (post: { type: string }) =>
+          post.type.toLocaleLowerCase() == params?.slug
+      )
+      .sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)));
   }
   return { props: { posts } };
 };

@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-//TODO: height 반응형으로 만들기
 export const PostCard = styled.div`
   width: 100%;
   height: 9.5rem;
@@ -72,7 +71,6 @@ export const PostInfo = styled.div`
   }
 `;
 
-//TODO: height 반응형으로 만들기
 export const PostImg = styled.div`
   width: 13rem;
   height: 100%;
@@ -103,4 +101,8 @@ export const PostData = styled.div`
   gap: 1rem;
 `;
 
-export const PostTitleSection = styled.section``;
+export const PostTitleSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
