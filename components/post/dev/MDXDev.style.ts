@@ -134,7 +134,7 @@ export const MDXDevContainer = styled.div`
     margin: 0.25rem 0;
     padding: 0 1rem;
     position: relative;
-    border-left: 3px solid var(--text-base-40);
+    border-left: 3px solid var(--text-base-50);
     & p {
       font-size: 16px;
       display: inline;
@@ -339,7 +339,7 @@ export const MDXDevContainer = styled.div`
 export const MDXDevSection = styled.section``;
 
 export const MDXDevHead = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
   position: relative;
 `;
 
@@ -358,4 +358,15 @@ export const MDXDevDate = styled.div`
 
 export const MDXDevContent = styled.div`
   margin-top: 3rem;
+`;
+
+export const MDXTags = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+`;
+
+export const MDXTag = styled.span`
+  color: var(--text-base-70);
+  font-weight: 300;
 `;

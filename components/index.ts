@@ -7,7 +7,6 @@ export { default as Container } from './Container';
 export { default as Menu } from './Menu';
 
 export * from './about';
-export * from './daily';
-export * from './dev';
+export * from './post/daily';
 export * from './home';
 export * from './post';

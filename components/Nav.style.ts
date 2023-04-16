@@ -8,8 +8,8 @@ export const NavContainer = styled.div`
     display: flex;
     gap: 2rem;
     opacity: 1;
-    font-size: var(--nav-font-size);
-    font-weight: var(--nav-font-weight);
+    font-size: 1rem;
+    font-weight: 500;
   }
   li {
     &:hover {

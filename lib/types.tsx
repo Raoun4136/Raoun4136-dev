@@ -11,6 +11,7 @@ export type MDXDevProps = {
   date?: string;
   url?: string;
   path?: string;
+  tags?: string[];
 };
 
 export type MDXDailyProps = {
@@ -18,4 +19,5 @@ export type MDXDailyProps = {
   date?: string;
   url?: string;
   path?: string;
+  tags?: string[];
 };

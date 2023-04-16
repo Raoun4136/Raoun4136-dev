@@ -25,6 +25,7 @@ const DailyLayout = ({ post }: { post: Daily }) => {
           title={post.title}
           date={post.date}
           path={`${metadata.meta.url}/daily/${post.slug}`}
+          tags={post.tags}
         >
           <MDXComponent />
         </MDXDaily>

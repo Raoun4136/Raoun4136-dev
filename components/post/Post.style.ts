@@ -37,26 +37,38 @@ export const PostCard = styled.div`
 `;
 
 export const PostDate = styled.p`
-  font-size: var(--link-font-size);
-  font-weight: var(--link-font-weight);
-  color: var(--text-base-90);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-base-70);
 `;
 
 export const PostType = styled.p`
-  font-size: var(--link-font-size);
-  font-weight: var(--link-font-weight);
-  color: var(--text-base-90);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-base-70);
 `;
 
 export const PostTitle = styled.h2`
-  font-size: var(--intro-font-size);
-  font-weight: var(--intro-font-weight);
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  @media screen and (max-width: 600px) {
+    padding-top: 0.2rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    font-size: 1rem;
+  }
 `;
 
 export const PostDesc = styled.h3`
-  font-size: var(--text-font-size);
-  font-weight: var(--text-font-weight);
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--text-base-90);
+
+  @media screen and (max-width: 400px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const PostInfo = styled.div`

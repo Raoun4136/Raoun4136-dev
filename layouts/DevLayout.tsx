@@ -1,9 +1,8 @@
 import { NextSeo } from 'next-seo';
-import Container from '../components/Container';
 import metadata from '../data/metadata';
-import { Dev } from 'contentlayer/generated';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import MDXDev from 'components/dev/MDXDev';
+import { Dev } from 'contentlayer/generated';
+import { Container, MDXDev } from 'components';
 
 const DevLayout = ({ post }: { post: Dev }) => {
   const MDXComponent = useMDXComponent(post.body.code);
@@ -26,6 +25,7 @@ const DevLayout = ({ post }: { post: Dev }) => {
           title={post.title}
           date={post.date}
           path={`${metadata.meta.url}/blog/${post.slug}`}
+          tags={post.tags}
         >
           <MDXComponent />
         </MDXDev>

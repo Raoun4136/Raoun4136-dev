@@ -9,8 +9,8 @@ export const ProjectsSection = styled.section`
   justify-content: center;
 
   > h2 {
-    font-size: var(--intro-font-size);
-    font-weight: var(--intro-font-weight);
+    font-size: 1.2rem;
+    font-weight: 700;
   }
 `;
 
@@ -42,9 +42,9 @@ export const ProjectInfo = styled.div`
   gap: 1rem;
 
   a {
-    font-size: var(--link-font-size);
-    font-weight: var(--link-font-weight);
-    color: var(--text-base-90);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--text-base-70);
     text-decoration: underline;
   }
   a:hover {
@@ -63,17 +63,19 @@ export const ProjectInfoTitle = styled.div`
   align-items: flex-end;
 `;
 
-export const ProjectTitle = styled.h2``;
+export const ProjectTitle = styled.h2`
+  font-weight: 600;
+`;
 
 export const ProjectDesc = styled.h3`
   width: 100%;
-  color: var(--text-base-90);
+  color: var(--text-base-70);
 `;
 
 export const ProjectDate = styled.h3`
   width: 15rem;
   flex-shrink: 0;
-  color: var(--text-base-90);
+  color: var(--text-base-70);
 `;
 
 export const ProjectImg = styled.div`

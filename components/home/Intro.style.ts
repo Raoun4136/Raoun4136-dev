@@ -14,20 +14,20 @@ export const IntroSection = styled.section`
 `;
 
 export const IntroTitle = styled.h1`
-  font-size: var(--intro-font-size);
-  font-weight: var(--intro-font-weight);
+  font-size: 1.2rem;
+  font-weight: 700;
 `;
 
 export const IntroDetail = styled.h2`
-  font-size: var(--text-font-size);
-  font-weight: var(--text-font-weight);
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--text-base-90);
   margin-top: 0.5rem;
 `;
 
 export const IntroButton = styled.button`
-  font-size: var(--link-font-size);
-  font-weight: var(--link-font-weight);
+  font-size: 0.8rem;
+  font-weight: 400;
   color: var(--text-base-70);
   border: none;
   padding: 0;

@@ -258,15 +258,14 @@ body {
 
 /* variables */
 body {
-  --bg: rgb(23, 23, 23);
   --bg: #292929;
   --accent: #8a6fb6;
   --shadow: #13161640;
-  --text-base: #dfdfdf;
-  --text-base-20: #dfdfdf20;
-  --text-base-40: #dfdfdf40;
-  --text-base-70: #dfdfdf70;
-  --text-base-90: #dfdfdf90;
+  --text-base: rgb(223, 223, 223);
+  --text-base-30: rgba(223, 223, 223, 0.3);
+  --text-base-50: rgba(223, 223, 223, 0.5);
+  --text-base-70: rgba(223, 223, 223, 0.7);
+  --text-base-90: rgba(223, 223, 223, 0.9);
   --icon-color: #ffffff20;
   --border-color: #ffffff16;
   --hover-base: #232323;
@@ -276,7 +275,7 @@ body {
   --toggle-border: #eeeefb20;
   --code-block: #232323;
   --card-bg: #212121;
-  --card-border: var(--text-base-40);
+  --card-border: var(--text-base-50);
   --mdx-border: #dfe2e535;
   --mdx-icon-color: #dfdfdf70;
   --mdx-icon-bg: #eeeefb20;
@@ -285,14 +284,14 @@ body {
 }
 
 body[data-theme='light'] {
-  --bg: #fff;
+  --bg: #f1ede980;
   --accent: #7d5fad;
   --shadow: #2c3e5015;
-  --text-base: #000;
-  --text-base-20: #2c3e5020;
-  --text-base-40: #2c3e5040;
-  --text-base-70: #2c3e5070;
-  --text-base-90: #2c3e5090;
+  --text-base: rgb(44, 62, 80);
+  --text-base-30: rgba(44, 62, 80, 0.3);
+  --text-base-50: rgba(44, 62, 80, 0.5);
+  --text-base-70: rgba(44, 62, 80, 0.7);
+  --text-base-90: rgba(44, 62, 80, 0.9);
   --icon-color: #2c3e5070;
   --border-color: #00000016;
   --hover-base: #edf1f38a;
@@ -308,25 +307,6 @@ body[data-theme='light'] {
   --mdx-icon-bg: #dfdfdf4d;
   --post-shadow: #00000033;
   --post-shadow-hover: #00000066;
-}
-
-body {
-  --logo-font-size: 1.4rem;
-  --logo-font-weight: 800;
-  --mobile-logo-font-size: 1rem;
-  --mobile-logo-font-weight: 600;
-  --fold-logo-font-size: 0.8rem;
-  --fold-logo-font-weight: 600;
-  --nav-font-size: 1rem;
-  --nav-font-weight: 500;
-  --link-font-size: 0.8rem;
-  --link-font-weight: 500;
-  --intro-font-size: 1.2rem;
-  --intro-font-weight: 600;
-  --text-font-size: 1rem;
-  --text-font-weight: 400;
-  --header-font-size: 1.6rem;
-  --header-font-weight: 600;
 }
 
 /* custom scroll-bar */

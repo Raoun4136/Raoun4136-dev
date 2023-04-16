@@ -16,19 +16,19 @@ export const ProfileDesc = styled.div`
 `;
 
 export const ProfileTitle = styled.h1`
-  font-size: var(--logo-font-size);
-  font-weight: var(--logo-font-weight);
+  font-size: 1.4rem;
+  font-weight: 800;
 `;
 
 export const ProfileMainDesc = styled.h2`
-  font-size: var(--text-font-size);
-  font-weight: var(--text-font-weight);
+  font-size: 1rem;
+  font-weight: 400;
   margin-top: 0.5rem;
 `;
 
 export const ProfileSubDesc = styled.h3`
-  font-size: var(--link-font-size);
-  font-weight: var(--link-font-weight);
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--text-base-90);
 `;
 

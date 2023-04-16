@@ -18,13 +18,13 @@ export const RecentHeader = styled.div`
 `;
 
 export const RecentTitle = styled.h2`
-  font-size: var(--intro-font-size);
-  font-weight: var(--intro-font-weight);
+  font-size: 1.2rem;
+  font-weight: 600;
 `;
 
 export const RecentMore = styled.span`
-  font-size: var(--link-font-size);
-  font-weight: var(--link-font-weight);
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--text-base-90);
   text-decoration: underline;
 

@@ -22,8 +22,8 @@ export const HeaderContainer = styled.header`
 export const InnerHeader = styled.div``;
 
 export const HeaderLogo = styled.h1`
-  font-weight: var(--logo-font-weight);
-  font-size: var(--logo-font-size);
+  font-weight: 800;
+  font-size: 1.4rem;
   &:hover {
     cursor: pointer;
     color: var(--accent);

@@ -13,25 +13,25 @@ export const AboutHeaderSection = styled.section`
 `;
 
 export const AboutHeaderWelcome = styled.div`
-  font-size: var(--logo-font-size);
-  font-weight: var(--text-font-weight);
+  font-size: 1.4rem;
+  font-weight: 400;
 
   @media screen and (max-width: 600px) {
-    font-size: var(--logo-font-size);
-    font-weight: var(--text-font-weight);
+    font-size: 1.4rem;
+    font-weight: 400;
   }
 `;
 
 export const AboutHeaderTitle = styled.div`
-  font-size: var(--header-font-size);
-  font-weight: var(--header-font-weight);
+  font-size: 1.6rem;
+  font-weight: 600;
 
   span {
     color: var(--accent);
   }
 
   @media screen and (max-width: 600px) {
-    font-size: var(--logo-font-size);
-    font-weight: var(--mobile-logo-font-weight);
+    font-size: 1.4rem;
+    font-weight: 600;
   }
 `;

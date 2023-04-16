@@ -25,23 +25,23 @@ export const FooterInfoContainer = styled.div`
 `;
 
 export const BlogInfo = styled.div`
-  font-size: var(--logo-font-size);
-  font-weight: var(--logo-font-weight);
+  font-size: 1.4rem;
+  font-weight: 800;
 
   @media screen and (max-width: 480px) {
-    font-size: var(--mobile-logo-font-size);
-    font-weight: var(--mobile-logo-font-weight);
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   @media screen and (max-width: 350px) {
-    font-size: var(--fold-logo-font-size);
-    font-weight: var(--fold-logo-font-weight);
+    font-size: 0.8rem;
+    font-weight: 600;
   }
 `;
 
 export const BlogLink = styled.a`
-  font-size: var(--link-font-size);
-  font-weight: var(--link-font-weight);
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--text-base-90);
   &:hover {
     color: var(--text-base);
@@ -62,13 +62,12 @@ export const BlogContantContainer = styled.div`
 
 export const BlogContact = styled.a`
   svg {
-    width:30px;
+    width: 30px;
     height: 30px;
     stroke: var(--text-base);
-    &:hover{
+    &:hover {
       stroke: var(--accent);
     }
     transition: 0.3s;
   }
-
-}`;
+`;
