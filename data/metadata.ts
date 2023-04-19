@@ -3,13 +3,13 @@ const metadata = {
   meta: {
     url: 'https://raoun4136-dev.vercel.app/',
     title: 'Raoun4136 | Developer',
-    description: '해버려',
+    description: 'Give it a shot',
   },
   author: 'Raoun4136',
   home: {
     name: '박성오 | Raoun',
     description: '프론트 개발자가 되기위해 노력중입니다.',
-    subDescription: '해버려',
+    subDescription: '뭐든지 해보는게 취미',
     image: '/home/profile.jpg',
   },
   social: {

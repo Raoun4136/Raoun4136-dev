@@ -29,7 +29,7 @@ export const ProfileMainDesc = styled.h2`
 export const ProfileSubDesc = styled.h3`
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--text-base-90);
+  color: var(--text-base-70);
 `;
 
 export const ProfileImage = styled.div`
