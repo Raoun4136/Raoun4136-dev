@@ -8,5 +8,7 @@ export { default as Menu } from './Menu';
 
 export * from './about';
 export * from './post/daily';
+export * from './post/dev';
 export * from './home';
 export * from './post';
+export * from './404';

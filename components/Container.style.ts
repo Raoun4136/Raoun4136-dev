@@ -8,13 +8,17 @@ export const Main = styled.main`
   align-items: center;
   box-sizing: border-box;
 
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem - 7rem);
 
   .contents {
     display: block;
     width: 100%;
     max-width: 768px;
     margin: 0 auto;
+  }
+
+  @media screen and (max-width: 480px) {
+    min-height: calc(100vh - 4rem - 5rem);
   }
 `;
 
