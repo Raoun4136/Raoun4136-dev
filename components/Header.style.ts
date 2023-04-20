@@ -11,7 +11,6 @@ export const HeaderContainer = styled.header`
   background-color: var(--header-bg);
 
   .open {
-    height: 15rem;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -24,10 +23,17 @@ export const InnerHeader = styled.div``;
 export const HeaderLogo = styled.h1`
   font-weight: 800;
   font-size: 1.4rem;
-  &:hover {
+  white-space: nowrap;
+  :hover {
     cursor: pointer;
     color: var(--accent);
     transition: 0.3s;
+    span {
+      color: var(--text-base);
+    }
+  }
+  span {
+    color: var(--accent);
   }
 `;
 
@@ -39,7 +45,6 @@ export const MobileHeader = styled.div`
   display: none;
   flex-direction: row;
   justify-content: space-between;
-  height: 2rem;
   margin: 0 auto;
   align-items: center;
   @media screen and (max-width: 600px) {

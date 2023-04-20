@@ -18,6 +18,13 @@ const Post = ({ post }: { post: DocumentTypes }) => {
   return (
     <Link href={`../${post._raw.flattenedPath}`}>
       <PostCard>
+        <PostImg>
+          <Image
+            src={`/posts/${post._raw.flattenedPath}.jpg`}
+            layout="fill"
+            className="autoImage"
+          ></Image>
+        </PostImg>
         <PostInfo>
           <PostTitleSection>
             <PostTitle>{post.title}</PostTitle>
@@ -29,14 +36,6 @@ const Post = ({ post }: { post: DocumentTypes }) => {
             <PostType>{post.type}</PostType>
           </PostData>
         </PostInfo>
-        <PostImg>
-          <Image
-            src={`/posts/${post._raw.flattenedPath}.jpg`}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="50% 50%"
-          ></Image>
-        </PostImg>
       </PostCard>
     </Link>
   );

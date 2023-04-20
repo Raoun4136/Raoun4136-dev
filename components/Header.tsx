@@ -17,7 +17,9 @@ const Header = () => {
     <HeaderContainer>
       <DesktopHeader>
         <Link href="/">
-          <HeaderLogo>Raoun.dev</HeaderLogo>
+          <HeaderLogo>
+            <span>//</span> Raoun<span>.</span>dev
+          </HeaderLogo>
         </Link>
         <Nav />
         <IconContainer>

@@ -15,28 +15,25 @@ export const FooterInnerContainer = styled.div`
   margin: 0 auto;
 
   @media screen and (max-width: 480px) {
-    height: 3rem;
+    max-width: 252px;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
   }
 `;
 
 export const FooterInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 480px) {
+    text-align: center;
+  }
 `;
 
 export const BlogInfo = styled.div`
   font-size: 1.4rem;
   font-weight: 800;
-
-  @media screen and (max-width: 480px) {
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  @media screen and (max-width: 350px) {
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
 `;
 
 export const BlogLink = styled.a`
@@ -56,7 +53,8 @@ export const BlogContantContainer = styled.div`
   justify-content: flex-end;
 
   @media screen and (max-width: 480px) {
-    gap: 0.2rem;
+    width: 100%;
+    justify-content: center;
   }
 `;
 

@@ -2,18 +2,14 @@ import styled from '@emotion/styled';
 
 export const PostCard = styled.div`
   width: 100%;
-  height: 9.5rem;
   position: relative;
-  box-shadow: 0 0 0.2rem var(--post-shadow);
-  border-radius: 0.5rem;
   display: flex;
   flex-direction: row;
-  padding: 1rem 1.5rem;
-  justify-content: space-between;
+  justify-content: start;
+  gap: 2rem;
 
-  &:hover {
+  :hover {
     cursor: pointer;
-    box-shadow: 0 0 0.4rem var(--post-shadow-hover);
 
     span img {
       transition: 0.2s;
@@ -21,18 +17,9 @@ export const PostCard = styled.div`
     }
   }
 
-  @media screen and (max-width: 600px) {
-    padding: 1rem;
-    height: 20rem;
-    flex-direction: column-reverse;
-  }
-
-  @media screen and (max-width: 400px) {
-    height: 18rem;
-  }
-
-  @media screen and (max-width: 300px) {
-    height: 16rem;
+  @media screen and (max-width: 768px) {
+    gap: 0rem;
+    flex-direction: column;
   }
 `;
 
@@ -49,26 +36,14 @@ export const PostType = styled.p`
 `;
 
 export const PostTitle = styled.h2`
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
-
-  @media screen and (max-width: 600px) {
-    padding-top: 0.2rem;
-  }
-
-  @media screen and (max-width: 400px) {
-    font-size: 1rem;
-  }
 `;
 
 export const PostDesc = styled.h3`
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 400;
   color: var(--text-base-90);
-
-  @media screen and (max-width: 400px) {
-    font-size: 0.8rem;
-  }
 `;
 
 export const PostInfo = styled.div`
@@ -76,34 +51,41 @@ export const PostInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
-  padding-right: 0.5rem;
+  padding: 0.8rem 0;
 
-  @media screen and (max-width: 600px) {
-    padding-right: 0;
+  @media screen and (max-width: 768px) {
+    gap: 0.5rem;
+    flex-direction: column;
+  }
+
+  @media screen and (max-width: 270px) {
+    display: none;
   }
 `;
 
 export const PostImg = styled.div`
-  width: 13rem;
-  height: 100%;
+  width: 14rem;
+  height: 9rem;
   position: relative;
   flex-shrink: 0;
-
-  img {
-    border-radius: 0.5rem;
+  & > span {
+    border-radius: 0.6rem;
+    & .autoImage {
+      object-fit: cover !important;
+      position: relative !important;
+      height: auto !important;
+    }
   }
-
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 768px) {
     width: 100%;
-    height: 12rem;
-  }
+    height: inherit;
 
-  @media screen and (max-width: 400px) {
-    height: 10rem;
-  }
-
-  @media screen and (max-width: 300px) {
-    height: 6rem;
+    & > span {
+      position: unset !important;
+      & .autoImage {
+        object-fit: contain !important;
+      }
+    }
   }
 `;
 
@@ -116,5 +98,5 @@ export const PostData = styled.div`
 export const PostTitleSection = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 `;
