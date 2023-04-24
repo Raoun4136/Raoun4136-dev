@@ -9,7 +9,7 @@ export const MDXContainer = styled.div`
 
   * {
     color: var(--text-base);
-    font-size: 17px;
+    font-size: 16px;
     line-height: 2;
 
     &::selection {
@@ -339,19 +339,28 @@ export const MDXContainer = styled.div`
 export const MDXSection = styled.section``;
 
 export const MDXHead = styled.div`
-  margin-top: 1rem;
+  margin-top: 3rem;
   position: relative;
+
+  @media screen and (max-width: 600px) {
+    margin-top: 1rem;
+  }
+`;
+export const MDXInnerHead = styled.div`
+  width: max-content;
+  margin: 0 auto;
 `;
 
 export const MDXTitle = styled.h1`
+  margin: 0 !important;
   font-size: 2rem !important;
   word-break: keep-all;
-  text-align: center;
+  text-align: start;
 `;
 
 export const MDXDate = styled.div`
-  font-size: 1rem;
-  text-align: center;
+  font-size: 0.8rem;
+  text-align: start;
   word-break: keep-all;
   color: var(--text-base-70);
 `;
@@ -362,11 +371,11 @@ export const MDXContent = styled.div`
 
 export const MDXTags = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   gap: 8px;
 `;
 
 export const MDXTag = styled.span`
-  color: var(--text-base-70);
-  font-weight: 300;
+  color: var(--text-base-90);
+  font-weight: 400;
 `;

@@ -1,6 +1,7 @@
 import {
   MDXContainer,
   MDXHead,
+  MDXInnerHead,
   MDXSection,
   MDXDate,
   MDXTitle,
@@ -20,15 +21,17 @@ const MDXDaily = ({
   return (
     <MDXContainer>
       <MDXHead>
-        {date && <MDXDate>{convertDateUs(date)}</MDXDate>}
-        <MDXTitle>{title}</MDXTitle>
-        {tags && (
-          <MDXTags>
-            {tags.map((tag) => (
-              <MDXTag>{tag}</MDXTag>
-            ))}
-          </MDXTags>
-        )}
+        <MDXInnerHead>
+          {tags && (
+            <MDXTags>
+              {tags.map((tag) => (
+                <MDXTag>{`#${tag}`}</MDXTag>
+              ))}
+            </MDXTags>
+          )}
+          <MDXTitle>{title}</MDXTitle>
+          {date && <MDXDate>{convertDateUs(date)}</MDXDate>}
+        </MDXInnerHead>
       </MDXHead>
       <MDXSection>
         <MDXContent>{children}</MDXContent>

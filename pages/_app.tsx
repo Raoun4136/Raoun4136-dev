@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 import * as gtag from '../lib/gtag';
 
@@ -45,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
       />
       <DefaultSeo {...SEO} />
       <Component {...pageProps} />
+      <Analytics />
     </>
   );
 }

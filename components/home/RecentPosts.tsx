@@ -24,7 +24,7 @@ const RecentPosts = ({ posts }: { posts: DocumentTypes[] }) => {
           <RecentHeader>
             <RecentTitle>최근 포스트</RecentTitle>
             <RecentMore>
-              <Link href="/posts">더보기</Link>
+              <Link href="/posts/all">더보기</Link>
             </RecentMore>
           </RecentHeader>
           <PostList posts={posts} />
