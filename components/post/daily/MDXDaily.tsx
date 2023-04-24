@@ -1,13 +1,13 @@
 import {
-  MDXDailyContainer,
-  MDXDailyHead,
-  MDXDailySection,
-  MDXDailyDate,
-  MDXDailyTitle,
-  MDXDailyContent,
+  MDXContainer,
+  MDXHead,
+  MDXSection,
+  MDXDate,
+  MDXTitle,
+  MDXContent,
   MDXTags,
   MDXTag,
-} from './MDXDaily.style';
+} from '../MDX.style';
 import { MDXDailyProps } from 'lib/types';
 import type { PropsWithChildren } from 'react';
 import convertDateUs from 'lib/convertDateUs';
@@ -18,10 +18,10 @@ const MDXDaily = ({
   tags,
 }: PropsWithChildren<MDXDailyProps>) => {
   return (
-    <MDXDailyContainer>
-      <MDXDailyHead>
-        {date && <MDXDailyDate>{convertDateUs(date)}</MDXDailyDate>}
-        <MDXDailyTitle>{title}</MDXDailyTitle>
+    <MDXContainer>
+      <MDXHead>
+        {date && <MDXDate>{convertDateUs(date)}</MDXDate>}
+        <MDXTitle>{title}</MDXTitle>
         {tags && (
           <MDXTags>
             {tags.map((tag) => (
@@ -29,11 +29,11 @@ const MDXDaily = ({
             ))}
           </MDXTags>
         )}
-      </MDXDailyHead>
-      <MDXDailySection>
-        <MDXDailyContent>{children}</MDXDailyContent>
-      </MDXDailySection>
-    </MDXDailyContainer>
+      </MDXHead>
+      <MDXSection>
+        <MDXContent>{children}</MDXContent>
+      </MDXSection>
+    </MDXContainer>
   );
 };
 

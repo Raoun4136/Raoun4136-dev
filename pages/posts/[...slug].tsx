@@ -2,8 +2,7 @@ import { Container, PostList, PostHeader } from 'components';
 import { allDocuments } from 'contentlayer/generated';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
 
-//TODO: slug말고 query로 받아서 필터링하기
-const PostPage = ({
+const PostsPage = ({
   posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
@@ -22,7 +21,6 @@ export const getStaticPaths = async () => {
     params: { slug: [type] },
   }));
   paths.push({ params: { slug: ['all'] } }); //all object
-  paths.push({ params: { slug: [''] } }); //empty object
   return {
     paths,
     fallback: false,
@@ -43,7 +41,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       )
       .sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)));
   }
+
   return { props: { posts } };
 };
 
-export default PostPage;
+export default PostsPage;

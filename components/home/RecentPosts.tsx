@@ -15,7 +15,6 @@ const RecentPosts = ({ posts }: { posts: DocumentTypes[] }) => {
   const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => {
     setMounted(true);
-    console.log(posts);
   }, []);
 
   return (

@@ -287,11 +287,11 @@ body[data-theme='light'] {
   --bg: #f1ede980;
   --accent: #7d5fad;
   --shadow: #2c3e5015;
-  --text-base: rgb(44, 62, 80);
-  --text-base-30: rgba(44, 62, 80, 0.3);
-  --text-base-50: rgba(44, 62, 80, 0.5);
-  --text-base-70: rgba(44, 62, 80, 0.7);
-  --text-base-90: rgba(44, 62, 80, 0.9);
+  --text-base: rgb(51, 51, 51);
+  --text-base-30: rgba(51, 51, 51, 0.3);
+  --text-base-50: rgba(51, 51, 51, 0.5);
+  --text-base-70: rgba(51, 51, 51, 0.7);
+  --text-base-90: rgba(51, 51, 51, 0.9);
   --icon-color: #2c3e5070;
   --border-color: #00000016;
   --hover-base: #edf1f38a;

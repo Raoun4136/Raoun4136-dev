@@ -15,6 +15,11 @@ export const PostCard = styled.div`
       transition: 0.2s;
       transform: scale(1.1);
     }
+
+    h2 {
+      transition: 0.2s;
+      color: var(--accent);
+    }
   }
 
   @media screen and (max-width: 768px) {

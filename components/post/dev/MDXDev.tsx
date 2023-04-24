@@ -1,13 +1,13 @@
 import {
-  MDXDevContainer,
-  MDXDevHead,
-  MDXDevSection,
-  MDXDevDate,
-  MDXDevTitle,
-  MDXDevContent,
+  MDXContainer,
+  MDXHead,
+  MDXSection,
+  MDXDate,
+  MDXTitle,
+  MDXContent,
   MDXTags,
   MDXTag,
-} from './MDXDev.style';
+} from '../MDX.style';
 import { MDXDevProps } from 'lib/types';
 import type { PropsWithChildren } from 'react';
 import convertDateUs from 'lib/convertDateUs';
@@ -18,10 +18,10 @@ const MDXDev = ({
   tags,
 }: PropsWithChildren<MDXDevProps>) => {
   return (
-    <MDXDevContainer>
-      <MDXDevHead>
-        {date && <MDXDevDate>{convertDateUs(date)}</MDXDevDate>}
-        <MDXDevTitle>{title}</MDXDevTitle>
+    <MDXContainer>
+      <MDXHead>
+        {date && <MDXDate>{convertDateUs(date)}</MDXDate>}
+        <MDXTitle>{title}</MDXTitle>
         {tags && (
           <MDXTags>
             {tags.map((tag) => (
@@ -29,11 +29,11 @@ const MDXDev = ({
             ))}
           </MDXTags>
         )}
-      </MDXDevHead>
-      <MDXDevSection>
-        <MDXDevContent>{children}</MDXDevContent>
-      </MDXDevSection>
-    </MDXDevContainer>
+      </MDXHead>
+      <MDXSection>
+        <MDXContent>{children}</MDXContent>
+      </MDXSection>
+    </MDXContainer>
   );
 };
 

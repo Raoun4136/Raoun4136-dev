@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const MDXDailyContainer = styled.div`
+export const MDXContainer = styled.div`
   position: relative;
   width: 100%;
   font-size: 1rem;
@@ -33,21 +33,21 @@ export const MDXDailyContainer = styled.div`
 
   h1 {
     font-size: 28px;
-    font-weight: 500;
+    font-weight: 800;
     margin: 32px 0 0;
     line-height: 1.57em;
   }
 
   h2 {
     font-size: 26px;
-    font-weight: 500;
+    font-weight: 700;
     margin: 32px 0 8px;
     line-height: 1.57em;
   }
 
   h3 {
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 600;
     margin: 20px 0 8px;
     line-height: 1.57em;
   }
@@ -74,7 +74,7 @@ export const MDXDailyContainer = styled.div`
   }
 
   strong {
-    font-weight: 600;
+    font-weight: 700;
   }
 
   code {
@@ -336,27 +336,27 @@ export const MDXDailyContainer = styled.div`
   }
 `;
 
-export const MDXDailySection = styled.section``;
+export const MDXSection = styled.section``;
 
-export const MDXDailyHead = styled.div`
+export const MDXHead = styled.div`
   margin-top: 1rem;
   position: relative;
 `;
 
-export const MDXDailyTitle = styled.h1`
+export const MDXTitle = styled.h1`
   font-size: 2rem !important;
   word-break: keep-all;
   text-align: center;
 `;
 
-export const MDXDailyDate = styled.div`
+export const MDXDate = styled.div`
   font-size: 1rem;
   text-align: center;
   word-break: keep-all;
   color: var(--text-base-70);
 `;
 
-export const MDXDailyContent = styled.div`
+export const MDXContent = styled.div`
   margin-top: 3rem;
 `;
 
