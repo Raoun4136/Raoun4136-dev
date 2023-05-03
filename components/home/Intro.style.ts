@@ -15,7 +15,7 @@ export const IntroSection = styled.section`
 
 export const IntroTitle = styled.h1`
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 800;
 `;
 
 export const IntroDetail = styled.h2`

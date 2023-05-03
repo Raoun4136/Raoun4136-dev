@@ -7,7 +7,6 @@ export const PostHeaderSection = styled.section`
   padding: 3rem 0 1rem 0;
   .active {
     color: var(--accent);
-    font-weight: 800;
   }
 
   @media screen and (max-width: 600px) {
@@ -17,7 +16,7 @@ export const PostHeaderSection = styled.section`
 
 export const PostHeaderTitle = styled.div`
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 800;
 
   span {
     color: var(--accent);
@@ -25,7 +24,7 @@ export const PostHeaderTitle = styled.div`
 
   @media screen and (max-width: 600px) {
     font-size: 1.4rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 `;
 

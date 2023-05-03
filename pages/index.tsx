@@ -10,7 +10,7 @@ export default function Home({
     <Container>
       <Intro />
       <Projects />
-      <RecentPosts posts={documents.slice(0, 4)} />
+      <RecentPosts posts={documents.slice(0, 1)} />
     </Container>
   );
 }

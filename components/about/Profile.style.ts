@@ -17,7 +17,7 @@ export const ProfileDesc = styled.div`
 
 export const ProfileTitle = styled.h1`
   font-size: 1.4rem;
-  font-weight: 800;
+  font-weight: 700;
 `;
 
 export const ProfileMainDesc = styled.h2`

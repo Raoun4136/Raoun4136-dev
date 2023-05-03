@@ -17,9 +17,7 @@ const PostHeader = () => {
           <Link href="/posts/all">
             <a
               className={
-                router.asPath.includes('posts/all') || router.asPath == '/posts'
-                  ? 'active'
-                  : 'nonActive'
+                router.asPath.includes('/all') ? 'active' : 'nonActive'
               }
             >
               All

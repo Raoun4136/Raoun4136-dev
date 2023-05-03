@@ -347,8 +347,9 @@ export const MDXHead = styled.div`
   }
 `;
 export const MDXInnerHead = styled.div`
-  width: max-content;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const MDXTitle = styled.h1`
@@ -371,6 +372,7 @@ export const MDXContent = styled.div`
 
 export const MDXTags = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: start;
   gap: 8px;
 `;

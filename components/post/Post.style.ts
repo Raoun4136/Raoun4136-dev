@@ -42,7 +42,7 @@ export const PostType = styled.p`
 
 export const PostTitle = styled.h2`
   font-size: 1.3rem;
-  font-weight: 600;
+  font-weight: 700;
 `;
 
 export const PostDesc = styled.h3`

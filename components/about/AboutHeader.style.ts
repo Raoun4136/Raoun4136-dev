@@ -24,7 +24,7 @@ export const AboutHeaderWelcome = styled.div`
 
 export const AboutHeaderTitle = styled.div`
   font-size: 1.6rem;
-  font-weight: 600;
+  font-weight: 800;
 
   span {
     color: var(--accent);
@@ -32,6 +32,6 @@ export const AboutHeaderTitle = styled.div`
 
   @media screen and (max-width: 600px) {
     font-size: 1.4rem;
-    font-weight: 600;
+    font-weight: 700;
   }
 `;

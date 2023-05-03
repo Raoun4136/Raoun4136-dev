@@ -1,0 +1,346 @@
+---
+title: TellingMe 디자인 시스템 구축하기
+description: theme과 기본 styled-components 만들어서 적용해보자
+type: Dev
+date: 2023-05-02
+tags: ['tellingme', 'react', 'typescript']
+---
+
+## 앞서
+
+스타일 작업들에 대한 코드가 잘 짜여있다면, 각각의 컴포넌트 스타일 코드가 길어짐을 방지하고 코드를 읽기 쉬워진다. 덤으로 유지보수까지 쉬워질 것이다.
+
+하지만 개인프로젝트나 학교 내 작은 프로젝트를 할 경우에는 디자이너가 없어 마땅히 관리할 스타일이 없었는데, 이번 텔링미 프로젝트에 뛰어난 디자이너가 있어 디자인 시스템과 그에 따른 최적화된 스타일 시스템을 구축해보기로 결정했다.
+
+협업도 해야했기에 디자인 가이드가 제대로 구축되어 있다면 협업도 쉽게 할 수 있겠다는 생각이었다.
+
+### 목표
+
+1. 텔링미 프로젝트 내에서 스타일 가이드를 벗어나는 텍스트나 테마가 없게 한다.
+2. 중복된 `css`코드를 없애고 한줄로 적용가능한 코드를 만든다.
+3. 다른 개발자가 보기에 사용하기 편하고 수정,확장 가능한 코드를 만든다.
+
+## ThemeProvider로 스타일 환경 구축하기
+
+`styled-components`의 `ThemeProvider`는 React 어플리케이션에서 일관된 디자인 시스템을 구축하는데 도움을 주는 도구이다.
+이를 사용하면 어플리케이션의 모든 컴포넌트에서 일관된 디자인 스타일을 적용할 수 있는데, 이에 따른 장점들이 있다.
+
+### 1. 유지 보수성
+
+- 테마를 사용하여 스타일을 관리하면, 스타일의 변경이 필요한 경우에 모든 컴포넌트에서 직접 변경할 필요가 없다. 테마 내에서 스타일을 수정하면 모든 컴포넌트에 자동으로 적용되므로 유지 보수가 편리하다.
+
+### 2. 쉬운 사용성
+
+- 스타일을 적용하는 데 필요한 코드 양이 줄어든다. 기존의 CSS 작성 방식보다 훨씬 직관적이고 간편하게 스타일을 적용할 수 있으며 컴포넌트의 스타일을 동적으로 변경하기 쉬우므로 사용자 지정 테마를 적용하는 것도 간단하다.
+
+### 사용방법
+
+사용방법은 간단하다. 아래와 같이 `ThemeProvider`를 적용하고자 하는 `App`을 감싸면된다.
+
+```typescript
+// style
+import { ThemeProvider } from 'styled-components';
+import { Theme } from './styles/DefaultTheme';
+
+// 테마를 적용할 App 렌더링
+root.render(
+  <ThemeProvider theme={Theme}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ThemeProvider>
+);
+```
+
+### 적용기
+
+텔링미의 디자인 스타일가이드대로 `color`,`shadow`,`gradient`,`font` 들을 모아놓은 Theme을 생성한다.
+
+```typescript
+// 밑에서 쓰일 theme import
+import typo,font,shadow, ... from './ ... '
+
+const Theme: DefaultTheme = {
+  colors: {
+    gray,
+    primary,
+    secondary,
+    side,
+    logo,
+    error,
+  },
+  typo,
+  font,
+  shadow,
+  gradient,
+  common,
+};
+
+export { Theme };
+
+// 예시 primary
+const primary: IPrimary = {
+  primary25: '#secret',
+  primary50: '#secret',
+  primary100: '#secret',
+  primary200: '#secret',
+  primary300: '#secret',
+  primary400_main: '#secret',
+  primary500: '#secret',
+  primary600: '#secret',
+  primary700: '#secret',
+  primary800: '#secret',
+  primary900: '#secret'
+}
+
+export default primary
+
+```
+
+사용할 땐 이런 식으로 사용할 수 있다.
+
+```typescript
+const InnerWrapper = styled.div`
+  ...
+  background-color: ${({ theme }) => theme.colors.primary.primary400_main};
+`;
+```
+
+위의 예시처럼 한 폴더 안에서 스타일을 관리할 수 있으므로, 디자인 시스템이나 스타일 변경에 따른 모든 컴포넌트에서 일일이 수정하지 않아도 되어 유지 보수성이 향상된다.
+
+## 좀 더 나아가기
+
+`colors에` 대한 것만 아니라 `styled-components`에 쓰일만한 스타일도 적용해보기로 했다.
+
+`DefaultTheme`에 있는 `common` 파일은 `flex`를 사용할때 자주 사용하는 스타일끼리 뭉쳐있다.
+
+```typescript
+const common: ICommon = {
+  flexCenter: `
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `,
+    ...
+};
+
+export default common;
+```
+
+이런식으로 정의해두면 `flex`를 편리하게 사용하며, 한눈에 알아보기 쉽게 되었다.
+
+```typescript
+const InnerWrapper = styled.div`
+  ...
+  ${({ theme }) => theme.common.flexCenter};
+`;
+```
+
+### 자주사용할 Grid와 Text 만들기
+
+위의 코드들로 style의 base들이 다 잡혔으니 디자인 가이드에 있는 `Text`와 편리하게 사용할 `Grid`를 구현할 수 있다.
+
+```typescript
+// Grid
+const Grid = styled(motion.div)<IGrid>`
+  ${({ _width }) => (_width != null ? `width: ${_width}` : 'width: 100%')};
+  ${({ _height }) => _height != null && `height: ${_height}`};
+  ${({ _margin }) => _margin != null && `margin: ${_margin}`};
+  ${({ _padding }) => _padding != null && `padding: ${_padding}`};
+  ${({ theme, flex }) =>
+    flex === 'start'
+      ? theme.common.flexStart
+      : flex === 'end'
+      ? theme.common.flexEnd
+      : flex === 'between'
+      ? theme.common.flexBetween
+      : flex === 'center' && theme.common.flexCenter};
+  ${({ _alignItems }) =>
+    _alignItems === 'start'
+      ? 'align-items: flex-start'
+      : _alignItems === 'end'
+      ? 'align-items: flex-end'
+      : _alignItems === 'stretch'
+      ? 'align-items: stretch'
+      : _alignItems === 'center' && 'align-items: center'};
+  ${({ direction }) => direction === 'column' && 'flex-direction: column'};
+  ${({ wrap }) => wrap === 'wrap' && 'flex-wrap: wrap'};
+  ${({ flexOption }) => flexOption != null && `flex: ${flexOption}`};
+  ${({ align }) =>
+    align === 'left'
+      ? 'text-align: left'
+      : align === 'right'
+      ? 'text-align: right'
+      : align === 'center' && 'text-align: center'};
+
+  ${({ _gap }) => _gap != null && `gap: ${_gap}`};
+  ${({ _overflow }) => _overflow != null && `overflow: ${_overflow}`};
+`;
+
+const settingStyle = {
+  Grid,
+  ...
+};
+
+export default settingStyle;
+```
+
+한번 정의해놓은 `Grid`로 불필요한 `div`를 생성할 필요없이 `Grid`를 `import`하여 사용하면 된다.
+
+```typescript
+import style from 'styles/styled-components/styled';
+
+<ModalHeader flex="between">
+  <style.Grid _width="56px" _height="56px" />
+  <style.Grid
+    flex="center"
+    onClick={() => {
+      setIsEmotionModal(true);
+    }}
+  >
+    <Icon.Bubble width="56px" height="56px" />
+  </style.Grid>
+</ModalHeader>;
+
+// 물론 Grid를 상속받아 사용도 가능하다.
+const ModalHeader = styled(style.Grid)`
+  background-color: ...;
+  ...
+`;
+```
+
+디자인 스타일 가이드를 따라 `Text`도 같은 폴더에 만들었다.
+
+```typescript
+const TextP = styled.p<IText>`
+  white-space: normal;
+  ${({ _width }) => _width != null && `width: ${_width}`};
+  ${({ _margin }) => _margin != null && `margin: ${_margin}`};
+  ${({ textAlign }) => textAlign != null && `text-align: ${textAlign}`};
+  ${({ wordBreak }) => wordBreak != null && `word-break: ${wordBreak}`};
+
+  ${({ theme, typo }) =>
+    ...
+    typo === 'h6'
+      ? theme.typo.title[typo]
+      : typo === 'b1_b' || typo === 'b1' || typo === 'b2_b' || typo === 'b2'
+      ? theme.typo.body[typo]
+      : (typo === 'c_b' || typo === 'c') && theme.typo.caption[typo]};
+
+  ${({ textColor }) =>
+    `color: ${useChangeColor(textColor as ColorType) as string}`}
+`;
+
+const settingStyle = {
+  TextP,
+  ...
+};
+
+export default settingStyle;
+```
+
+`color`와 `typo`는 앞서 말한 `theme`와 매칭 시켜주는 역할을 한다.
+
+```typescript
+const typo: ITypo = {
+  title: {
+    h1_b: `
+      font-weight: ${font.weight.bold};
+      font-size: ${font.size.h1};
+      line-height: ${font.lineHeight.h1};
+      `,
+    h1: `
+      font-weight: ${font.weight.regular};
+      font-size: ${font.size.h1};
+      line-height: ${font.lineHeight.h1};
+      `,
+      ...
+  },
+  body: {
+    b1_b: `
+      font-weight: ${font.weight.bold};
+      font-size: ${font.size.b1};
+      line-height: ${font.lineHeight.b1};
+      `,
+      ...
+  },
+  caption: {
+    c_b: `
+      font-weight: ${font.weight.bold};
+      font-size: ${font.size.c};
+      line-height: ${font.lineHeight.c};
+      `,
+      ...
+  }
+}
+```
+
+### Grid와 Text를 사용한 예제
+
+```typescript
+<style.Grid flex="start" direction="column" _gap="18px">
+  <style.Grid flex="start" direction="column" _gap="10px">
+    <style.TextP
+      typo="h6"
+      textColor="logo"
+      textAlign="center"
+      wordBreak="keep-all"
+    >
+      {title}
+    </style.TextP>
+
+    <style.TextP
+      typo="b2"
+      textColor="gray5"
+      textAlign="center"
+      wordBreak="keep-all"
+    >
+      {phrase}
+    </style.TextP>
+  </style.Grid>
+  <style.TextP typo="c" textColor="side500" textAlign="center">
+    {new Date().toLocaleString()}
+  </style.TextP>
+</style.Grid>
+```
+
+아무런 `styled-components`를 만들지 않고 디자인 시스템에 맞는 컴포넌트를 만들 수 있다.
+
+### 단점
+
+1. 리팩토링 시 `style.Grid`가 너무 많아 한눈에 알아보기 힘들다.
+2. VScode의 autoTag가 <strong>마침표</strong>에 focus되어 수정이 필요없는 컴포넌트도 건들게 된다.
+
+### 해결 방법
+
+1. `style.Grid`를 상속받는 `styled-components`를 만든다.
+2. `Grid`와 `Text`를 구조분해하여 받아 사용한다.
+
+```typescript
+const ExampleComponent = () => {
+  return (
+    <GridComponent flex="center" _width="100%" _height="50px">
+      <Grid flex="start" alignItems="start" _margin="0 20px">
+        <Text typo="c">example</Text>
+      </Grid>
+    </GridComponent>
+  );
+};
+
+// style.이 아닌 바로 Grid와 Text로 사용할 수 있게 된다.
+const { Grid, Text } = style;
+
+const GridComponent = styled(Grid)`
+  ...
+`;
+```
+
+## 회고
+
+프론트엔드 개발자들`(개발자라기보단 같이 성장하는 동료들이지만)`은 어떤 한 주제나 코드에 대해 말할 때, 어떻게 하는 것이 <strong>맞아요?</strong> 가 아니라 <strong>좋아요?</strong> 나 <strong>나아요?</strong>라고 물어본다.
+그리고 답할때도 마찬가지로 경험에 기반하여 장단점들을 토론하여 나에게 맞는 식의 개발방식을 택하여 가는 것 같다.
+
+나도 조금 더 나은, 좋은 코드를 짜기위해 노력하고 있지만 지금 생각에 잘 짠 코드인 것 같아도 후에 개발하다보면 더 복잡해지는 코드가 많은 것같다.
+`ThemeProvider`를 사용한 `Grid`와 `Text`도 잘 사용하고 있지만 나중에 프로젝트가 커지면 리팩토링이 힘들지도 모르겠다는 생각이 들었다.
+
+남은 개발 기간동안 팀원들과 열심히 개발하여 좋은 성과를 냇으면 좋겠다. 화이팅!
