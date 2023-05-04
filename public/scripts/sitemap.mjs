@@ -2,37 +2,45 @@ import { writeFileSync } from 'fs';
 import { globby } from 'globby';
 import prettier from 'prettier';
 
-const pages = await globby(['pages/*.tsx', 'posts/**/*.mdx', '!pages/_*.tsx']);
+async function generate() {
+  const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
+  const pages = await globby([
+    'pages/*.js',
+    'pages/*.tsx',
+    'posts/**/*.mdx',
+    '!pages/_*.tsx',
+    '!pages/_*.js',
+  ]);
 
-const urlTags = pages
-  .map((file) =>
-    file
-      .replace('pages', '')
-      .replace('data/content', '')
-      .replace('.tsx', '')
-      .replace('.mdx', '')
-  )
-  .map((path) => (path === '/index' ? '/' : path))
-  .map(
-    (path) => `
-      <url>
-          <loc>https://raoun4136-dev.vercel.app/${path}</loc>
-      </url>
-    `
-  )
-  .join('');
+  const sitemap = `
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        ${pages
+          .map((page) => {
+            const path = page
+              .replace('pages', '')
+              .replace('posts', '')
+              .replace('.tsx', '')
+              .replace('.js', '')
+              .replace('.mdx', '')
+              .replace('/index', '');
+            return `
+              <url>
+                  <loc>${`https://raoun4136-dev.vercel.app${path}`}</loc>
+              </url>
+            `;
+          })
+          .join('')}
+    </urlset>
+    `;
 
-const sitemap = `
-  <?xml version="1.0" encoding="UTF-8"?>
-  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${urlTags}
-  </urlset>
-`;
+  const formatted = prettier.format(sitemap, {
+    ...prettierConfig,
+    parser: 'html',
+  });
 
-const prettierConfig = await prettier.resolveConfig('./prettierrc');
-const formatted = prettier.format(sitemap, {
-  ...prettierConfig,
-  parser: 'html',
-});
+  // eslint-disable-next-line no-sync
+  writeFileSync('public/sitemap.xml', formatted);
+}
 
-writeFileSync('public/sitemap.xml', formatted);
+generate();

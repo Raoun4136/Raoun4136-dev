@@ -33,6 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
+    "**/*.mjs",
     ".contentlayer/generated",
     ".eslintrc.json"
   ],

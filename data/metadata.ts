@@ -1,7 +1,7 @@
 const metadata = {
   repo: 'https://github.com/Raoun4136/Raoun4136-dev',
   meta: {
-    url: 'https://raoun4136-dev.vercel.app/',
+    url: 'https://raoun4136-dev.vercel.app',
     title: 'Raoun4136 | Developer',
     description: 'Give it a shot',
   },

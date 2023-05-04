@@ -355,13 +355,13 @@ export const MDXInnerHead = styled.div`
 export const MDXTitle = styled.h1`
   margin: 0 !important;
   font-size: 2rem !important;
-  word-break: keep-all;
-  text-align: start;
+  word-break: break-all;
+  text-align: center;
 `;
 
 export const MDXDate = styled.div`
   font-size: 0.8rem;
-  text-align: start;
+  text-align: center;
   word-break: keep-all;
   color: var(--text-base-70);
 `;

@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://raoun4136-dev.vercel.app/sitemap.xml
