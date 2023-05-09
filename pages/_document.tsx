@@ -22,6 +22,11 @@ export default function Document() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        {/* Google Search Console */}
+        <meta
+          name="google-site-verification"
+          content="8NuhoMSBYXjVe2TMpT5-FjmE0gBU_Os-pwNfUpHgRdo"
+        />
       </Head>
       <body>
         <Main />
