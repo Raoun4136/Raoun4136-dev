@@ -35,8 +35,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#test-trouble
+# test-trouble
 trouble/
 
-#contentlayer
+# contentlayer
 .contentlayer
+
+# sitemap
+public/*.xml
