@@ -12,7 +12,7 @@ const Nav = () => {
     link: '/',
   };
   return (
-    <NavContainer>
+    <NavContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <ul>
         {menu_modal ? (
           <li>

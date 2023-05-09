@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const IntroSection = styled.section`
-  transition: 0.3s;
+  transition: 0.2s;
   display: flex;
   flex-direction: column;
   justify-content: center;

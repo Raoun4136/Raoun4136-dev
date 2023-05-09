@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 
-export const NavContainer = styled.nav`
+export const NavContainer = styled(motion.nav)`
   width: 100%;
+  transition: 0.2s;
 
   ul {
     justify-content: flex-end;
@@ -15,7 +17,7 @@ export const NavContainer = styled.nav`
     &:hover {
       opacity: 1;
       color: var(--accent);
-      transition: 0.3s;
+      transition: 0.2s;
     }
   }
   .active {

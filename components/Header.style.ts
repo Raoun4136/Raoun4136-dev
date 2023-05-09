@@ -9,6 +9,7 @@ export const HeaderContainer = styled.header`
   backdrop-filter: blur(7px);
   z-index: 1000;
   background-color: var(--header-bg);
+  transition: 0.2s;
 
   .open {
     flex-direction: column;
@@ -27,7 +28,7 @@ export const HeaderLogo = styled.h1`
   :hover {
     cursor: pointer;
     color: var(--accent);
-    transition: 0.3s;
+    transition: 0.2s;
     span {
       color: var(--text-base);
     }
@@ -47,6 +48,7 @@ export const MobileHeader = styled.div`
   justify-content: space-between;
   margin: 0 auto;
   align-items: center;
+
   @media screen and (max-width: 600px) {
     display: flex;
   }
