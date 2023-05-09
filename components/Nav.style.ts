@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const NavContainer = styled.div`
+export const NavContainer = styled.nav`
   width: 100%;
 
   ul {
