@@ -30,6 +30,11 @@ export default function Document() {
           name="google-site-verification"
           content="8NuhoMSBYXjVe2TMpT5-FjmE0gBU_Os-pwNfUpHgRdo"
         />
+        {/* Naver Search Advisor */}
+        <meta
+          name="naver-site-verification"
+          content="3f538bd79d405ce047d26e5eb8503866328bb55d"
+        />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           strategy="beforeInteractive"
