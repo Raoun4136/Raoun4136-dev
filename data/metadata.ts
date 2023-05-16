@@ -3,7 +3,7 @@ const metadata = {
   meta: {
     url: 'https://raoun4136-dev.vercel.app',
     title: 'Raoun4136 | Developer',
-    description: 'Give it a shot',
+    description: '좋은 개발자가 되기위한 개발 블로그',
   },
   author: 'Raoun4136',
   home: {
