@@ -10,7 +10,7 @@ export const MDXContainer = styled.div`
   * {
     color: var(--text-base);
     font-size: 16px;
-    line-height: 2;
+    line-height: 1.7;
 
     &::selection {
       background-color: #98b48d63;
@@ -82,7 +82,10 @@ export const MDXContainer = styled.div`
   }
 
   p {
-    margin: 1rem 0;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
     code {
       color: #109a79;
       color: var(--text-base-90);
@@ -134,11 +137,12 @@ export const MDXContainer = styled.div`
     margin: 0.25rem 0;
     padding: 0 1rem;
     position: relative;
-    border-left: 3px solid var(--text-base-50);
+    border-left: 3px solid var(--accent);
+    background-color: var(--bg);
     & p {
       font-size: 16px;
       display: inline;
-      color: var(--text-base-70);
+      color: var(--text-base-90);
       line-height: 1;
 
       * {

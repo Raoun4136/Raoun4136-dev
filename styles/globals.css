@@ -258,7 +258,7 @@ body {
 
 /* variables */
 body {
-  --bg: #292929;
+  --bg: #252525;
   --accent: #8a6fb6;
   --shadow: #13161640;
   --text-base: rgb(223, 223, 223);
@@ -299,7 +299,7 @@ body[data-theme='light'] {
   --toggle-bg: #0101010a;
   --toggle-icon: var(--text-base-70);
   --toggle-border: #dfdfdf4d;
-  --code-block: #eff2f6;
+  --code-block: #f1ede980;
   --card-bg: #fff;
   --card-border: #ececf3;
   --mdx-border: #2c3e5040;
