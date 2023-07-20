@@ -4,13 +4,12 @@ export const MDXContainer = styled.div`
   position: relative;
   width: 100%;
   font-size: 1rem;
-  line-height: 1.75;
-  font-weight: 400;
+  line-height: 1.85;
+  font-weight: 300;
 
   * {
-    color: var(--text-base);
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 1rem;
+    line-height: 1.85;
 
     &::selection {
       background-color: #98b48d63;
@@ -32,49 +31,51 @@ export const MDXContainer = styled.div`
   }
 
   h1 {
-    font-size: 28px;
+    font-size: 2.2rem;
     font-weight: 800;
     margin: 32px 0 0;
-    line-height: 1.57em;
+    line-height: 3.2rem;
   }
 
   h2 {
-    font-size: 26px;
+    font-size: 1.75rem;
     font-weight: 700;
-    margin: 32px 0 8px;
-    line-height: 1.57em;
+    margin: 56px 0 24px;
+    line-height: 3rem;
+    border-bottom: 1px solid var(--mdx-border);
   }
 
   h3 {
-    font-size: 22px;
+    font-size: 1.5rem;
     font-weight: 600;
-    margin: 20px 0 8px;
-    line-height: 1.57em;
+    margin: 32px 0 8px;
+    line-height: 2.2rem;
   }
 
   h4 {
-    font-size: 18px;
+    font-size: 1.25rem;
     font-weight: 500;
-    margin: 28px 0 0;
-    line-height: 1.57em;
+    margin: 12px 0 0;
+    line-height: 2rem;
   }
 
   h5 {
-    font-size: 17px;
+    font-size: 1.2rem;
     font-weight: 500;
-    margin: 28px 0 0;
-    line-height: 1.57em;
+    margin: 8px 0 0;
+    line-height: 1.6rem;
   }
 
   h6 {
-    font-size: 16px;
+    font-size: 1.1rem;
     font-weight: 500;
-    margin: 28px 0 0;
-    line-height: 1.57em;
+    margin: 8px 0 0;
+    line-height: 1.4rem;
   }
 
   strong {
     font-weight: 700;
+    color: var(--accent);
   }
 
   code {
@@ -82,18 +83,15 @@ export const MDXContainer = styled.div`
   }
 
   p {
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    margin: 20px 8px 15px;
     code {
-      color: #109a79;
-      color: var(--text-base-90);
+      color: #3fccaa;
+      color: var(--text-code);
       padding: 3px 6px;
       font-size: 14px;
       margin: 0 2px;
-      font-weight: 400;
-      background-color: var(--code-block);
+      font-weight: 500;
+      background-color: var(--inline-code-block);
       border-radius: 3px;
     }
   }
@@ -111,6 +109,7 @@ export const MDXContainer = styled.div`
     padding: 12px 14px;
     border-radius: 8px;
     background-color: var(--code-block);
+    color: var(--text-code);
     margin: 0.85em 0;
 
     * {
@@ -125,6 +124,7 @@ export const MDXContainer = styled.div`
       font-family: 'FiraMono';
       font-weight: 400;
       font-size: 14px;
+      color: var(--text-code);
 
       * {
         font-size: 14px;
@@ -165,7 +165,7 @@ export const MDXContainer = styled.div`
     }
 
     code {
-      color: var(--text-base-90);
+      color: var(--text-code);
       font-weight: 400;
       padding: 0.2rem 0.3rem;
       font-size: 14px;
@@ -221,11 +221,11 @@ export const MDXContainer = styled.div`
       margin: 0 2px;
       padding: 0.2rem 0.3rem;
       font-size: 14px;
-      font-weight: 400;
+      font-weight: 500;
       font-family: 'FiraMono';
-      color: var(--text-base-90);
+      color: var(--text-code);
       border-radius: 3px;
-      background-color: var(--code-block);
+      background-color: var(--inline-code-block);
     }
   }
 
@@ -265,10 +265,13 @@ export const MDXContainer = styled.div`
   /* mdx code block styles */
   pre > code[class*='language-'] {
     position: relative;
+    * {
+      color: var(--text-code);
+    }
     .hljs-title {
       &.class_,
       &.function_ {
-        color: #109a79;
+        color: #24c19c;
       }
     }
     .hljs-number {
@@ -279,23 +282,26 @@ export const MDXContainer = styled.div`
     }
 
     .hljs-type {
-      color: var(--text-base-70);
+      color: var(--text-code);
     }
 
     .hljs-variable {
       &.language_ {
         color: #109a79;
       }
-      color: var(--text-base-70);
+      color: var(--text-code);
       &.constant_ {
         color: #3c8f99;
       }
+    }
+    .hljs-attr {
+      color: #e1954d;
     }
 
     .hljs-built_in,
     .hljs-function,
     .hljs-selector-class {
-      color: #e06c75;
+      color: #e78787;
     }
 
     .hljs-string {
@@ -304,7 +310,7 @@ export const MDXContainer = styled.div`
     }
 
     .hljs-comment {
-      color: var(--text-base-70);
+      color: #959595;
       font-weight: 500;
     }
     .hljs-name,
@@ -315,7 +321,7 @@ export const MDXContainer = styled.div`
 
     &.language-csharp {
       * {
-        color: var(--text-base);
+        color: var(--text-code);
       }
     }
   }
@@ -326,7 +332,7 @@ export const MDXContainer = styled.div`
     margin-top: 4px;
     font-size: 14px;
     font-weight: 500;
-    color: var(--text-base-90);
+    color: var(--text-code);
     font-family: 'FiraMono';
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -358,7 +364,7 @@ export const MDXInnerHead = styled.div`
 
 export const MDXTitle = styled.h1`
   margin: 0 !important;
-  font-size: 2rem !important;
+  font-size: 2.2rem !important;
   word-break: break-all;
   text-align: center;
 `;

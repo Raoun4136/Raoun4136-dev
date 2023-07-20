@@ -54,7 +54,7 @@ root.render(
 
 ### 적용기
 
-텔링미의 디자인 스타일가이드대로 `color`,`shadow`,`gradient`,`font` 들을 모아놓은 Theme을 생성한다.
+텔링미의 디자인 스타일가이드대로 <strong>color</strong>, <strong>shadow</strong>, <strong>gradient</strong>, <strong>font</strong> 들을 모아놓은 Theme을 생성한다.
 
 ```typescript
 // 밑에서 쓰일 theme import
@@ -110,9 +110,9 @@ const InnerWrapper = styled.div`
 
 ## 좀 더 나아가기
 
-`colors에` 대한 것만 아니라 `styled-components`에 쓰일만한 스타일도 적용해보기로 했다.
+colors에 대한 것만 아니라 `styled-components`에 쓰일만한 스타일도 적용해보기로 했다.
 
-`DefaultTheme`에 있는 `common` 파일은 `flex`를 사용할때 자주 사용하는 스타일끼리 뭉쳐있다.
+DefaultTheme에 있는 common 파일은 flex를 사용할때 자주 사용하는 스타일끼리 뭉쳐있다.
 
 ```typescript
 const common: ICommon = {
@@ -185,7 +185,7 @@ const settingStyle = {
 export default settingStyle;
 ```
 
-한번 정의해놓은 `Grid`로 불필요한 `div`를 생성할 필요없이 `Grid`를 `import`하여 사용하면 된다.
+한번 정의해놓은 <strong>Grid</strong>로 불필요한 div를 생성할 필요없이 Grid를 import하여 사용하면 된다.
 
 ```typescript
 import style from 'styles/styled-components/styled';
@@ -209,7 +209,7 @@ const ModalHeader = styled(style.Grid)`
 `;
 ```
 
-디자인 스타일 가이드를 따라 `Text`도 같은 폴더에 만들었다.
+디자인 스타일 가이드를 따라 <strong>Text</strong>도 같은 폴더에 만들었다.
 
 ```typescript
 const TextP = styled.p<IText>`
@@ -239,7 +239,7 @@ const settingStyle = {
 export default settingStyle;
 ```
 
-`color`와 `typo`는 앞서 말한 `theme`와 매칭 시켜주는 역할을 한다.
+- color와 typo는 앞서 말한 theme와 매칭 시켜주는 역할을 한다.
 
 ```typescript
 const typo: ITypo = {
@@ -308,13 +308,13 @@ const typo: ITypo = {
 
 ### 단점
 
-1. 리팩토링 시 `style.Grid`가 너무 많아 한눈에 알아보기 힘들다.
-2. VScode의 autoTag가 <strong>마침표</strong>에 focus되어 수정이 필요없는 컴포넌트도 건들게 된다.
+1. 리팩토링 시 style.Grid가 너무 많아 한눈에 알아보기 힘들다.
+2. VScode의 autoTag가 마침표에 focus되어 수정이 필요없는 컴포넌트도 건들게 된다.
 
 ### 해결 방법
 
-1. `style.Grid`를 상속받는 `styled-components`를 만든다.
-2. `Grid`와 `Text`를 구조분해하여 받아 사용한다.
+1. style.Grid를 상속받는 <strong>styled-components</strong>를 만든다.
+2. Grid와 Text를 <strong>구조분해</strong>하여 받아 사용한다.
 
 ```typescript
 const ExampleComponent = () => {
