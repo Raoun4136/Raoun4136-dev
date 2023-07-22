@@ -61,20 +61,20 @@ export const MDXContainer = styled.div`
 
   h5 {
     font-size: 1.2rem;
-    font-weight: 500;
+    font-weight: 400;
     margin: 8px 0 0;
     line-height: 1.6rem;
   }
 
   h6 {
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 400;
     margin: 8px 0 0;
     line-height: 1.4rem;
   }
 
   strong {
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent);
   }
 
@@ -346,7 +346,9 @@ export const MDXContainer = styled.div`
   }
 `;
 
-export const MDXSection = styled.section``;
+export const MDXSection = styled.section`
+  padding-bottom: 3rem;
+`;
 
 export const MDXHead = styled.div`
   margin-top: 3rem;

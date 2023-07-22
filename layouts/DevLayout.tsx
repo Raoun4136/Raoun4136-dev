@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo';
 import metadata from '../data/metadata';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { Dev } from 'contentlayer/generated';
-import { Container, MDXDev } from 'components';
+import { Container, MDXDev, MDXComment } from 'components';
 
 const DevLayout = ({ post }: { post: Dev }) => {
   const MDXComponent = useMDXComponent(post.body.code);
@@ -29,6 +29,7 @@ const DevLayout = ({ post }: { post: Dev }) => {
         >
           <MDXComponent />
         </MDXDev>
+        <MDXComment />
       </>
     </Container>
   );

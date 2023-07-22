@@ -2,7 +2,7 @@ import { NextSeo } from 'next-seo';
 import metadata from 'data/metadata';
 import { useMDXComponent } from 'next-contentlayer/hooks';
 import { Daily } from 'contentlayer/generated';
-import { Container, MDXDaily } from 'components';
+import { Container, MDXDaily, MDXComment } from 'components';
 
 const DailyLayout = ({ post }: { post: Daily }) => {
   const MDXComponent = useMDXComponent(post.body.code);
@@ -29,6 +29,7 @@ const DailyLayout = ({ post }: { post: Daily }) => {
         >
           <MDXComponent />
         </MDXDaily>
+        <MDXComment />
       </>
     </Container>
   );
