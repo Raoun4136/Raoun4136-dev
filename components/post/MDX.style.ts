@@ -78,9 +78,9 @@ export const MDXContainer = styled.div`
     color: var(--accent);
   }
 
-  code {
+  /* code {
     font-family: 'FiraMono';
-  }
+  } */
 
   p {
     margin: 20px 8px 15px;

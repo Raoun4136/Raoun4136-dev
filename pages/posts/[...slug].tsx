@@ -8,7 +8,7 @@ const PostsPage = ({
   return (
     <Container>
       <PostHeader />
-      <PostList posts={posts.slice(0, 1)}></PostList>
+      <PostList posts={posts}></PostList>
     </Container>
   );
 };

@@ -10,7 +10,7 @@ const metadata = {
     name: '박성오 | Raoun',
     description: '프론트 개발자가 되기위해 노력중입니다.',
     subDescription: '뭐든지 해보는게 취미',
-    image: '/home/profile.jpg',
+    image: '/home/profile.png',
   },
   social: {
     github: 'https://github.com/Raoun4136',

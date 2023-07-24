@@ -17,7 +17,7 @@ export const ProfileDesc = styled.div`
 
 export const ProfileTitle = styled.h1`
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 600;
 `;
 
 export const ProfileMainDesc = styled.h2`
@@ -28,7 +28,7 @@ export const ProfileMainDesc = styled.h2`
 
 export const ProfileSubDesc = styled.h3`
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 300;
   color: var(--text-base-70);
 `;
 
@@ -41,6 +41,7 @@ export const ProfileImage = styled.div`
 
   img {
     object-fit: cover;
+    object-position: 50% 0%;
     border-radius: 20rem;
   }
 

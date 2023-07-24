@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
 const MDXComment = () => {
+  const router = useRouter();
+
   return (
     <Comment
       ref={(elem) => {
@@ -12,7 +15,12 @@ const MDXComment = () => {
         scriptElem.async = true;
         scriptElem.setAttribute('repo', 'Raoun4136/Raoun4136-dev');
         scriptElem.setAttribute('issue-term', 'pathname');
-        scriptElem.setAttribute('theme', 'preferred-color-scheme');
+        scriptElem.setAttribute(
+          'theme',
+          document.body.dataset.theme === 'light'
+            ? 'github-light'
+            : 'github-dark'
+        );
         scriptElem.setAttribute('label', 'blog-comment');
         scriptElem.crossOrigin = 'anonymous';
         elem.appendChild(scriptElem);
