@@ -70,7 +70,7 @@ const Dev = defineDocumentType(() => ({
       resolve: (doc) => doc._raw.sourceFileName.replace(/\.mdx$/, ''),
     },
     pathSegments: {
-      type: 'string',
+      type: 'nested',
       resolve: (doc) => doc._raw.flattenedPath.split('/').slice(1),
     },
   },
