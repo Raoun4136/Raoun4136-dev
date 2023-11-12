@@ -16,7 +16,7 @@ import {
 
 const Post = ({ post }: { post: DocumentTypes }) => {
   return (
-    <Link href={`../${post._raw.flattenedPath}`}>
+    <Link href={`/posts/${post._raw.flattenedPath}`}>
       <PostCard>
         <PostImg>
           <Image

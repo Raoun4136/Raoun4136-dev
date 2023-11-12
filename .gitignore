@@ -43,3 +43,6 @@ trouble/
 
 # sitemap
 public/*.xml
+
+# env
+.env.*

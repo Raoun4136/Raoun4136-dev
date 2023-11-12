@@ -30,7 +30,9 @@ const Nav = () => {
         ) : null}
         {navLinks.map((link: any) => (
           <li key={link.title}>
-            <Link href={link.link}>
+            <Link
+              href={link.link + (link.extra_slug ? '/' + link.extra_slug : '')}
+            >
               <a
                 onClick={() => setMenuModal(false)}
                 className={

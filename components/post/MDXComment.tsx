@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
+import { useRef } from 'react';
 
 const MDXComment = () => {
   const router = useRouter();
+  const utterancesRef = useRef();
 
   return (
     <Comment
@@ -23,6 +25,9 @@ const MDXComment = () => {
         );
         scriptElem.setAttribute('label', 'blog-comment');
         scriptElem.crossOrigin = 'anonymous';
+        scriptElem.onload = () => {
+          utterancesRef.current = document.querySelector('.utterances-frame');
+        };
         elem.appendChild(scriptElem);
       }}
     />

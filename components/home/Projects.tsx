@@ -70,7 +70,7 @@ const Projects = () => {
             <ProjectInfo>
               <ProjectInfoTitle>
                 <ProjectTitle>{project.title}</ProjectTitle>
-                <a onClick={showModal}>프로젝트 상세 보기</a>
+                {/* <a onClick={showModal}>프로젝트 상세 보기</a> */}
               </ProjectInfoTitle>
               <ProjectDesc>{project.desc}</ProjectDesc>
               <ProjectImg>
