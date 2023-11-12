@@ -8,6 +8,7 @@ import { getApps } from 'firebase/app';
 import { Canvas } from '@react-three/fiber';
 import Scene from 'components/toy/game/Scene';
 import { Physics } from '@react-three/cannon';
+import ControlDesc from 'components/toy/game/ControlDesc';
 
 export default function Game(): JSX.Element {
   // const auth = getAuth(firebase_app);
@@ -33,6 +34,8 @@ export default function Game(): JSX.Element {
           <Scene />
         </Physics>
       </Canvas>
+
+      <ControlDesc />
     </>
   );
 }
