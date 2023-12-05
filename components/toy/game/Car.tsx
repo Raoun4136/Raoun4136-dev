@@ -15,7 +15,7 @@ import { Quaternion, Vector3 } from 'three';
 
 const Car = ({ thirdPerson }) => {
   const result = useLoader(GLTFLoader, '/car-game/models/car.glb').scene;
-  const position = [-1.5, 0.5, 3] as Triplet;
+  const position = [-4.7, 0.5, 1.45] as Triplet;
   const width = 0.15;
   const height = 0.07;
   const front = 0.15;
@@ -27,6 +27,7 @@ const Car = ({ thirdPerson }) => {
       allowSleep: false,
       args: chassisBodyArgs,
       mass: 150,
+      rotation: [0, -Math.PI / 2, 0],
       position,
     }),
     useRef(null)
@@ -43,7 +44,7 @@ const Car = ({ thirdPerson }) => {
     useRef(null)
   );
 
-  useControls(vehicleApi, chassisApi);
+  useControls(vehicle, vehicleApi, chassisBody, chassisApi, wheels);
 
   useFrame((state) => {
     if (!thirdPerson) return;
@@ -62,7 +63,7 @@ const Car = ({ thirdPerson }) => {
       .clone()
       .add(wDir.clone().multiplyScalar(1).add(new Vector3(0, 0.3, 0)));
 
-    wDir.add(new Vector3(0, 0.2, 0));
+    wDir.add(new Vector3(0, 0.8, 0));
     state.camera.position.copy(cameraPosition);
     state.camera.lookAt(position);
   });
@@ -79,7 +80,7 @@ const Car = ({ thirdPerson }) => {
   return (
     <group ref={vehicle} name="vehicle">
       {/* <mesh ref={chassisBody}>
-        <meshBasicMaterial transparent={true} opacity={0.3} />
+        <meshBasicMaterial transparent={true} opacity={0.7} />
         <boxGeometry args={chassisBodyArgs} />
       </mesh> */}
 

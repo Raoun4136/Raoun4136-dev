@@ -30,7 +30,7 @@ export default function Game(): JSX.Element {
         openGraph={{ url: `${metadata.meta.url}/toy/game` }}
       />
       <Canvas style={{ height: '100vh' }}>
-        <Physics broadphase="SAP" gravity={[0, -2.6, 0]}>
+        <Physics broadphase="SAP" gravity={[0, -4.81, 0]}>
           <Scene />
         </Physics>
       </Canvas>
