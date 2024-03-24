@@ -53,18 +53,18 @@ tags: ['log', 'custom-hook', 'react', 'typescript']
 기존의 로깅 이벤트는 다음과 같이 구성되어 있었다.
 
 ```ts
-export interface LogEventLogInterfaceParams {
+export interface LogInterfaceParams {
   entry_point: string;
   ...
 }
 
 const EventLogInterface = (
-  params: LogEventLogInterfaceParams,
+  params: LogInterfaceParams,
   analytics: Analytics // firebase analytics
 ) => logEvent(analytics, 'EVENT_LOG_1', params);
 ```
 
-위와 같이 `LogEventLogInterfaceParams` 라는 인터페이스를 정의하고, `EventLogInterface` 함수를 통해 로깅 이벤트를 정의하고 있다.
+위와 같이 `LogInterfaceParams` 라는 인터페이스를 정의하고, `EventLogInterface` 함수를 통해 로깅 이벤트를 정의하고 있다.
 
 하지만 이러한 방식은 type-safe하지 않다. `EVENT_LOG_1` 이벤트에 대한 타입을 정의하지 않았기 때문이다.<br />
 또한, 이벤트 로깅을 위한 함수와 이벤트 타입을 분리하지 않았기 때문에, 이벤트 로깅을 위한 함수를 사용할 때마다 이벤트 타입을 정의하고 함수를 재정의해야 한다.
@@ -360,7 +360,7 @@ const App = () => {
       });
     });
   };
-  return <button>Click Event!</button>;
+  return <button onClick={handleData}>Click Event!</button>;
 };
 ```
 
@@ -424,7 +424,7 @@ const App = () => {
       });
     });
   };
-  return <button>Click Event!</button>;
+  return <button onClick={handleData}>Click Event!</button>;
 };
 ```
 
