@@ -1,0 +1,522 @@
+---
+title: 프론트엔드 입장에서 생각하는 이벤트 로그 찍기
+description: 선언적이고 type-safe한 로그를 찍어보자
+type: Dev
+date: 2024-03-24
+tags: ['log', 'custom-hook', 'react', 'typescript']
+---
+
+# 서론
+
+제품을 개발하고 런칭을 하게 되면 사용자들이 어떻게 사용하는지, 어떤 행동들을 하는지, 한마디로 **유저 행동 데이터**를 파악해야 한다.<br />
+
+이러한 데이터를 기록하는 방법은 여러가지가 있는데,
+보편적으로 Google Analytics, Amplitude, Mixpanel 같은 서비스를 사용하거나, 직접 서버에 로그를 남기는 방법이 있다.
+
+필자는 Firebase를 사용하고 있고, Custom Event를 사용하여 로그를 남기고 있다.
+이번 글에서는 Custom Event 로그를 어떻게 관리할 수 있는지 알아보자.
+
+## 이벤트 로깅이란?
+
+웹서비스에서 말하는 이벤트 로깅은 사용자나 시스템에서 발생하는 주요 이벤트를 기록하는 과정이다. <br />
+이러한 이벤트를 분석하면 여러가지를 얻을 수 있다.
+
+- **사용자 분석 및 행동 추적**<br />
+  흔히 말하는 A/B 테스트를 통해 사용자의 패턴을 이해하고 사용자 경험 개선 및 비즈니스 결정에 활용할 수 있다.
+
+- **디버깅 및 보안**<br />
+  로깅에 오류가 발생하거나, 문제가 생기면 이벤트 로그를 통해 발생한 시점과 원인을 파악할 수 있어 빠르게 대응할 수 있다.
+  사용자의 행동을 기록하면서 악의적인 행동이나 보안 위협에 대한 탐지와 대응에 활용할 수 있다.
+
+이벤트 로그는 다양한 측면에서 유용함으로 어떻게 관리할지, 어떤 이벤트, 데이터들을 로깅할지 잘 정의해야 한다.
+
+---
+
+필자의 회사에서는 Google Docs로 관리하고 있었고, 이벤트의 종류는 다음과 같이 두가지로 구분할 수 있었다.
+
+1. **Click Event** : 주로 버튼 클릭, 링크 클릭, entry_point에 집중하는 이벤트
+2. **View Event** : 페이지 진입에 의미를 두는 이벤트
+
+다른 이벤트 로깅과 약간 다른 점은 Click Event중에서 서버에 api를 호출하고 성공한 데이터를 넘기는 이벤트가 있다는 것이었다.
+따라서 필자는 지속가능한 이벤트 로깅을 위해 다음과 같은 목표를 세웠다.
+
+## 목표
+
+1. **type-safe** 해야 한다.
+2. 다른 로직들과 **관심사 분리**가 되어야 한다.
+3. 종속적이지 않으며 **재사용**이 가능해야 한다.
+
+# 본론
+
+## type-safe
+
+기존의 로깅 이벤트는 다음과 같이 구성되어 있었다.
+
+```ts
+export interface LogEventLogInterfaceParams {
+  entry_point: string;
+  ...
+}
+
+const EventLogInterface = (
+  params: LogEventLogInterfaceParams,
+  analytics: Analytics // firebase analytics
+) => logEvent(analytics, 'EVENT_LOG_1', params);
+```
+
+위와 같이 `LogEventLogInterfaceParams` 라는 인터페이스를 정의하고, `EventLogInterface` 함수를 통해 로깅 이벤트를 정의하고 있다.
+
+하지만 이러한 방식은 type-safe하지 않다. `EVENT_LOG_1` 이벤트에 대한 타입을 정의하지 않았기 때문이다.<br />
+또한, 이벤트 로깅을 위한 함수와 이벤트 타입을 분리하지 않았기 때문에, 이벤트 로깅을 위한 함수를 사용할 때마다 이벤트 타입을 정의하고 함수를 재정의해야 한다.
+
+이러한 문제를 해결하기 위해 다음과 같이 개선하였다.
+
+### 이벤트 타입 정의
+
+이벤트 타입을 Enum으로 정의하고,
+
+```ts
+// events.ts
+export enum EventType {
+  EVENT_LOG_1 = 'EVENT_LOG_1',
+  ...
+}
+```
+
+프로퍼티를 인터페이스로 정의하였다.
+
+```ts
+// property.ts
+export interface EventLog1Interface {
+entry_point: string;
+...
+}
+```
+
+그 후 `eventMap`을 통해 이벤트 타입에 따른 프로퍼티를 매핑하였다.
+
+```ts
+// map.ts
+import { EventType } from './events';
+import { EventLog1Interface } from './property';
+
+export const EventMap = {
+  [EventType.EVENT_LOG_1]: EventLog1Interface,
+  ...
+};
+```
+
+### 이벤트 로깅 함수
+
+위와 같이 이벤트 타입, 프로퍼티, 매핑을 정의하고 나면, 이벤트 로깅 함수를 다음과 같이 정의할 수 있다.
+
+```ts
+// log.ts
+import { type Analytics, logEvent } from 'firebase/analytics'; // firebase analytics
+import { EventMap } from './map';
+
+export const logEvent = <T extends keyof EventMap>(
+  analytics: Analytics,
+  eventName: T,
+  params: EventMap[T]
+) => {
+  logEvent(analytics, String(eventName), params);
+};
+```
+
+이제 이벤트 로깅 함수를 사용할 때, **이벤트 타입**을 type-safe하게 사용할 수 있다.
+
+```ts
+import { logEvent } from './log';
+import { EventType } from './events';
+
+logEvent(analytics, EventType.EVENT_LOG_1, {
+  entry_point: 'entry_point',
+  ...
+});
+```
+
+**property**경우에도 EventType을 넘기기만 하면 자동으로 params의 타입이 정의되어 type-safe하게 사용할 수 있다.
+
+```ts
+// 정상 작동
+logEvent(analytics, EventType.EVENT_LOG_1, {
+  entry_point: 'entry_point',
+  ...
+});
+
+// type-error 발생
+logEvent(analytics, EventType.EVENT_LOG_1, {});
+// type-error 발생
+logEvent(analytics, EventType.EVENT_LOG_1, {
+  error_params : 'error'
+});
+```
+
+### 이벤트 타입 나누기
+
+앞서 말했듯이, 이벤트 로깅은 Click Event와 View Event로 나누어져 있다.<br />
+따라서 이벤트 타입을 나누어서 관리하고 싶다면, 다음과 같이 구성할 수 있다.
+
+```ts
+// events/click.ts
+export const ClickEventMap = {
+  [ClickEventType.EVENT_LOG_1]: EventLog1Interface,
+  ...
+};
+
+// events/view.ts
+export const ViewEventMap = {
+  [ViewEventType.EVENT_LOG_2]: EventLog2Interface,
+  ...
+};
+
+// events/index.ts
+export type CombinedLogEventMap = ClickEventMap & ViewEventMap;
+
+export const logEvent = <T extends keyof CombinedLogEventMap>(
+  analytics: Analytics,
+  eventName: T,
+  params: CombinedLogEventMap[T]
+) => {
+  logEvent(analytics, String(eventName), params);
+};
+```
+
+이렇게 나누어서 관리하면, Click Event와 View Event를 따로 관리할 수 있고,
+나중에 설명할 **선언적 로깅 방식**에서 Event Type을 나누어서 관리할 수 있다.
+
+## 다른 로직과 관심사 분리
+
+이벤트 로깅은 다른 로직과 관심사를 분리해야 한다.
+
+만약 이벤트 로깅을 사용할 때, 다음과 같이 사용한다면,
+
+```tsx
+<button
+  onClick={() => {
+    logEvent(analytics, EventType.EVENT_LOG_1, {
+      entry_point: 'entry_point',
+      ...
+    });
+
+    /** other logics */
+  }}
+>
+  Click Event!
+</button>;
+```
+
+비즈니스 로직과 이벤트 로깅이 섞여있어, 추후에 이벤트 로깅을 변경하거나, 다른 로직을 추가할 때, **유지보수**가 어려워진다.
+또한 **가독성**마저 떨어진다.
+
+이러한 문제를 해결하기 위해 다음과 같이 개선하였다.
+
+### 선언적 로깅 방식
+
+Click Event를 담당하는 `LogClickComponent`와 View Event를 담당하는 `LogViewComponent`를 만든다.
+이 컴포넌트들은 오직 이벤트 로깅만을 담당하고, child 받아 렌더링하는 방식으로 구현한다.
+
+> **LogClickComponent**
+
+```tsx
+interface LogClickProps<T extends keyof CombinedLogEventMap> {
+  children: JSX.Element;
+  eventName: T;
+  params: CombinedLogEventMap[T];
+}
+
+const LogClickComponent = <T extends keyof ClickEventMap>({
+  children,
+  eventName,
+  params,
+}: LogClickProps<T>) => {
+  const child = React.Children.only(children);
+
+  return React.cloneElement(child, {
+    onClick: () => {
+      logEvent(analytics, String(eventName), params);
+
+      if (child.props.onClick) {
+        child.props.onClick();
+      }
+    },
+  });
+};
+
+export default LogClickComponent;
+```
+
+> **LogViewComponent**
+
+```tsx
+interface LogViewProps<T extends keyof CombinedLogEventMap> {
+  children: JSX.Element;
+  eventName: T;
+  params: CombinedLogEventMap[T];
+}
+
+const LogViewComponent = <T extends keyof ViewEventMap>({
+  children,
+  eventName,
+  params,
+}: LogViewProps<T>) => {
+  const child = React.Children.only(children);
+
+  useEffect(() => {
+    logEvent(analytics, String(eventName), params);
+  }, [eventName, logEvent, params]);
+
+  return React.cloneElement(child);
+};
+
+export default LogViewComponent;
+```
+
+앞서 정의한 CombinedLogEventMap과 ClickEventMap, ViewEventMap을 사용하여,
+Event Type에 따라서 params의 타입이 정의되어 **type-safe**하게 사용할 수 있다.
+
+또한 Click Event와 View Event를 **구분**하여 관리할 수 있다.
+
+```tsx
+// 예를 들어 Click Component를 사용할 때
+<LogClickComponent
+  eventName={ViewEventType.EVENT_LOG_2} // ViewEventType type-error 발생
+  params={{
+    ...
+  }}
+>
+  <button>Type Error Button!</button>
+</LogClickComponent>;
+```
+
+이제 이벤트 로깅을 사용할 때, 컴포넌트 사용만으로 이벤트 로깅을 할 수 있게 되었다.
+
+> **Click Event**
+
+```tsx
+import { LogClickComponent } from './log';
+
+<LogClickComponent
+  eventName={ClickEventType.EVENT_LOG_1}
+  params={{
+    entry_point: 'entry_point',
+    ...
+  }}
+>
+  <button
+    onClick={() => {
+        /** other logics */
+      }}>
+    Click Event!
+  </button>
+</LogClickComponent>;
+```
+
+> **View Event**
+
+```tsx
+import { LogViewComponent } from './log';
+
+<LogViewComponent
+  eventName={ViewEventType.EVENT_LOG_2}
+  params={{
+    entry_point: 'entry_point',
+    ...
+  }}
+>
+  <div>View Event!</div>
+</LogViewComponent>;
+```
+
+## 종속적이지 않고 재사용 가능하다.
+
+종속적인 부분은 위에서 설명한 것처럼, 이벤트 로깅 함수를 분리하고 선언적으로 사용함으로써 해결하였다.
+
+하지만 필자의 회사에서는 이벤트 로깅을 순전히 클릭시에만 사용하지 않고 **api 호출 후 성공한 데이터**를 넘기는 이벤트도 있었다.
+또한 **global property**를 받아서 넘겨야 하는 경우도 있었다.
+
+기존의 방식으로는 이러한 경우에 다음과 같이 사용했다.
+
+```tsx
+import { logEvent } from './log';
+import { EventType } from './events';
+import { useAnalytics } from './hooks';
+import { useQuery } from 'react-query';
+
+const App = () => {
+  const analytics = useAnalytics(); // firebase analytics custom hook
+  const { globalProperty } = useQuery(...); // for global property
+
+  const handleData = () => {
+    apiCall().then((data) => {
+
+      /** for business-logic */
+
+      logEvent(analytics, EventType.EVENT_LOG_1, {
+        entry_point: 'entry_point',
+        globalProperty,
+        ...
+      });
+    });
+  };
+  return <button>Click Event!</button>;
+};
+```
+
+하나의 logEvent를 찍기위해서 여러가지 로직들이 섞여있다.
+
+- analytics 객체를 불러오는 `useAnalytics`,
+- global property를 불러오는 `useQuery`,
+- 등등...
+
+파일 하나만 보자면 그렇게 큰 문제는 없지만, 만약 복잡한 로직과 많은 파일들이 생겨난다면 **유지보수**가 어려워진다.
+
+이러한 문제를 해결하기 위해서 LogEvent를 위한 Custom Hook을 만들었다.
+
+### Custom Hook
+
+Custom Hook은 global property를 불러올지 말지 결정하고, analytics 객체를 불러오는 역할만을 한다.
+return 값으로는 `handleLogEvent` 함수를 반환하여 사용하는 입장에서 `handleLogEvent` 함수만 사용하면 된게 한다.
+
+```tsx
+// useLogEvent.ts
+export const useLogEvent = (global : boolean) => {
+  const analytics = useAnalytics();
+  const { globalProperty } = useQuery({
+    ...
+    enabled: global,
+  });
+
+  const handleLogEvent = <T extends keyof CombinedLogEventMap>(eventName: T, params: CombinedLogEventMap[T]) => {
+		switch (global) {
+			case true:
+				logEvent(analytics, String(eventName), { ...params, ...globalProperty });
+				break;
+			case false:
+				logEvent(analytics, String(eventName), params);
+				break;
+		}
+	};
+
+  return { handleLogEvent };
+};
+```
+
+이제 이벤트 로깅을 사용할 때, logEvent함수와 상관없는
+`ùseAnalytics`와 `useQuery`를 사용하지 않고, `handleLogEvent`만 사용할 수 있게된다.
+
+```tsx
+import { useLogEvent } from './useLogEvent';
+import { EventType } from './events';
+
+const App = () => {
+  const { handleLogEvent } = useLogEvent(true);
+
+  const handleData = () => {
+    apiCall().then((data) => {
+
+      /** for business-logic */
+
+      handleLogEvent(EventType.EVENT_LOG_1, {
+        entry_point: 'entry_point',
+        ...
+      });
+    });
+  };
+  return <button>Click Event!</button>;
+};
+```
+
+또한 `LogClickComponent`와 `LogViewComponent`를 다음과 같이 변경하면 global property를 쉽게 적용할 수 있다.
+
+> **LogClickComponent**
+
+```tsx
+// LogClickComponent
+const LogClickComponent = <T extends keyof ClickEventMap>({
+  children,
+  eventName,
+  params,
+  global,
+}: LogClickProps<T>) => {
+  const { handleLogEvent } = useLogEvent(global);
+  const child = React.Children.only(children);
+
+  return React.cloneElement(child, {
+    onClick: () => {
+      handleLogEvent(eventName, params);
+
+      if (child.props.onClick) {
+        child.props.onClick();
+      }
+    },
+  });
+};
+```
+
+> **LogViewComponent**
+
+```tsx
+// LogViewComponent
+const LogViewComponent = <T extends keyof ViewEventMap>({
+  children,
+  eventName,
+  params,
+  global,
+}: LogViewProps<T>) => {
+  const { handleLogEvent } = useLogEvent(global);
+  const child = React.Children.only(children);
+
+  useEffect(() => {
+    handleLogEvent(eventName, params);
+  }, [eventName, handleLogEvent, params]);
+
+  return React.cloneElement(child);
+};
+```
+
+### global property type
+
+필자의 회사에서는 `SSR`을 사용하고 있어, global property를 사용하는 곳에서는 dehydratedState를 사용했다.
+이미 페이지에 global property가 존재한다는 가정하에, useQuery로 불러올 수 있다고 가정하고 작성하였다.
+
+위에 이벤트 타입을 작성했듯이, global property에 대한 type-safe도 적용해야 한다.<br />
+앞서 작성했던 logEvent함수에 global property를 넣어주는 방식을 사용하면 된다.
+
+```ts
+// property.ts
+export interface GlobalPropertyInterface {
+  globalProperty?: string;
+  ...
+}
+
+export const logEvent = <T extends keyof CombinedLogEventMap>(
+  analytics: Analytics,
+  eventName: T,
+  params: CombinedLogEventMap[T] & GlobalPropertyInterface
+) => {
+  logEvent(analytics, String(eventName), params);
+};
+```
+
+이로써 global property에 대한 관심사는 **Custom Hook** 으로 분리되었다.
+LoggingComponent, logEvent함수는 오로지 이벤트 로깅만을 담당할 수 있게 되었다.
+
+# 더 생각해봐야 할 점
+
+Google Docs로 관리하고 있는 이벤트는 ServerSide Event와 같이 관리되고 있는데,
+서버 - 프론트 - google docs 간의 이벤트 **로깅 Sync**를 맞출 수 있는 방법을 생각해보는 것도 좋을 것 같다.
+
+눈으로 보기 힘들 정도로 많은 이벤트 로깅이 생긴다면 **Google Docs 자동화** 연결을 생각해보는 것도 좋을 것 같다.
+만일 자동화한다면, 위에서 언급한 로깅 Sync도 같이 해결할 수 있을 것 같다.
+
+또한 지금의 Event Logging Naming 방식이 깔끔하지 않다고 생각한다.
+예를 들어, 현재 이벤트 로그는 단순히 `sign-up`, `sign-in`과 같은 이름으로 되어있다.<br/>
+이를 유저 행동을 나타내는 `What`, `Where` 같은 **Naming Convention**을 사용하여 더 명확하고 확장성 있게 정의할 수 있을 것 같다.
+
+# Ref.
+
+- [https://toss.tech/article/engineering-note-5](https://toss.tech/article/engineering-note-5)
+- [https://velog.io/@moreso/data-event-design-for-frontend](https://velog.io/@moreso/data-event-design-for-frontend)
+- [https://xionwcfm.tistory.com/446](https://xionwcfm.tistory.com/446)

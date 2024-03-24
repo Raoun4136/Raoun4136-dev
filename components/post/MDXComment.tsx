@@ -12,6 +12,9 @@ const MDXComment = () => {
         if (!elem) {
           return;
         }
+        if (document.querySelector('.utterances')) {
+          return;
+        }
         const scriptElem = document.createElement('script');
         scriptElem.src = 'https://utteranc.es/client.js';
         scriptElem.async = true;
