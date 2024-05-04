@@ -13,8 +13,7 @@ tags: ['log', 'custom-hook', 'react', 'typescript']
 이러한 데이터를 기록하는 방법은 여러가지가 있는데,
 보편적으로 Google Analytics, Amplitude, Mixpanel 같은 서비스를 사용하거나, 직접 서버에 로그를 남기는 방법이 있다.
 
-필자는 Firebase를 사용하고 있고, Custom Event를 사용하여 로그를 남기고 있다.
-이번 글에서는 Custom Event 로그를 어떻게 관리할 수 있는지 알아보자.
+이 글에서는 Firebase를 사용하고 있고, Custom Event를 사용한다는 가정으로 로그를 어떻게 관리할 수 있는지 알아보자
 
 ## 이벤트 로깅이란?
 
@@ -32,13 +31,13 @@ tags: ['log', 'custom-hook', 'react', 'typescript']
 
 ---
 
-필자의 회사에서는 Google Docs로 관리하고 있었고, 이벤트의 종류는 다음과 같이 두가지로 구분할 수 있었다.
+이벤트는 Google Docs로 관리하고 있었고, 이벤트의 종류는 다음과 같이 두가지로 구분할 수 있었다.
 
 1. **Click Event** : 주로 버튼 클릭, 링크 클릭, entry_point에 집중하는 이벤트
 2. **View Event** : 페이지 진입에 의미를 두는 이벤트
 
 다른 이벤트 로깅과 약간 다른 점은 Click Event중에서 서버에 api를 호출하고 성공한 데이터를 넘기는 이벤트가 있다는 것이었다.
-따라서 필자는 지속가능한 이벤트 로깅을 위해 다음과 같은 목표를 세웠다.
+따라서 지속가능한 이벤트 로깅을 위해 다음과 같은 목표를 세웠다.
 
 ## 목표
 
@@ -333,7 +332,7 @@ import { LogViewComponent } from './log';
 
 종속적인 부분은 위에서 설명한 것처럼, 이벤트 로깅 함수를 분리하고 선언적으로 사용함으로써 해결하였다.
 
-하지만 필자의 회사에서는 이벤트 로깅을 순전히 클릭시에만 사용하지 않고 **api 호출 후 성공한 데이터**를 넘기는 이벤트도 있었다.
+하지만 나의 경우에는 이벤트 로깅을 순전히 클릭시에만 사용하지 않고 **api 호출 후 성공한 데이터**를 넘기는 이벤트도 있었다.
 또한 **global property**를 받아서 넘겨야 하는 경우도 있었다.
 
 기존의 방식으로는 이러한 경우에 다음과 같이 사용했다.
@@ -478,7 +477,7 @@ const LogViewComponent = <T extends keyof ViewEventMap>({
 
 ### global property type
 
-필자의 회사에서는 `SSR`을 사용하고 있어, global property를 사용하는 곳에서는 dehydratedState를 사용했다.
+`SSR`을 사용하고 있어서, global property를 사용하는 곳에서는 dehydratedState를 사용했다.
 이미 페이지에 global property가 존재한다는 가정하에, useQuery로 불러올 수 있다고 가정하고 작성하였다.
 
 위에 이벤트 타입을 작성했듯이, global property에 대한 type-safe도 적용해야 한다.<br />
