@@ -9,7 +9,7 @@ export default function Home({
   return (
     <Container>
       <Intro />
-      <Projects />
+      {/* <Projects /> */}
       <RecentPosts posts={documents.slice(0, 3)} />
     </Container>
   );

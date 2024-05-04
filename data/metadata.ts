@@ -8,8 +8,8 @@ const metadata = {
   author: 'Raoun4136',
   home: {
     name: '박성오 | Raoun',
-    description: '프론트 개발자가 되기위해 노력중입니다.',
-    subDescription: '뭐든지 해보는게 취미',
+    description: '프론트엔드 개발자 라운입니다.',
+    subDescription: '좋은 개발자가 되기위해 노력하고 있습니다.',
     image: '/home/profile.png',
   },
   social: {

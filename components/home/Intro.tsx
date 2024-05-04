@@ -10,7 +10,7 @@ const Intro = () => {
   return (
     <IntroSection>
       <IntroTitle>박성오 | Raoun</IntroTitle>
-      <IntroDetail>프론트 개발자가 되기위해 노력중입니다</IntroDetail>
+      <IntroDetail>프론트엔드 개발자 라운입니다</IntroDetail>
       <IntroButton>
         <Link href="/about">더보기</Link>
       </IntroButton>

@@ -1,16 +1,10 @@
 import styled from '@emotion/styled';
 
 export const Item = styled.div`
-  padding: 1rem;
-  margin: 1rem;
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
 
   &:hover {
-    border: 1px solid var(--accent);
-
     h4 {
       color: var(--accent);
     }
@@ -18,7 +12,7 @@ export const Item = styled.div`
 `;
 
 export const Title = styled.h4`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 0;
 
   transition: all 0.3s ease;

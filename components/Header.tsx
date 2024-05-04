@@ -24,7 +24,7 @@ const Header = () => {
         <Nav />
         <IconContainer>
           <Theme />
-          <Search />
+          {/* <Search /> */}
         </IconContainer>
       </DesktopHeader>
       <MobileHeader className={menu_modal ? 'open' : 'close'}>
@@ -32,7 +32,7 @@ const Header = () => {
         {menu_modal ? <Nav /> : null}
         <IconContainer className={menu_modal ? 'open' : 'close'}>
           <Theme />
-          <Search />
+          {/* <Search /> */}
         </IconContainer>
       </MobileHeader>
     </HeaderContainer>

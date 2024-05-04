@@ -5,7 +5,7 @@ export const HobbySection = styled.section`
 `;
 
 export const HobbyHeader = styled.h3`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 400;
   margin-bottom: 4px;
 `;
@@ -13,7 +13,7 @@ export const HobbyHeader = styled.h3`
 export const HobbyItemWrapper = styled.div``;
 
 export const HobbyLink = styled.a`
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 800;
   text-decoration: underline;
   cursor: pointer;
@@ -26,7 +26,7 @@ export const HobbyLink = styled.a`
 `;
 
 export const HobbyDesc = styled.p`
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 300;
   margin-left: 16px;
   margin-top: 4px;
