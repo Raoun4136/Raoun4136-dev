@@ -18,7 +18,7 @@ export const MDXContainer = styled.div`
 
   sub,
   sup {
-    font-size: 12px;
+    font-size: 0.8rem;
   }
 
   a {
