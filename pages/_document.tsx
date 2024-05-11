@@ -1,7 +1,4 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
-
-import * as gtag from '../lib/gtag';
 
 export default function Document() {
   return (
@@ -25,35 +22,10 @@ export default function Document() {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-        {/* Google Search Console */}
-        <meta
-          name="google-site-verification"
-          content="8NuhoMSBYXjVe2TMpT5-FjmE0gBU_Os-pwNfUpHgRdo"
-        />
         {/* Naver Search Advisor */}
         <meta
           name="naver-site-verification"
-          content="3f538bd79d405ce047d26e5eb8503866328bb55d"
-        />
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <Script
-          strategy="beforeInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        />
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <Script
-          id="gtag-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
-          }}
+          content="a86b2f1dbcae85a65adac50bd181de3cb7d853d0"
         />
         {/* Theme Mode - Dark */}
         <script

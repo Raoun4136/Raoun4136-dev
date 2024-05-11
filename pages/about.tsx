@@ -8,7 +8,7 @@ export default function DailyPage(): JSX.Element {
     <>
       <NextSeo
         title="About"
-        description="이력서"
+        description="소개"
         canonical={`${metadata.meta.url}/about`}
         openGraph={{ url: `${metadata.meta.url}/about` }}
       />

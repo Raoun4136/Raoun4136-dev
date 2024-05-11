@@ -1,15 +1,25 @@
 import { Container, PostList, PostHeader } from 'components';
 import { allDocuments } from 'contentlayer/generated';
+import metadata from 'data/metadata';
 import { InferGetStaticPropsType, GetStaticProps } from 'next';
+import { NextSeo } from 'next-seo';
 
 const PostsPage = ({
   posts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <Container>
-      <PostHeader />
-      <PostList posts={posts}></PostList>
-    </Container>
+    <>
+      <NextSeo
+        title="Posts"
+        description="포스트"
+        canonical={`${metadata.meta.url}/posts`}
+        openGraph={{ url: `${metadata.meta.url}/posts` }}
+      />
+      <Container>
+        <PostHeader />
+        <PostList posts={posts}></PostList>
+      </Container>
+    </>
   );
 };
 

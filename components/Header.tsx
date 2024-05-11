@@ -18,7 +18,7 @@ const Header = () => {
       <DesktopHeader>
         <Link href="/">
           <HeaderLogo>
-            <span>//</span> Raoun<span>.</span>dev
+            <span>//</span> Raoun<span>.</span>me
           </HeaderLogo>
         </Link>
         <Nav />

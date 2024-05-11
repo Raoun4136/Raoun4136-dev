@@ -1,7 +1,7 @@
 import metadata from '/data/metadata';
 
 const SEO = {
-  titleTemplate: '%s | Raoun4136.dev',
+  titleTemplate: '%s | Raoun.me',
   defaultTitle: metadata.meta.title,
   description: metadata.meta.description,
   canonical: metadata.meta.url,
@@ -15,7 +15,7 @@ const SEO = {
         url: `${metadata.meta.url}/static/og-image.jpg`,
         width: 850,
         height: 650,
-        alt: `Raoun4136.dev`,
+        alt: `Raoun.me`,
       },
     ],
   },
