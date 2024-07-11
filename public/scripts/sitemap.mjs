@@ -27,7 +27,7 @@ async function generate() {
               .replace('/index', '');
             return `
               <url>
-                  <loc>${`https://raoun4136-dev.vercel.app${path}`}</loc>
+                  <loc>${`https://raoun.me${path}`}</loc>
               </url>
             `;
           })

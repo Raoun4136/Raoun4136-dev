@@ -16,7 +16,7 @@ const Footer = () => {
         <FooterInfoContainer>
           <BlogInfo>{metadata.meta.title}</BlogInfo>
           <BlogLink href={metadata.repo} rel="noreferrer">
-            Raoun4136-dev
+            Raoun.me
           </BlogLink>
         </FooterInfoContainer>
 
