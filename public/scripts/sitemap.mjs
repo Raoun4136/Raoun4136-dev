@@ -20,7 +20,7 @@ async function generate() {
           .map((page) => {
             const path = page
               .replace('pages', '')
-              .replace('posts', '')
+              .replace('posts', '/posts')
               .replace('.tsx', '')
               .replace('.js', '')
               .replace('.mdx', '')
