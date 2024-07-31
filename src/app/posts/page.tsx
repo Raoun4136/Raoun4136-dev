@@ -6,8 +6,11 @@ import PostLi from './_ui/post-li';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Posts | Raoun.me',
+  title: 'Posts',
   description: 'My Posts',
+  alternates: {
+    canonical: '/posts',
+  },
 };
 
 export default function Posts() {

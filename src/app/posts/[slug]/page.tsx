@@ -51,8 +51,11 @@ export async function generateMetadata({ params }: any) {
   const blog = getPost(params);
 
   return {
-    title: `${blog.frontMatter.title} | Raoun.me`,
+    title: `${blog.frontMatter.title}`,
     description: blog.frontMatter.description,
+    alternates: {
+      canonical: `/posts/${params.slug}`,
+    },
   };
 }
 

@@ -1,8 +1,11 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About | Raoun.me',
+  title: 'About',
   description: 'About Me',
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function About() {

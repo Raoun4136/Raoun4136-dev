@@ -8,6 +8,7 @@ import LinkButton from '@/components/link-button';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Github } from 'lucide-react';
 import Link from 'next/link';
+import { Analytics } from '@vercel/analytics/react';
 
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -15,8 +16,24 @@ const sans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Raoun.me',
+  metadataBase: new URL('https://raoun.me'),
+  title: {
+    template: '%s | Raoun.me',
+    default: 'Raoun.me',
+  },
   description: 'Become a better developer',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    images: '/images/og-image.png',
+    type: 'website',
+  },
+  verification: {
+    other: {
+      'naver-site-verification': 'a86b2f1dbcae85a65adac50bd181de3cb7d853d0',
+    },
+  },
 };
 
 export default function RootLayout({
@@ -48,6 +65,8 @@ export default function RootLayout({
             {children}
           </main>
         </ThemeProvider>
+
+        <Analytics />
       </body>
     </html>
   );
