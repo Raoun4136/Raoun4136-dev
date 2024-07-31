@@ -27,7 +27,7 @@ export default function Posts() {
   });
 
   return (
-    <div className="mb-16 mt-8 w-full max-w-lg text-left lg:h-full lg:w-full lg:max-w-5xl">
+    <div className="mb-16 mt-8 w-full max-w-2xl text-left">
       <ul className="flex flex-col gap-8">
         {blogs
           ?.sort((a, b) => b.meta.date - a.meta.date)
