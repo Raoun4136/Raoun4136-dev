@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: any) {
   const blog = getPost(params);
 
   return {
-    title: blog.frontMatter.title,
+    title: `${blog.frontMatter.title} | Raoun.me`,
     description: blog.frontMatter.description,
   };
 }

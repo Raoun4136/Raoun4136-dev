@@ -1,6 +1,9 @@
-import LinkButton from '@/components/link-button';
-import { ModeToggle } from '@/components/mode-toggle';
-import { Github } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About | Raoun.me',
+  description: 'About Me',
+};
 
 export default function About() {
   return (

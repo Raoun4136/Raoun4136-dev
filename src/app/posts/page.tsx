@@ -3,6 +3,12 @@ import path from 'path';
 import matter from 'gray-matter';
 
 import PostLi from './_ui/post-li';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Posts | Raoun.me',
+  description: 'My Posts',
+};
 
 export default function Posts() {
   // 1) Set blogs directory
