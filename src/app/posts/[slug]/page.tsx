@@ -10,6 +10,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import { format } from 'date-fns';
+import GiscusComment from '../_ui/giscus-comment';
 
 function getPost({ slug }: { slug: string }) {
   const markdownFile = fs.readFileSync(path.join('src/mdx/posts', slug + '.mdx'), 'utf-8');
@@ -42,6 +43,7 @@ export default function Post({ params }: any) {
       </section>
       <section className="mdx">
         <MDXRemote source={props.content} options={options} />
+        <GiscusComment />
       </section>
     </article>
   );
