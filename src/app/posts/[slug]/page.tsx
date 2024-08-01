@@ -37,8 +37,8 @@ export default function Post({ params }: any) {
   return (
     <article className="mb-16 mt-8 w-full max-w-2xl text-left">
       <section className="mb-12">
-        <h1 className="mb-3 text-xl font-semibold">{props.frontMatter.title}</h1>
-        <h2 className="text-base font-medium">{props.frontMatter.description}</h2>
+        <h1 className="mb-3 text-xl font-medium">{props.frontMatter.title}</h1>
+        <h2 className="text-base font-normal">{props.frontMatter.description}</h2>
         <span className="text-sm font-light">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
       </section>
       <section className="mdx">

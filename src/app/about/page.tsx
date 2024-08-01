@@ -16,7 +16,7 @@ export default function About() {
         <p>모든 것을</p>
         <p>배우고 싶은</p>
         <p>
-          <span className="font-bold">프론트엔드 개발자</span> 입니다.
+          <span className="font-semibold">프론트엔드 개발자</span> 입니다.
         </p>
       </div>
     </div>

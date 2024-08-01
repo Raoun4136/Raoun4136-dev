@@ -1,8 +1,11 @@
 'use client';
 
 import Giscus from '@giscus/react';
+import { useTheme } from 'next-themes';
 
 const GiscusComment = () => {
+  const theme = useTheme();
+
   return (
     <Giscus
       repo="Raoun4136/Raoun4136-dev"
@@ -11,7 +14,7 @@ const GiscusComment = () => {
       reactionsEnabled="1"
       emitMetadata="1"
       loading="lazy"
-      theme="preferred_color_scheme"
+      theme={theme.resolvedTheme}
     />
   );
 };

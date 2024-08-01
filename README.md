@@ -10,7 +10,7 @@ My Personal Blog with Next14 app router
   - rehype
   - remark
 - **Next14**
-  - App Router 적용
+  - App Router
 - **UI**
   - shadcn ui
   - TailwindCSS
