@@ -51,7 +51,7 @@ export default function RootLayout({
             </Link>
           </header>
           <main className="flex h-full flex-col items-center justify-between px-4 py-12">{children}</main>
-          <footer className="fixed bottom-0 left-0 flex h-24 w-full items-end justify-center gap-2 bg-gradient-to-t from-white via-white pb-2 dark:from-black dark:via-black">
+          <footer className="fixed bottom-0 left-0 flex h-24 w-full items-end justify-center gap-2 bg-gradient-to-t from-white via-white pb-3 dark:from-black dark:via-black">
             <ModeToggle />
 
             <LinkButton href="https://github.com/Raoun4136" target="_blank" variant="outline" size="icon">
