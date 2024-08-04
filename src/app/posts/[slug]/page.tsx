@@ -7,6 +7,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import { format } from 'date-fns';
@@ -30,19 +31,50 @@ export default function Post({ params }: any) {
   const options = {
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkBreaks],
-      rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypePrettyCode],
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'wrap',
+            properties: {
+              className: ['anchor'],
+            },
+          },
+        ],
+        [
+          rehypeExternalLinks,
+          {
+            properties: {
+              class: 'external-link',
+            },
+            target: '_blank',
+            rel: ['noopener noreferrer'],
+          },
+        ],
+        [
+          rehypePrettyCode,
+          {
+            theme: {
+              dark: 'github-dark',
+              light: 'github-light',
+            },
+            keepBackground: false,
+          },
+        ],
+      ],
     },
   };
 
   return (
     <article className="mb-16 mt-8 w-full max-w-2xl text-left">
-      <section className="mb-12">
-        <h1 className="mb-3 text-xl font-medium">{props.frontMatter.title}</h1>
+      <section className="mb-12 text-white text-opacity-90">
+        <h1 className="mb-3 text-lg font-medium">{props.frontMatter.title}</h1>
         <h2 className="text-base font-normal">{props.frontMatter.description}</h2>
         <span className="text-sm font-light">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
       </section>
       <section className="mdx">
-        <MDXRemote source={props.content} options={options} />
+        <MDXRemote source={props.content} options={options as any} />
         <GiscusComment />
       </section>
     </article>
