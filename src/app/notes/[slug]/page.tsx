@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import './mdx.css';
+import '@/styles/mdx.css';
 
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
@@ -30,7 +30,20 @@ export default function Note({ params }: any) {
   const options = {
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkBreaks],
-      rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypePrettyCode],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypeAutolinkHeadings,
+        [
+          rehypePrettyCode,
+          {
+            theme: {
+              dark: 'github-dark',
+              light: 'github-light',
+            },
+            keepBackground: false,
+          },
+        ],
+      ],
     },
   };
 
@@ -42,7 +55,7 @@ export default function Note({ params }: any) {
         <span className="text-sm font-light">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
       </section>
       <section className="mdx">
-        <MDXRemote source={props.content} options={options} />
+        <MDXRemote source={props.content} options={options as any} />
         <GiscusComment />
       </section>
     </article>
