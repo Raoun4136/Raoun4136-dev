@@ -13,6 +13,7 @@ import { Analytics } from '@vercel/analytics/react';
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
   variable: '--font-sans',
+  weight: '100 900',
 });
 
 export const metadata: Metadata = {
