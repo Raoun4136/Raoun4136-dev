@@ -17,7 +17,7 @@ const sans = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://raoun.me'),
+  metadataBase: new URL('https://www.raoun.me'),
   title: {
     template: '%s | Raoun.me',
     default: 'Raoun.me',
