@@ -4,8 +4,6 @@ description: theme과 기본 styled-components 만들어서 적용해보자
 date: 2023-05-02
 ---
 
-# 서론
-
 스타일 작업들에 대한 코드가 잘 짜여있다면, 각각의 컴포넌트 스타일 코드가 길어짐을 방지하고 코드를 읽기 쉬워진다. 덤으로 유지보수까지 쉬워질 것이다.
 
 하지만 개인프로젝트나 학교 내 작은 프로젝트를 할 경우에는 디자이너가 없어 마땅히 관리할 스타일이 없었는데, 이번 텔링미 프로젝트에 뛰어난 디자이너가 있어 디자인 시스템과 그에 따른 최적화된 스타일 시스템을 구축해보기로 결정했다.
@@ -13,6 +11,8 @@ date: 2023-05-02
 협업도 해야했기에 디자인 가이드가 제대로 구축되어 있다면 협업도 쉽게 할 수 있겠다는 생각이었다.
 
 > [텔링미 미디엄 블로그 글](https://medium.com/@tellingme/frontend-%EB%94%94%EC%9E%90%EC%9D%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%BD%94%EB%93%9C%EB%A1%9C-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-bc0a8319f137)의 내용입니다.
+
+---
 
 ## 목표
 
@@ -33,7 +33,7 @@ date: 2023-05-02
 
 - 스타일을 적용하는 데 필요한 코드 양이 줄어든다. 기존의 CSS 작성 방식보다 훨씬 직관적이고 간편하게 스타일을 적용할 수 있으며 컴포넌트의 스타일을 동적으로 변경하기 쉬우므로 사용자 지정 테마를 적용하는 것도 간단하다.
 
-### 사용방법
+## 사용방법
 
 사용방법은 간단하다. 아래와 같이 `ThemeProvider`를 적용하고자 하는 `App`을 감싸면된다.
 
@@ -52,7 +52,7 @@ root.render(
 );
 ```
 
-### 적용기
+## 적용기
 
 텔링미의 디자인 스타일가이드대로 <strong>color</strong>, <strong>shadow</strong>, <strong>gradient</strong>, <strong>font</strong> 들을 모아놓은 Theme을 생성한다.
 
@@ -136,7 +136,7 @@ const InnerWrapper = styled.div`
 `;
 ```
 
-### 자주사용할 Grid와 Text 만들기
+## 자주사용할 Grid와 Text 만들기
 
 위의 코드들로 style의 base들이 다 잡혔으니 디자인 가이드에 있는 `Text`와 편리하게 사용할 `Grid`를 구현할 수 있다.
 
@@ -275,7 +275,7 @@ const typo: ITypo = {
 }
 ```
 
-### Grid와 Text를 사용한 예제
+## Grid와 Text를 사용한 예제
 
 ```typescript
 <style.Grid flex="start" direction="column" _gap="18px">
@@ -306,7 +306,7 @@ const typo: ITypo = {
 
 아무런 `styled-components`를 만들지 않고 디자인 시스템에 맞는 컴포넌트를 만들 수 있다.
 
-### 단점
+## 단점
 
 1. 리팩토링 시 style.Grid가 너무 많아 한눈에 알아보기 힘들다.
 2. VScode의 autoTag가 마침표에 focus되어 수정이 필요없는 컴포넌트도 건들게 된다.

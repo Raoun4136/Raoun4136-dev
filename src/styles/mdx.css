@@ -22,7 +22,7 @@ h4 {
   @apply font-bold;
 }
 
-.mdx > :where(h3, h4) {
+.mdx > :where(h2, h3, h4) {
   @apply mt-8;
 }
 
