@@ -59,18 +59,18 @@ export default function Home() {
         </Link>
 
         <Link
-          href="https://raoun4136.notion.site/Raoun-f3f0c035828d491a8a95845bbf14de02"
+          href="/resume"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           target="_blank"
           rel="noopener noreferrer"
         >
           <h2 className="mb-3 text-lg font-medium">
-            Portpolio{' '}
+            Resume{' '}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
           </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">Portpolio by Notion.</p>
+          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">My PDF Resume</p>
         </Link>
       </div>
     </>
