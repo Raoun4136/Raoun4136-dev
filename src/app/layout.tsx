@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: '%s | Raoun.me',
     default: 'Raoun.me',
   },
-  description: 'Become a better developer',
+  description: '대체할 수 없는 개발자가 되어보자',
   alternates: {
     canonical: '/',
   },
@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={cn('min-h-screen bg-background font-sans antialiased', sans.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <header className="sticky left-0 top-0 z-10 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-3 pt-4 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit">

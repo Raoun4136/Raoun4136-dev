@@ -68,10 +68,10 @@ export default function Post({ params }: any) {
 
   return (
     <article className="mb-16 mt-8 w-full max-w-2xl text-left">
-      <section className="mb-12 text-white text-opacity-90">
-        <h1 className="mb-3 text-lg font-medium">{props.frontMatter.title}</h1>
-        <h2 className="text-base font-normal">{props.frontMatter.description}</h2>
-        <span className="text-sm font-light">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
+      <section className="mb-12 opacity-90">
+        <h1 className="text-md font-medium">{props.frontMatter.title}</h1>
+        <h2 className="text-sm font-extralight">{props.frontMatter.description}</h2>
+        <span className="text-xs font-extralight">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
       </section>
       <section className="mdx">
         <MDXRemote source={props.content} options={options as any} />

@@ -6,8 +6,8 @@ import NoteLi from './_ui/note-li';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Notes',
-  description: 'My Notes',
+  title: '노트',
+  description: '단순 기술 또는 배운 것들을 적는 공간',
   alternates: {
     canonical: '/notes',
   },

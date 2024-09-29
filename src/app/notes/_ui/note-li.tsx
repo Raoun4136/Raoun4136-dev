@@ -15,7 +15,7 @@ const NoteLi = ({
 }) => {
   return (
     <Link className="group" href={`notes/${slug}`}>
-      <p className="font-medium group-hover:underline">{title}</p>
+      <p className="font-medium opacity-90 group-hover:underline">{title}</p>
       <div className="flex items-center justify-between gap-2">
         <p className="overflow-hidden text-ellipsis whitespace-nowrap break-all text-sm font-extralight">
           {description}

@@ -3,7 +3,7 @@
   @apply font-normal;
   @apply leading-7;
   @apply text-black dark:text-white;
-  @apply text-opacity-70 !important;
+  @apply text-opacity-80 !important;
 }
 
 .mdx > :first-child {

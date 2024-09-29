@@ -6,8 +6,8 @@ import PostLi from './_ui/post-li';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Posts',
-  description: 'My Posts',
+  title: '글',
+  description: '경험을 바탕으로 나의 생각을 작성하는 공간',
   alternates: {
     canonical: '/posts',
   },
