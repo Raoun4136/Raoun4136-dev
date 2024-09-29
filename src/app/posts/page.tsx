@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 
 import PostLi from './_ui/post-li';
 import { Metadata } from 'next';
+import PostOutlink from './_ui/post-outlink';
 
 export const metadata: Metadata = {
   title: '글',
@@ -40,16 +41,25 @@ export default function Posts() {
       <ul className="flex flex-col gap-8">
         {blogs
           ?.sort((a, b) => b.meta.date - a.meta.date)
-          .map((blog) => (
-            <li key={blog.slug}>
-              <PostLi
-                title={blog.meta.title}
-                description={blog.meta.description}
-                date={blog.meta.date}
-                slug={blog.slug}
-              />
-            </li>
-          ))}
+          .map((blog) => {
+            if (blog.meta.outlink) {
+              return (
+                <li key={blog.slug}>
+                  <PostOutlink title={blog.meta.title} date={blog.meta.date} link={blog.meta.outlink} />
+                </li>
+              );
+            }
+            return (
+              <li key={blog.slug}>
+                <PostLi
+                  title={blog.meta.title}
+                  description={blog.meta.description}
+                  date={blog.meta.date}
+                  slug={blog.slug}
+                />
+              </li>
+            );
+          })}
       </ul>
     </div>
   );
