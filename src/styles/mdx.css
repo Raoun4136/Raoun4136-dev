@@ -221,6 +221,7 @@ h4 {
 [data-line] {
   @apply inline-block;
   @apply px-4;
+  @apply font-normal;
 }
 
 [data-highlighted-line] {
