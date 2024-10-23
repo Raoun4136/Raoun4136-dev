@@ -10,7 +10,7 @@ date: 2024-10-22
 
 복잡한 객체를 만들 때 사용하면 좋은 패턴이다.
 
-```js
+```js showLineNumbers
 class Person {
   constructor(name, age, address) {
     // name은 필수, age와 address는 선택
@@ -45,7 +45,7 @@ person.setAddress('Seoul');
 
 ## 빌더 패턴 적용하기
 
-```js
+```js showLineNumbers
 class Person {
   constructor(builder) {
     this.name = builder.name;
