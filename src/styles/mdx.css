@@ -332,7 +332,7 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   @apply fixed transition-all lg:translate-y-[-80px];
   @apply max-xl:left-2 xl:left-7;
   @apply max-xl:max-w-[150px] xl:max-w-[240px];
-  @apply max-lg:h-0 max-lg:opacity-0 lg:opacity-100;
+  @apply max-lg:pointer-events-none max-lg:h-0 max-lg:select-none max-lg:opacity-0 lg:opacity-100;
   @apply text-sm;
 }
 
