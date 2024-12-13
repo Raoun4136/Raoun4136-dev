@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: any) {
 
   return {
     title: `${blog.frontMatter.title}`,
-    description: blog.frontMatter.description,
+    description: blog.frontMatter.description + blog.content,
     alternates: {
       canonical: `/posts/${params.slug}`,
     },
