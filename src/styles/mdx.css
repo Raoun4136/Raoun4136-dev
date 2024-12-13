@@ -338,6 +338,15 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
 
 .mdx .toc li {
   @apply indent-0;
+  @apply pl-4;
+  @apply leading-6;
+}
+
+.mdx .toc li a {
+  @apply max-w-full;
+  @apply text-ellipsis;
+  @apply overflow-hidden;
+  @apply whitespace-nowrap;
 }
 
 .mdx .toc li:before {
