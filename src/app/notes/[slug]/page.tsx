@@ -10,6 +10,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
+import rehypeToc from 'rehype-toc';
 import { format } from 'date-fns';
 import GiscusComment from '../_ui/giscus-comment';
 
@@ -40,6 +41,12 @@ export default function Note({ params }: any) {
             properties: {
               className: ['anchor'],
             },
+          },
+        ],
+        [
+          rehypeToc,
+          {
+            headings: ['h1', 'h2', 'h3'],
           },
         ],
         [

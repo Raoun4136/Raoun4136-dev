@@ -23,7 +23,15 @@ h4 {
   @apply font-bold;
 }
 
-.mdx > :where(h2, h3, h4) {
+.mdx > :where(h2) {
+  @apply mt-24;
+}
+.mdx > :where(h3, h4) {
+  @apply mt-24;
+}
+
+/* h2 바로 아래 h3, h4가 올때 */
+.mdx > :where(h2) + :where(h3, h4) {
   @apply mt-8;
 }
 
@@ -316,4 +324,22 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   .mdx .anchor:hover::after {
     opacity: 1;
   }
+}
+
+/* rehype-toc */
+
+.mdx .toc {
+  @apply fixed transition-all lg:translate-y-[-80px];
+  @apply max-xl:left-2 xl:left-7;
+  @apply max-xl:max-w-[150px] xl:max-w-[240px];
+  @apply max-lg:h-0 max-lg:opacity-0 lg:opacity-100;
+  @apply text-sm;
+}
+
+.mdx .toc li {
+  @apply indent-0;
+}
+
+.mdx .toc li:before {
+  @apply hidden;
 }

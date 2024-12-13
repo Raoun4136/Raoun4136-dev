@@ -30,8 +30,6 @@ date: 2024-10-28
 
 는 장점이 있다.
 
----
-
 ## IndexedDB 구조
 
 <img src="/images/indexedDB/structure-indexedDB.png" width="100%" />
@@ -51,8 +49,6 @@ date: 2024-10-28
 - Object Store 이름은 고유 해야한다.
 - `IDBRequest.createObjectStore(store_name, \{keyPath: 'id'\})` 로 만들 수 있다.
 - Object store 에 key path 를 설정하면, in-line keys (내부 key) 를 사용하며, 그 외에는 out-of-line keys (외부 key) 를 사용한다.
-
----
 
 ## IndexedDB API
 
@@ -74,8 +70,6 @@ date: 2024-10-28
 - Object Store 에서 특정 필드를 인덱싱하여 검색을 빠르게 할 수 있다.
 - `IDBObjectStore.createIndex(index_name, keyPath)` 로 만들 수 있다.
 - `Object Store`에 Index와 관련된 레코드가 업데이트 되면, Index도 업데이트 된다.
-
----
 
 ## 예제
 
@@ -233,8 +227,6 @@ request.onupgradeneeded = (event) => {
 />
 ```
 
----
-
 ## 실제 사용 예시
 
 - 직접 `indexedDB`를 다루기보다는 라이브러리를 통해 컨트롤 한다.
@@ -245,7 +237,6 @@ request.onupgradeneeded = (event) => {
 - **Youtube**
   - permission이나 idtoken, guide section에 rendering할 데이터들 등을 저장하는 것 같다.
 
----
 
 ## 결론
 

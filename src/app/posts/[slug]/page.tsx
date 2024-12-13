@@ -10,6 +10,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
+import rehypeToc from 'rehype-toc';
 import { format } from 'date-fns';
 import GiscusComment from '../_ui/giscus-comment';
 
@@ -43,6 +44,12 @@ export default function Post({ params }: any) {
           },
         ],
         [
+          rehypeToc,
+          {
+            headings: ['h1', 'h2', 'h3'],
+          },
+        ],
+        [
           rehypeExternalLinks,
           {
             properties: {
@@ -67,17 +74,19 @@ export default function Post({ params }: any) {
   };
 
   return (
-    <article className="mb-16 mt-8 w-full max-w-2xl text-left">
-      <section className="mb-12 opacity-90">
-        <h1 className="text-md font-medium">{props.frontMatter.title}</h1>
-        <h2 className="text-sm font-extralight">{props.frontMatter.description}</h2>
-        <span className="text-xs font-extralight">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
-      </section>
-      <section className="mdx">
-        <MDXRemote source={props.content} options={options as any} />
-        <GiscusComment />
-      </section>
-    </article>
+    <>
+      <article className="mb-16 mt-8 w-full max-w-2xl text-left">
+        <section className="mb-12 opacity-90">
+          <h1 className="text-md font-medium">{props.frontMatter.title}</h1>
+          <h2 className="text-sm font-extralight">{props.frontMatter.description}</h2>
+          <span className="text-xs font-extralight">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
+        </section>
+        <section className="mdx">
+          <MDXRemote source={props.content} options={options as any} />
+          <GiscusComment />
+        </section>
+      </article>
+    </>
   );
 }
 
