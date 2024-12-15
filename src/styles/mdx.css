@@ -229,7 +229,7 @@ h4 {
 
 [data-line] {
   @apply inline-block;
-  @apply px-4;
+  @apply px-2;
   @apply font-normal;
 }
 
