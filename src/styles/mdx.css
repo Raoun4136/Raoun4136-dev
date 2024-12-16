@@ -131,7 +131,9 @@ h4 {
 
 .mdx table {
   empty-cells: hide;
+  @apply block;
   @apply text-sm;
+  @apply overflow-x-auto;
 }
 
 .mdx th {
