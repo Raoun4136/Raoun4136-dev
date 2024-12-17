@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { cn } from '@/lib/utils';
 import LinkButton from '@/components/link-button';
@@ -63,6 +64,8 @@ export default function RootLayout({
         </ThemeProvider>
 
         <Analytics />
+        {/* Google Analytics 설정 */}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       </body>
     </html>
   );
