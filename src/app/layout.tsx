@@ -7,7 +7,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { cn } from '@/lib/utils';
 import LinkButton from '@/components/link-button';
 import { ModeToggle } from '@/components/mode-toggle';
-import { Github } from 'lucide-react';
+import { Github, Rss } from 'lucide-react';
 import Link from 'next/link';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -59,6 +59,11 @@ export default function RootLayout({
             <LinkButton href="https://github.com/Raoun4136" target="_blank" variant="outline" size="icon">
               <Github className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
               <span className="sr-only">Github Link</span>
+            </LinkButton>
+
+            <LinkButton href="/feed.xml" target="_blank" variant="outline" size="icon">
+              <Rss className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
+              <span className="sr-only">Feed Link</span>
             </LinkButton>
           </footer>
         </ThemeProvider>
