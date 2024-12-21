@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const sitemapFromPosts: MetadataRoute.Sitemap = posts.map((post) => {
     const { data: frontMatter } = matter(fs.readFileSync(path.join('src/mdx/posts', post), 'utf-8'));
     return {
-      url: 'https://www.raoun.me/' + post?.replace('.mdx', ''),
+      url: 'https://www.raoun.me/posts/' + post?.replace('.mdx', ''),
       lastModified: new Date(frontMatter.update ?? frontMatter.date),
       changeFrequency: 'monthly',
     };
@@ -42,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const sitemapFromNotes: MetadataRoute.Sitemap = notes.map((note) => {
     const { data: frontMatter } = matter(fs.readFileSync(path.join('src/mdx/notes', note), 'utf-8'));
     return {
-      url: 'https://www.raoun.me/' + note?.replace('.mdx', ''),
+      url: 'https://www.raoun.me/notes/' + note?.replace('.mdx', ''),
       lastModified: new Date(frontMatter.update ?? frontMatter.date),
       changeFrequency: 'monthly',
     };
