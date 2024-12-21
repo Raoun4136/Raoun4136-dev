@@ -10,6 +10,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { Github, Rss } from 'lucide-react';
 import Link from 'next/link';
 import { Analytics } from '@vercel/analytics/react';
+import Script from 'next/script';
 
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -71,6 +72,18 @@ export default function RootLayout({
         <Analytics />
         {/* Google Analytics 설정 */}
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+
+        {/* Naver Analytics 설정 */}
+        <Script strategy="afterInteractive" src="//wcs.naver.net/wcslog.js" />
+        <Script id="wcs" strategy="afterInteractive">
+          {`
+            if (!wcs_add) var wcs_add = {};
+            wcs_add["wa"] = "ff0e6299b37308";
+            if (window.wcs) {
+              wcs_do();
+            }
+          `}
+        </Script>
       </body>
     </html>
   );
