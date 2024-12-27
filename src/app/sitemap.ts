@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return {
       url: 'https://www.raoun.me/posts/' + post?.replace('.mdx', ''),
       lastModified: new Date(frontMatter.update ?? frontMatter.date),
-      changeFrequency: 'monthly',
+      changeFrequency: 'daily',
     };
   });
 
@@ -44,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return {
       url: 'https://www.raoun.me/notes/' + note?.replace('.mdx', ''),
       lastModified: new Date(frontMatter.update ?? frontMatter.date),
-      changeFrequency: 'monthly',
+      changeFrequency: 'daily',
     };
   });
   return [...defaultSiteMap, ...sitemapFromPosts, ...sitemapFromNotes];
