@@ -1,4 +1,4 @@
-import { generateRSS } from '@/lib/rss';
+import { generateRSS } from '@/components/lib/rss';
 
 export async function GET() {
   const rss = generateRSS();

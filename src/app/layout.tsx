@@ -4,7 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/components/lib/utils';
 import LinkButton from '@/components/link-button';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Github, Rss } from 'lucide-react';

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ui": "pnpm shadcn-ui@latest"
+    "ui": "pnpm dlx shadcn@latest"
   },
   "dependencies": {
     "@giscus/react": "^3.0.0",
