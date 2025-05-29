@@ -1,5 +1,6 @@
-import { Separator } from '@/components/ui/separator';
+import LinkButton from '@/components/link-button';
 import { format } from 'date-fns';
+import { ArrowUpRightFromSquareIcon } from 'lucide-react';
 import Link from 'next/link';
 
 const PostLi = ({
@@ -7,23 +8,29 @@ const PostLi = ({
   description,
   date,
   slug,
+  outlink,
 }: {
   title: string;
   description: string;
   date: Date;
   slug: string;
+  outlink?: string;
 }) => {
   return (
-    <Link className="group" href={`posts/${slug}`}>
-      <p className="font-medium opacity-90 group-hover:underline">{title}</p>
-      <div className="flex items-center justify-between gap-2">
-        <p className="overflow-hidden text-ellipsis whitespace-nowrap break-all text-sm font-extralight">
-          {description}
-        </p>
-        <span className="whitespace-nowrap text-xs font-extralight">{format(date, 'yyyy-MM-dd')}</span>
-      </div>
-      <Separator className="mt-4" />
-    </Link>
+    <div className="group">
+      <Link className="block" href={`posts/${slug}`}>
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-base font-normal group-hover:underline">{title}</p>
+          <span className="whitespace-nowrap text-xs font-light opacity-70">{format(date, 'yyyy-MM-dd')}</span>
+        </div>
+      </Link>
+      {outlink && (
+        <LinkButton href={outlink} target="_blank" variant="outline" className="my-2 w-full" size={'sm'}>
+          외부 글 보러가기
+          <ArrowUpRightFromSquareIcon />
+        </LinkButton>
+      )}
+    </div>
   );
 };
 

@@ -13,6 +13,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeToc from 'rehype-toc';
 import { format } from 'date-fns';
 import GiscusComment from '../_ui/giscus-comment';
+import { TocHighlighter } from '@/components/toc-highlighter';
 
 function getPost({ slug }: { slug: string }) {
   const markdownFile = fs.readFileSync(path.join('src/mdx/posts', slug + '.mdx'), 'utf-8');
@@ -75,15 +76,16 @@ export default function Post({ params }: any) {
 
   return (
     <>
-      <article className="mb-16 mt-8 w-full max-w-2xl text-left">
+      <article>
         <section className="mb-12 opacity-90">
-          <h1 className="text-md font-medium">{props.frontMatter.title}</h1>
-          <h2 className="text-sm font-extralight">{props.frontMatter.description}</h2>
-          <span className="text-xs font-extralight">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
+          <h1 className="text-md font-semibold">{props.frontMatter.title}</h1>
+          <h2 className="text-sm font-light opacity-70">{props.frontMatter.description}</h2>
+          <span className="text-xs font-light opacity-70">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
         </section>
         <section className="mdx">
           <MDXRemote source={props.content} options={options as any} />
           <GiscusComment />
+          <TocHighlighter />
         </section>
       </article>
     </>

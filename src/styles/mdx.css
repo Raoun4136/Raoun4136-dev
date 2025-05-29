@@ -16,9 +16,9 @@
 }
 
 .mdx > h1,
-h2,
-h3,
-h4 {
+.mdx > h2,
+.mdx > h3,
+.mdx > h4 {
   @apply text-lg;
   @apply font-bold;
 }
@@ -331,11 +331,13 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
 /* rehype-toc */
 
 .mdx .toc {
-  @apply fixed transition-all lg:translate-y-[-80px];
+  @apply fixed top-1/2 -translate-y-1/2 transition-all;
   @apply max-xl:left-2 xl:left-7;
-  @apply max-xl:max-w-[150px] xl:max-w-[240px];
+  @apply max-xl:max-w-[150px] max-xl:pr-2 xl:max-w-[240px] xl:pr-4;
   @apply max-lg:pointer-events-none max-lg:h-0 max-lg:select-none max-lg:opacity-0 lg:opacity-100;
   @apply text-sm;
+  max-height: 70vh;
+  overflow-y: auto;
 }
 
 .mdx .toc li {
@@ -349,6 +351,10 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   @apply text-ellipsis;
   @apply overflow-hidden;
   @apply whitespace-nowrap;
+}
+
+.mdx .toc-link.active {
+  @apply font-bold text-primary;
 }
 
 .mdx .toc li:before {
