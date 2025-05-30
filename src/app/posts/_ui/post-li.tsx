@@ -17,7 +17,7 @@ const PostLi = ({
   outlink?: string;
 }) => {
   return (
-    <div className="group">
+    <div className="group py-4">
       <Link className="block" href={`posts/${slug}`}>
         <div className="flex items-center justify-between gap-2">
           <p className="text-base font-normal group-hover:underline max-sm:text-sm">{title}</p>

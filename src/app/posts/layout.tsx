@@ -1,6 +1,7 @@
 import { Header, HeaderRouter, HeaderTitle, HeaderSearch } from '@/components/common-header';
 import { metadata } from './page';
 import { Separator } from '@/components/ui/separator';
+import { RouterPath } from '@/components/lib/constant';
 
 const PostsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -12,7 +13,7 @@ const PostsLayout = ({ children }: { children: React.ReactNode }) => {
           <HeaderSearch />
         </HeaderTitle>
         <p className="text-sm opacity-70">{metadata?.description}</p>
-        <HeaderRouter pathname="/posts" />
+        <HeaderRouter pathname={RouterPath.POSTS} />
       </Header>
 
       <Separator />

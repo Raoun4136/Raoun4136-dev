@@ -1,12 +1,11 @@
 import LinkButton from '@/components/link-button';
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AtSignIcon, GithubIcon, InstagramIcon, LinkedinIcon, SearchIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import usePost from './posts/_hook/usePost';
 import useNote from './notes/_hook/useNote';
 import { Header, HeaderSearch, HeaderTitle } from '@/components/common-header';
+import { RouterPath } from '@/components/lib/constant';
 
 export default function Home() {
   const posts = usePost();
@@ -52,7 +51,7 @@ export default function Home() {
       </div>
 
       <div className="mb-10 flex flex-col gap-2">
-        <LinkButton variant="ghost" href="/posts" className="group flex w-fit items-center gap-2">
+        <LinkButton variant="ghost" href={RouterPath.POSTS} className="group flex w-fit items-center gap-2">
           <h2 className="text-md font-medium">글</h2>·
           <p className="m-0 max-w-[30ch] text-sm opacity-70">경험을 바탕으로 나의 생각을 작성하는 공간</p>
         </LinkButton>
@@ -75,7 +74,7 @@ export default function Home() {
               );
             }
             return (
-              <Link key={post.slug} href={`/posts/${post.slug}`} className="w-full">
+              <Link key={post.slug} href={`${RouterPath.POSTS}/${post.slug}`} className="w-full">
                 <li className="text-left text-sm hover:underline">{post.meta?.title}</li>
               </Link>
             );
@@ -84,14 +83,14 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-2">
-        <LinkButton variant="ghost" href="/notes" className="group flex w-fit items-center gap-2">
+        <LinkButton variant="ghost" href={RouterPath.NOTES} className="group flex w-fit items-center gap-2">
           <h2 className="text-md font-medium">노트</h2>·
           <p className="m-0 max-w-[30ch] text-sm opacity-70">단순 기술 또는 배운 것들을 적는 공간</p>
         </LinkButton>
 
         <ul className="ml-4 flex flex-col items-start gap-4 rounded-md border-b border-l pb-4 pl-4">
           {notes?.slice(0, 3).map((note) => (
-            <Link key={note.slug} href={`/notes/${note.slug}`} className="w-full">
+            <Link key={note.slug} href={`${RouterPath.NOTES}/${note.slug}`} className="w-full">
               <li className="text-left text-sm hover:underline">{note.meta?.title}</li>
             </Link>
           ))}

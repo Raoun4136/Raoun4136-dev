@@ -16,7 +16,7 @@ export default function Posts() {
   const blogs = usePost();
 
   return (
-    <ul className="group/ul flex flex-col gap-8">
+    <ul className="group/ul flex flex-col">
       {blogs?.map((blog) => {
         if (blog.meta.outlink && !blog.meta.showFull) {
           // 외부링크만 있는 경우

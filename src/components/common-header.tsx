@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import { SearchIcon } from 'lucide-react';
+import { RouterPath } from './lib/constant';
 
 const Header = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
@@ -23,9 +24,9 @@ type HeaderRouterProps = { pathname: string };
 
 const HeaderRouter = ({ pathname }: HeaderRouterProps) => {
   const navItems = [
-    { href: '/', label: '홈' },
-    { href: '/posts', label: '글' },
-    { href: '/notes', label: '노트' },
+    { href: RouterPath.HOME, label: '홈' },
+    { href: RouterPath.POSTS, label: '글' },
+    { href: RouterPath.NOTES, label: '노트' },
   ];
 
   return (
@@ -34,7 +35,7 @@ const HeaderRouter = ({ pathname }: HeaderRouterProps) => {
         <Link
           key={href}
           href={href}
-          className={`py-2 pr-2 text-sm opacity-70 hover:underline hover:opacity-100 ${pathname === href ? 'font-bold opacity-100' : ''}`}
+          className={`py-2 pr-2 text-sm hover:underline hover:opacity-100 ${pathname === href ? 'font-bold opacity-100' : 'opacity-70'}`}
         >
           <h2>{label}</h2>
         </Link>

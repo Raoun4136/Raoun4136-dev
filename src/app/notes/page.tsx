@@ -14,7 +14,7 @@ export default function Notes() {
   const notes = useNote();
 
   return (
-    <ul className="group/ul flex flex-col gap-8">
+    <ul className="group/ul flex flex-col">
       {notes?.map((note) => (
         <li
           key={note.slug}
