@@ -10,11 +10,6 @@ const defaultSiteMap: MetadataRoute.Sitemap = [
     changeFrequency: 'daily',
   },
   {
-    url: 'https://www.raoun.me/about',
-    lastModified: new Date(),
-    changeFrequency: 'daily',
-  },
-  {
     url: 'https://www.raoun.me/posts',
     lastModified: new Date(),
     changeFrequency: 'daily',

@@ -1,14 +1,19 @@
 import PostLi from './_ui/post-li';
-import { Metadata } from 'next';
 import PostOutlink from './_ui/post-outlink';
 import usePost from './_hook/usePost';
-import { Separator } from '@/components/ui/separator';
+import { CommonMetaData, RouterPath } from '@/components/lib/constant';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  ...CommonMetaData,
   title: '글',
   description: '경험을 바탕으로 나의 생각을 작성하는 공간',
   alternates: {
-    canonical: '/posts',
+    canonical: RouterPath.POSTS,
+  },
+  openGraph: {
+    ...CommonMetaData.openGraph,
+    url: RouterPath.POSTS,
   },
 };
 
@@ -25,7 +30,7 @@ export default function Posts() {
               key={blog.slug}
               className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
             >
-              <PostOutlink title={blog.meta.title} date={blog.meta.date} link={blog.meta.outlink} />
+              <PostOutlink {...blog.meta} />
             </li>
           );
         }
@@ -34,13 +39,7 @@ export default function Posts() {
             key={blog.slug}
             className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
           >
-            <PostLi
-              title={blog.meta.title}
-              description={blog.meta.description}
-              date={blog.meta.date}
-              slug={blog.slug}
-              outlink={blog.meta?.outlink}
-            />
+            <PostLi {...blog.meta} slug={blog.slug} />
           </li>
         );
       })}

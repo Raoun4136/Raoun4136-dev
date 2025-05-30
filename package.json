@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --turbopack",
+    "generate-rss": "npx tsx src/scripts/generate-rss.ts",
+    "build": "pnpm run generate-rss && next build",
     "start": "next start",
     "lint": "next lint",
     "ui": "pnpm dlx shadcn@latest"
@@ -12,7 +13,7 @@
   "dependencies": {
     "@giscus/react": "^3.0.0",
     "@hookform/resolvers": "^3.9.0",
-    "@next/third-parties": "^15.1.0",
+    "@next/third-parties": "15.3.3",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-aspect-ratio": "^1.1.0",
@@ -50,12 +51,12 @@
     "gray-matter": "^4.0.3",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.417.0",
-    "next": "14.2.5",
-    "next-mdx-remote": "^5.0.0",
+    "next": "15.3.3",
+    "next-mdx-remote-client": "^2.1.2",
     "next-themes": "^0.3.0",
-    "react": "^18",
+    "react": "19.1.0",
     "react-day-picker": "8.10.1",
-    "react-dom": "^18",
+    "react-dom": "19.1.0",
     "react-hook-form": "^7.52.1",
     "react-resizable-panels": "^2.0.22",
     "recharts": "^2.12.7",
@@ -75,11 +76,11 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.1.6",
+    "@types/react-dom": "19.1.5",
     "@types/rss": "^0.0.32",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "15.3.3",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "postcss": "^8",
@@ -88,5 +89,11 @@
     "rehype-toc": "^3.0.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.1.6",
+      "@types/react-dom": "19.1.5"
+    }
   }
 }

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { NoteType } from '@/components/lib/type';
 
 const useNote = () => {
   // 1) Set blogs directory
@@ -20,12 +21,12 @@ const useNote = () => {
 
       // 6) Return the metadata and page slug
       return {
-        meta: frontMatter,
+        meta: frontMatter as NoteType,
         slug: filename.replace('.mdx', ''),
       };
     })
     .filter((blog) => !blog.meta.draft)
-    ?.sort((a, b) => b.meta.date - a.meta.date);
+    ?.sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
 
   return blogs;
 };

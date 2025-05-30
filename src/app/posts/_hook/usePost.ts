@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { PostType } from '@/components/lib/type';
 
 const usePost = () => {
   // 1) Set blogs directory
@@ -20,12 +21,12 @@ const usePost = () => {
 
       // 6) Return the metadata and page slug
       return {
-        meta: frontMatter,
+        meta: frontMatter as PostType,
         slug: filename.replace('.mdx', ''),
       };
     })
     .filter((blog) => !blog.meta.draft)
-    ?.sort((a, b) => b.meta.date - a.meta.date);
+    ?.sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
 
   return blogs;
 };

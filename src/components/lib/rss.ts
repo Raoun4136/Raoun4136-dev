@@ -2,13 +2,14 @@ import RSS from 'rss';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { CommonMetaData } from './constant';
 
 export const generateRSS = () => {
   const feed = new RSS({
-    title: `Raoun.me`,
-    description: '대체할 수 없는 개발자가 되어보자',
-    site_url: 'https://www.raoun.me',
-    feed_url: 'https://www.raoun.me/feed.xml',
+    title: CommonMetaData.title.default,
+    description: CommonMetaData.description,
+    site_url: CommonMetaData.metadataBase.toString(),
+    feed_url: CommonMetaData.metadataBase.toString() + 'feed.xml',
     pubDate: new Date(),
   });
 
@@ -20,7 +21,7 @@ export const generateRSS = () => {
     feed.item({
       title: frontMatter.title,
       description: frontMatter.description,
-      url: `https://www.raoun.me/posts/${post.replace('.mdx', '')}`,
+      url: CommonMetaData.metadataBase.toString() + `posts/${post.replace('.mdx', '')}`,
       date: new Date(frontMatter.date),
     });
   });
@@ -30,7 +31,7 @@ export const generateRSS = () => {
     feed.item({
       title: frontMatter.title,
       description: frontMatter.description,
-      url: `https://www.raoun.me/notes/${note.replace('.mdx', '')}`,
+      url: CommonMetaData.metadataBase.toString() + `notes/${note.replace('.mdx', '')}`,
       date: new Date(frontMatter.date),
     });
   });

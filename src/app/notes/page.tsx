@@ -1,12 +1,18 @@
 import NoteLi from './_ui/note-li';
-import { Metadata } from 'next';
 import useNote from './_hook/useNote';
+import { CommonMetaData, RouterPath } from '@/components/lib/constant';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  ...CommonMetaData,
   title: '노트',
   description: '단순 기술 또는 배운 것들을 적는 공간',
   alternates: {
-    canonical: '/notes',
+    canonical: RouterPath.NOTES,
+  },
+  openGraph: {
+    ...CommonMetaData.openGraph,
+    url: RouterPath.NOTES,
   },
 };
 
@@ -20,7 +26,7 @@ export default function Notes() {
           key={note.slug}
           className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
         >
-          <NoteLi title={note.meta.title} description={note.meta.description} date={note.meta.date} slug={note.slug} />
+          <NoteLi {...note.meta} slug={note.slug} />
         </li>
       ))}
     </ul>

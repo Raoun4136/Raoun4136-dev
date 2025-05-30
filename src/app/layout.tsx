@@ -11,6 +11,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { Rss } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
+import { CommonMetaData } from '@/components/lib/constant';
 
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -31,24 +32,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.raoun.me'),
-  title: {
-    template: '%s | Raoun.me',
-    default: 'Raoun.me',
-  },
-  description: '대체할 수 없는 개발자가 되어보자',
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    images: '/images/og-image.png',
-    type: 'website',
-  },
-  verification: {
-    other: {
-      'naver-site-verification': 'a86b2f1dbcae85a65adac50bd181de3cb7d853d0',
-    },
-  },
+  ...CommonMetaData,
 };
 
 export default function RootLayout({
@@ -59,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={cn('min-h-screen bg-background font-sans antialiased', sans.variable, serif.variable, mono.variable)}
+        className={cn('min-h-dvh bg-background font-sans antialiased', sans.variable, serif.variable, mono.variable)}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <main className="flex h-full flex-col items-center justify-between px-4 py-12">
@@ -80,16 +64,24 @@ export default function RootLayout({
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
 
         {/* Naver Analytics 설정 */}
-        <Script strategy="afterInteractive" src="//wcs.naver.net/wcslog.js" />
+        <Script strategy="beforeInteractive" src="//wcs.naver.net/wcslog.js" />
         <Script id="wcs" strategy="afterInteractive">
           {`
             if (!wcs_add) var wcs_add = {};
-            wcs_add["wa"] = "ff0e6299b37308";
+            wcs_add["wa"] = "${process.env.NEXT_PUBLIC_NAVER_WA_ID}";
             if (window.wcs) {
               wcs_do();
             }
           `}
         </Script>
+
+        {/* Umami Analytics 설정 */}
+        <Script
+          id="umami"
+          src="https://cloud.umami.is/script.js"
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
