@@ -12,7 +12,7 @@ const NotesLayout = ({ children }: { children: React.ReactNode }) => {
           <HeaderSearch />
         </HeaderTitle>
         <p className="text-sm opacity-70">{metadata?.description}</p>
-        <HeaderRouter />
+        <HeaderRouter pathname="/notes" />
       </Header>
 
       <Separator />

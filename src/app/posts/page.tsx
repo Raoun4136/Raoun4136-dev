@@ -16,18 +16,24 @@ export default function Posts() {
   const blogs = usePost();
 
   return (
-    <ul className="flex flex-col gap-8">
+    <ul className="group/ul flex flex-col gap-8">
       {blogs?.map((blog) => {
         if (blog.meta.outlink && !blog.meta.showFull) {
           // 외부링크만 있는 경우
           return (
-            <li key={blog.slug}>
+            <li
+              key={blog.slug}
+              className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+            >
               <PostOutlink title={blog.meta.title} date={blog.meta.date} link={blog.meta.outlink} />
             </li>
           );
         }
         return (
-          <li key={blog.slug}>
+          <li
+            key={blog.slug}
+            className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+          >
             <PostLi
               title={blog.meta.title}
               description={blog.meta.description}

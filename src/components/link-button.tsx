@@ -4,12 +4,13 @@ import Link, { LinkProps } from 'next/link';
 
 interface LinkButtonProps extends ButtonProps {
   href: LinkProps['href'];
+  scroll?: LinkProps['scroll'];
   target?: AnchorHTMLAttributes<HTMLAnchorElement>['target'];
 }
 
-const LinkButton = ({ href, target, ...props }: LinkButtonProps) => {
+const LinkButton = ({ href, scroll, target, ...props }: LinkButtonProps) => {
   return (
-    <Link href={href} target={target} rel="noopener noreferrer" tabIndex={-1}>
+    <Link href={href} target={target} rel="noopener noreferrer" tabIndex={-1} scroll={scroll}>
       <Button {...props} />
     </Link>
   );

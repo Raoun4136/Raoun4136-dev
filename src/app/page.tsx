@@ -80,10 +80,6 @@ export default function Home() {
               </Link>
             );
           })}
-
-          <Link href="/posts" className="w-full">
-            <li className="text-left text-sm hover:underline">...</li>
-          </Link>
         </ul>
       </div>
 
@@ -99,10 +95,6 @@ export default function Home() {
               <li className="text-left text-sm hover:underline">{note.meta?.title}</li>
             </Link>
           ))}
-
-          <Link href="/notes" className="w-full">
-            <li className="text-left text-sm hover:underline">...</li>
-          </Link>
         </ul>
       </div>
     </>

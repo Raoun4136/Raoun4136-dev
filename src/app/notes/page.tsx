@@ -14,9 +14,12 @@ export default function Notes() {
   const notes = useNote();
 
   return (
-    <ul className="flex flex-col gap-8">
+    <ul className="group/ul flex flex-col gap-8">
       {notes?.map((note) => (
-        <li key={note.slug}>
+        <li
+          key={note.slug}
+          className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+        >
           <NoteLi title={note.meta.title} description={note.meta.description} date={note.meta.date} slug={note.slug} />
         </li>
       ))}

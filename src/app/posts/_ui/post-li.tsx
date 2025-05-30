@@ -20,8 +20,10 @@ const PostLi = ({
     <div className="group">
       <Link className="block" href={`posts/${slug}`}>
         <div className="flex items-center justify-between gap-2">
-          <p className="text-base font-normal group-hover:underline">{title}</p>
-          <span className="whitespace-nowrap text-xs font-light opacity-70">{format(date, 'yyyy-MM-dd')}</span>
+          <p className="text-base font-normal group-hover:underline max-sm:text-sm">{title}</p>
+          <span className="whitespace-nowrap text-xs font-light opacity-70 max-sm:text-xs">
+            {format(date, 'yyyy-MM-dd')}
+          </span>
         </div>
       </Link>
       {outlink && (
