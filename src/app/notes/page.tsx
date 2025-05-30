@@ -20,7 +20,7 @@ export default function Notes() {
           key={note.slug}
           className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
         >
-          <NoteLi title={note.meta.title} description={note.meta.description} date={note.meta.date} slug={note.slug} />
+          <NoteLi {...note.meta} slug={note.slug} />
         </li>
       ))}
     </ul>

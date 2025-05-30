@@ -2,15 +2,20 @@ import { Header, HeaderRouter, HeaderTitle, HeaderSearch } from '@/components/co
 import { metadata } from './page';
 import { Separator } from '@/components/ui/separator';
 import { RouterPath } from '@/components/lib/constant';
+import usePost from '@/app/posts/_hook/usePost';
+import useNote from '@/app/notes/_hook/useNote';
 
 const NotesLayout = ({ children }: { children: React.ReactNode }) => {
+  const posts = usePost();
+  const notes = useNote();
+
   return (
     <>
       <Header>
         <HeaderTitle>
           <h1 className="font-serif font-semibold">{metadata?.title as string}</h1>
 
-          <HeaderSearch />
+          <HeaderSearch posts={posts} notes={notes} />
         </HeaderTitle>
         <p className="text-sm opacity-70">{metadata?.description}</p>
         <HeaderRouter pathname={RouterPath.NOTES} />

@@ -5,7 +5,7 @@ My Personal Blog with Next14 app router
 ## Features
 
 - **MDX**
-  - next-mdx-remote
+  - next-mdx-remote-client
   - gray-matter
   - rehype
   - remark

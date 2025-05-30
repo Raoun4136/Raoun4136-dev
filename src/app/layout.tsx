@@ -59,7 +59,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={cn('min-h-screen bg-background font-sans antialiased', sans.variable, serif.variable, mono.variable)}
+        className={cn('min-h-dvh bg-background font-sans antialiased', sans.variable, serif.variable, mono.variable)}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <main className="flex h-full flex-col items-center justify-between px-4 py-12">
@@ -84,12 +84,20 @@ export default function RootLayout({
         <Script id="wcs" strategy="afterInteractive">
           {`
             if (!wcs_add) var wcs_add = {};
-            wcs_add["wa"] = "ff0e6299b37308";
+            wcs_add["wa"] = "${process.env.NEXT_PUBLIC_NAVER_WA_ID}";
             if (window.wcs) {
               wcs_do();
             }
           `}
         </Script>
+
+        {/* Umami Analytics 설정 */}
+        <Script
+          id="umami"
+          src="https://cloud.umami.is/script.js"
+          data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Button } from '@/components/ui/button';
-import { SearchIcon } from 'lucide-react';
 import { RouterPath } from './lib/constant';
+import SearchMenu from './search-menu';
+import { PostType, NoteType } from './lib/type';
 
 const Header = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
@@ -44,21 +43,14 @@ const HeaderRouter = ({ pathname }: HeaderRouterProps) => {
   );
 };
 
-const HeaderSearch = () => {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <Button variant="outline" size="icon" disabled>
-            <SearchIcon />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>검색 기능은 준비 중입니다.</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
+const HeaderSearch = ({
+  posts,
+  notes,
+}: {
+  posts: { meta: PostType; slug: string }[];
+  notes: { meta: NoteType; slug: string }[];
+}) => {
+  return <SearchMenu posts={posts} notes={notes} />;
 };
 
 export { Header, HeaderTitle, HeaderRouter, HeaderSearch };

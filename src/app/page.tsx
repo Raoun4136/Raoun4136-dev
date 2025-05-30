@@ -2,8 +2,8 @@ import LinkButton from '@/components/link-button';
 import { AtSignIcon, GithubIcon, InstagramIcon, LinkedinIcon, SearchIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import usePost from './posts/_hook/usePost';
-import useNote from './notes/_hook/useNote';
+import usePost from '@/app/posts/_hook/usePost';
+import useNote from '@/app/notes/_hook/useNote';
 import { Header, HeaderSearch, HeaderTitle } from '@/components/common-header';
 import { RouterPath } from '@/components/lib/constant';
 
@@ -17,7 +17,7 @@ export default function Home() {
         <HeaderTitle>
           <h1 className="font-serif font-semibold">박성오 · Raoun</h1>
 
-          <HeaderSearch />
+          <HeaderSearch posts={posts} notes={notes} />
         </HeaderTitle>
       </Header>
 

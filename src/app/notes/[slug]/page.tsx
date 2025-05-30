@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import '@/styles/mdx.css';
 
-import { MDXRemote } from 'next-mdx-remote/rsc';
+import { EvaluateOptions, MDXRemote } from 'next-mdx-remote-client/rsc';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -27,10 +27,11 @@ function getPost({ slug }: { slug: string }) {
   };
 }
 
-export default function Note({ params }: any) {
-  const props = getPost(params);
+export default async function Note(props: any) {
+  const params = await props.params;
+  const note = getPost(params);
 
-  const options = {
+  const options: EvaluateOptions = {
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkBreaks],
       rehypePlugins: [
@@ -76,13 +77,13 @@ export default function Note({ params }: any) {
 
   return (
     <article>
-      <section className="mb-12 text-white text-opacity-90">
-        <h1 className="text-md font-semibold">{props.frontMatter.title}</h1>
-        <h2 className="text-sm font-light opacity-70">{props.frontMatter.description}</h2>
-        <span className="text-xs font-light opacity-70">{format(props.frontMatter.date, 'yyyy-MM-dd')}</span>
+      <section className="mb-12 text-opacity-90">
+        <h1 className="text-md font-semibold">{note.frontMatter.title}</h1>
+        <h2 className="text-sm font-light opacity-70">{note.frontMatter.description}</h2>
+        <span className="text-xs font-light opacity-70">{format(note.frontMatter.date, 'yyyy-MM-dd')}</span>
       </section>
       <section className="mdx">
-        <MDXRemote source={props.content} options={options as any} />
+        {await MDXRemote({ source: note.content, options })}
         <GiscusComment />
         <TocHighlighter />
       </section>
@@ -90,12 +91,13 @@ export default function Note({ params }: any) {
   );
 }
 
-export async function generateMetadata({ params }: any) {
-  const blog = getPost(params);
+export async function generateMetadata(props: any) {
+  const params = await props.params;
+  const note = getPost(params);
 
   return {
-    title: `${blog.frontMatter.title}`,
-    description: blog.frontMatter.description,
+    title: `${note.frontMatter.title}`,
+    description: note.frontMatter.description,
     alternates: {
       canonical: `/notes/${params.slug}`,
     },
