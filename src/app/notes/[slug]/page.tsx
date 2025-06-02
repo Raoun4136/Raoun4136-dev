@@ -17,6 +17,7 @@ import { TocHighlighter } from '@/components/toc-highlighter';
 
 import { notFound } from 'next/navigation';
 import { ResolvingMetadata } from 'next';
+import { mdxOptions } from '@/components/lib/mdx';
 
 export async function generateMetadata(props: any, parent: ResolvingMetadata) {
   const params = await props.params;
@@ -58,50 +59,6 @@ export default async function Note(props: any) {
   const params = await props.params;
   const note = getPost(params);
 
-  const options: EvaluateOptions = {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkBreaks],
-      rehypePlugins: [
-        rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'wrap',
-            properties: {
-              className: ['anchor'],
-            },
-          },
-        ],
-        [
-          rehypeToc,
-          {
-            headings: ['h1', 'h2', 'h3'],
-          },
-        ],
-        [
-          rehypeExternalLinks,
-          {
-            properties: {
-              class: 'external-link',
-            },
-            target: '_blank',
-            rel: ['noopener noreferrer'],
-          },
-        ],
-        [
-          rehypePrettyCode,
-          {
-            theme: {
-              dark: 'github-dark',
-              light: 'github-light',
-            },
-            keepBackground: false,
-          },
-        ],
-      ],
-    },
-  };
-
   return (
     <article>
       <section className="mb-12 text-opacity-90">
@@ -110,7 +67,7 @@ export default async function Note(props: any) {
         <span className="text-xs font-light opacity-70">{format(note.frontMatter.date, 'yyyy-MM-dd')}</span>
       </section>
       <section className="mdx">
-        {await MDXRemote({ source: note.content, options })}
+        {await MDXRemote({ source: note.content, options: mdxOptions })}
         <GiscusComment />
         <TocHighlighter />
       </section>

@@ -2,6 +2,7 @@ export const RouterPath = {
   HOME: '/',
   POSTS: '/posts',
   NOTES: '/notes',
+  ABOUT: '/about',
 };
 
 export const CommonMetaData = {

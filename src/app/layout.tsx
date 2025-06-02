@@ -8,7 +8,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { cn } from '@/components/lib/utils';
 import LinkButton from '@/components/link-button';
 import { ModeToggle } from '@/components/mode-toggle';
-import { Rss } from 'lucide-react';
+import { Rss, User } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
 import { CommonMetaData } from '@/components/lib/constant';
@@ -50,6 +50,11 @@ export default function RootLayout({
             <div className="mb-16 mt-8 w-full max-w-2xl">{children}</div>
           </main>
           <footer className="fixed bottom-0 left-0 flex h-24 w-full items-end justify-center gap-2 bg-gradient-to-t from-white via-white pb-3 dark:from-black dark:via-black">
+            <LinkButton href="/about" variant="outline" size="icon">
+              <User className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
+              <span className="sr-only">About Me</span>
+            </LinkButton>
+
             <ModeToggle />
 
             <LinkButton href="/feed.xml" target="_blank" variant="outline" size="icon">

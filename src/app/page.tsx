@@ -15,7 +15,9 @@ export default function Home() {
     <>
       <Header>
         <HeaderTitle>
-          <h1 className="font-serif font-semibold">박성오 · Raoun</h1>
+          <Link href={RouterPath.ABOUT} className="link">
+            <h1 className="font-serif font-semibold">박성오 · Raoun</h1>
+          </Link>
 
           <HeaderSearch posts={posts} notes={notes} />
         </HeaderTitle>

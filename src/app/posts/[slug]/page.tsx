@@ -20,6 +20,7 @@ import Link from 'next/link';
 
 import { notFound } from 'next/navigation';
 import { ResolvingMetadata } from 'next';
+import { mdxOptions } from '@/components/lib/mdx';
 
 export async function generateMetadata(props: any, parent: ResolvingMetadata) {
   const params = await props.params;
@@ -61,50 +62,6 @@ export default async function Post(props: any) {
   const params = await props.params;
   const post = getPost(params);
 
-  const options: EvaluateOptions = {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkBreaks],
-      rehypePlugins: [
-        rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'wrap',
-            properties: {
-              className: ['anchor'],
-            },
-          },
-        ],
-        [
-          rehypeToc,
-          {
-            headings: ['h1', 'h2', 'h3'],
-          },
-        ],
-        [
-          rehypeExternalLinks,
-          {
-            properties: {
-              class: 'external-link',
-            },
-            target: '_blank',
-            rel: ['noopener noreferrer'],
-          },
-        ],
-        [
-          rehypePrettyCode,
-          {
-            theme: {
-              dark: 'github-dark',
-              light: 'github-light',
-            },
-            keepBackground: false,
-          },
-        ],
-      ],
-    },
-  };
-
   return (
     <>
       <article>
@@ -125,7 +82,7 @@ export default async function Post(props: any) {
           )}
         </section>
         <section className="mdx">
-          {await MDXRemote({ source: post.content, options })}
+          {await MDXRemote({ source: post.content, options: mdxOptions })}
           <GiscusComment />
           <TocHighlighter />
         </section>
