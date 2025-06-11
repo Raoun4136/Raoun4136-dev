@@ -3,14 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import '@/styles/mdx.css';
 
-import { EvaluateOptions, MDXRemote } from 'next-mdx-remote-client/rsc';
-import remarkGfm from 'remark-gfm';
-import remarkBreaks from 'remark-breaks';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeExternalLinks from 'rehype-external-links';
-import rehypePrettyCode from 'rehype-pretty-code';
-import rehypeSlug from 'rehype-slug';
-import rehypeToc from 'rehype-toc';
+import { MDXRemote } from 'next-mdx-remote-client/rsc';
 import { format } from 'date-fns';
 import GiscusComment from '../_ui/giscus-comment';
 import { TocHighlighter } from '@/components/toc-highlighter';
@@ -18,6 +11,7 @@ import { TocHighlighter } from '@/components/toc-highlighter';
 import { notFound } from 'next/navigation';
 import { ResolvingMetadata } from 'next';
 import { mdxOptions } from '@/components/lib/mdx';
+import ImageZoomer from '@/components/ImageZoomer';
 
 export async function generateMetadata(props: any, parent: ResolvingMetadata) {
   const params = await props.params;
@@ -68,6 +62,7 @@ export default async function Note(props: any) {
       </section>
       <section className="mdx">
         {await MDXRemote({ source: note.content, options: mdxOptions })}
+        <ImageZoomer />
         <GiscusComment />
         <TocHighlighter />
       </section>
