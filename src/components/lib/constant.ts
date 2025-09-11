@@ -3,6 +3,7 @@ export const RouterPath = {
   POSTS: '/posts',
   NOTES: '/notes',
   ABOUT: '/about',
+  GUESTBOOK: '/guestbook',
 };
 
 export const CommonMetaData = {

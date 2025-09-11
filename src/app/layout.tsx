@@ -8,7 +8,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { cn } from '@/components/lib/utils';
 import LinkButton from '@/components/link-button';
 import { ModeToggle } from '@/components/mode-toggle';
-import { Rss, User } from 'lucide-react';
+import { MessageCircle, Rss, User } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
 import { CommonMetaData } from '@/components/lib/constant';
@@ -53,6 +53,11 @@ export default function RootLayout({
             <LinkButton href="/about" variant="outline" size="icon">
               <User className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
               <span className="sr-only">About Me</span>
+            </LinkButton>
+
+            <LinkButton href="/guestbook" variant="outline" size="icon">
+              <MessageCircle className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
+              <span className="sr-only">Guestbook</span>
             </LinkButton>
 
             <ModeToggle />

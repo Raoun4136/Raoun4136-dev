@@ -5,7 +5,7 @@ import '@/styles/mdx.css';
 
 import { MDXRemote } from 'next-mdx-remote-client/rsc';
 import { format } from 'date-fns';
-import GiscusComment from '../_ui/giscus-comment';
+import GiscusComment from '@/components/giscus-comment';
 import { TocHighlighter } from '@/components/toc-highlighter';
 
 import { notFound } from 'next/navigation';

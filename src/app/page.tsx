@@ -35,7 +35,14 @@ export default function Home() {
             Featuring
           </a>
           에서 <b>프론트엔드 개발자</b>로 일하고 있습니다.
+          <br />
+          궁금한 점이 있으시다면, 자유롭게{' '}
+          <Link href={RouterPath.GUESTBOOK} className="external-link">
+            방명록
+          </Link>
+          에 남겨주세요.
         </p>
+
         <div className="flex gap-1">
           <LinkButton href="mailto:qkrtjddh1212@naver.com" variant="outline" size="icon">
             <AtSignIcon />
