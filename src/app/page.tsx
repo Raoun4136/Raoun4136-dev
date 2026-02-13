@@ -1,5 +1,5 @@
 import LinkButton from '@/components/link-button';
-import { AtSignIcon, GithubIcon, InstagramIcon, LinkedinIcon, SearchIcon } from 'lucide-react';
+import { AtSignIcon, GithubIcon, InstagramIcon, LinkedinIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import usePost from '@/app/posts/_hook/usePost';

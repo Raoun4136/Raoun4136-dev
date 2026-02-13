@@ -13,7 +13,11 @@ import { ResolvingMetadata } from 'next';
 import { mdxOptions } from '@/components/lib/mdx';
 import ImageZoomer from '@/components/ImageZoomer';
 
-export async function generateMetadata(props: any, parent: ResolvingMetadata) {
+type NotePageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata(props: NotePageProps, parent: ResolvingMetadata) {
   const params = await props.params;
   const parentData = await parent;
 
@@ -37,7 +41,7 @@ function getPost({ slug }: { slug: string }) {
   let markdownFile;
   try {
     markdownFile = fs.readFileSync(path.join('src/mdx/notes', slug + '.mdx'), 'utf-8');
-  } catch (e) {
+  } catch {
     notFound();
   }
   const { data: frontMatter, content } = matter(markdownFile);
@@ -49,7 +53,7 @@ function getPost({ slug }: { slug: string }) {
   };
 }
 
-export default async function Note(props: any) {
+export default async function Note(props: NotePageProps) {
   const params = await props.params;
   const note = getPost(params);
 

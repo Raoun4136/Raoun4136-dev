@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, HTMLAttributeAnchorTarget } from 'react';
+import { AnchorHTMLAttributes } from 'react';
 import { Button, ButtonProps } from './ui/button';
 import Link, { LinkProps } from 'next/link';
 
