@@ -31,7 +31,7 @@ export const mdxOptions: EvaluateOptions = {
         rehypeExternalLinks,
         {
           properties: {
-            class: 'external-link',
+            className: ['external-link'],
           },
           target: '_blank',
           rel: ['noopener noreferrer'],

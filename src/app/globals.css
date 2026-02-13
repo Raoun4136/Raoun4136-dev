@@ -79,6 +79,20 @@
 }
 
 @layer base {
+  button,
+  [type='button'],
+  [type='submit'],
+  [type='reset'] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [type='button']:disabled,
+  [type='submit']:disabled,
+  [type='reset']:disabled {
+    cursor: not-allowed;
+  }
+
   * {
     @apply border-border outline-ring/50;
     scroll-behavior: smooth;
@@ -100,8 +114,15 @@
 .link::before,
 .external-link::before,
 .mdx a:not(.anchor)::before {
-  @apply absolute -inset-x-1 bottom-0.5 top-0 -z-10 rounded transition-colors hover:bg-secondary;
+  @apply absolute -inset-x-1 bottom-0.5 top-0 -z-10 rounded transition-colors;
   content: '';
+}
+@media (hover: hover) {
+  .link:hover::before,
+  .external-link:hover::before,
+  .mdx a:not(.anchor):hover::before {
+    background-color: hsl(var(--secondary));
+  }
 }
 .external-link::before {
   @apply -right-0.5;
