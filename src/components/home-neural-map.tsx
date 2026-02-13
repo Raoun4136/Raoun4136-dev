@@ -82,16 +82,6 @@ const ROTATE_TO_NODE_MS = 520;
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
-const getAdaptiveMapHeight = (viewportWidth: number, viewportHeight: number) => {
-  if (viewportWidth < 640) {
-    return Math.round(clamp(viewportHeight * 0.62, 400, 660));
-  }
-  if (viewportWidth < 1024) {
-    return Math.round(clamp(viewportHeight * 0.68, 480, 760));
-  }
-  return Math.round(clamp(viewportHeight * 0.73, 540, 900));
-};
-
 const angleDelta = (from: number, to: number) => {
   const wrappedFrom = normalizeAngle(from);
   const wrappedTo = normalizeAngle(to);
@@ -242,7 +232,6 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isCtrlPressed, setIsCtrlPressed] = useState(false);
   const [isMapHovered, setIsMapHovered] = useState(false);
-  const [mapHeight, setMapHeight] = useState(520);
   const [viewport, setViewport] = useState({ height: 0, width: 0 });
 
   const inertiaFrameRef = useRef<number | null>(null);
@@ -597,16 +586,6 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
   }, []);
 
   useEffect(() => {
-    const updateMapHeight = () => {
-      setMapHeight(getAdaptiveMapHeight(window.innerWidth, window.innerHeight));
-    };
-
-    updateMapHeight();
-    window.addEventListener('resize', updateMapHeight);
-    return () => window.removeEventListener('resize', updateMapHeight);
-  }, []);
-
-  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Control') setIsCtrlPressed(true);
     };
@@ -629,9 +608,8 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
   return (
     <section
       ref={sectionRef}
-      style={{ height: `${mapHeight}px` }}
       className={cn(
-        'relative w-full overflow-hidden rounded-[1.6rem] border border-border/60',
+        'relative h-full w-full overflow-hidden rounded-[1.6rem] border border-border/60',
         'bg-[radial-gradient(circle_at_18%_20%,hsl(var(--secondary))_0%,transparent_42%),radial-gradient(circle_at_85%_12%,hsl(var(--accent)/0.42)_0%,transparent_45%),radial-gradient(circle_at_50%_80%,hsl(var(--muted)/0.9)_0%,transparent_52%),hsl(var(--background))]',
       )}
     >
