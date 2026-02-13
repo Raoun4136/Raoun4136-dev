@@ -21,10 +21,14 @@ export default function Notes() {
 
   return (
     <ul className="group/ul flex flex-col">
-      {notes?.map((note) => (
+      {notes?.map((note, index) => (
         <li
           key={note.slug}
-          className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+          className="opacity-0 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+          style={{
+            animation: 'home-list-reveal 820ms cubic-bezier(0.22,1,0.36,1) forwards',
+            animationDelay: `${110 + index * 75}ms`,
+          }}
         >
           <NoteLi {...note.meta} slug={note.slug} />
         </li>

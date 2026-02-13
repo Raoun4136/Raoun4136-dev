@@ -7,6 +7,8 @@ import { useEffect } from 'react';
  */
 export function TocHighlighter() {
   useEffect(() => {
+    const scrollContainer = document.querySelector('[data-app-scroll-container]');
+
     function onScroll() {
       const headings = Array.from(document.querySelectorAll('.mdx [id]')).filter((el) =>
         /^h[1-6]$/.test(el.tagName.toLowerCase()),
@@ -37,9 +39,10 @@ export function TocHighlighter() {
       }
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const target = scrollContainer ?? window;
+    target.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => target.removeEventListener('scroll', onScroll);
   }, []);
 
   return null;

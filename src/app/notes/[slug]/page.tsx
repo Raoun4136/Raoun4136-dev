@@ -12,6 +12,7 @@ import { notFound } from 'next/navigation';
 import { ResolvingMetadata } from 'next';
 import { mdxOptions } from '@/components/lib/mdx';
 import ImageZoomer from '@/components/ImageZoomer';
+import { MdxEntranceMotion } from '@/components/mdx-entrance-motion';
 
 type NotePageProps = {
   params: Promise<{ slug: string }>;
@@ -66,6 +67,7 @@ export default async function Note(props: NotePageProps) {
       </section>
       <section className="mdx">
         {await MDXRemote({ source: note.content, options: mdxOptions })}
+        <MdxEntranceMotion />
         <ImageZoomer />
         <GiscusComment />
         <TocHighlighter />

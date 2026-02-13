@@ -1,109 +1,159 @@
-import LinkButton from '@/components/link-button';
-import { AtSignIcon, GithubIcon, InstagramIcon, LinkedinIcon } from 'lucide-react';
+import HomeNeuralMap, { NeuralNode } from '@/components/home-neural-map';
+import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
 import usePost from '@/app/posts/_hook/usePost';
 import useNote from '@/app/notes/_hook/useNote';
 import { Header, HeaderSearch, HeaderTitle } from '@/components/common-header';
 import { RouterPath } from '@/components/lib/constant';
 
+const SOCIAL_NODES: NeuralNode[] = [
+  {
+    category: 'social',
+    description: '메일로 연락하기',
+    href: 'mailto:qkrtjddh1212@naver.com',
+    id: 'social-email',
+    isExternal: true,
+    title: 'Email',
+    type: 'note',
+  },
+  {
+    category: 'social',
+    description: 'GitHub 프로필',
+    href: 'https://github.com/Raoun4136',
+    id: 'social-github',
+    isExternal: true,
+    title: 'GitHub',
+    type: 'note',
+  },
+  {
+    category: 'social',
+    description: 'Instagram 프로필',
+    href: 'https://www.instagram.com/park__55555/',
+    id: 'social-instagram',
+    isExternal: true,
+    title: 'Instagram',
+    type: 'note',
+  },
+  {
+    category: 'social',
+    description: 'LinkedIn 프로필',
+    href: 'https://www.linkedin.com/in/raoun4136/',
+    id: 'social-linkedin',
+    isExternal: true,
+    title: 'LinkedIn',
+    type: 'note',
+  },
+];
+
+const combineNeuralNodes = (posts: ReturnType<typeof usePost>, notes: ReturnType<typeof useNote>): NeuralNode[] => {
+  const postNodes = posts.map((post) => ({
+    category: 'content' as const,
+    description: post.meta.description,
+    href: post.meta.outlink && !post.meta.showFull ? post.meta.outlink : `${RouterPath.POSTS}/${post.slug}`,
+    id: `post-${post.slug}`,
+    isExternal: Boolean(post.meta.outlink && !post.meta.showFull),
+    title: post.meta.title,
+    type: 'post' as const,
+  }));
+
+  const noteNodes = notes.map((note) => ({
+    category: 'content' as const,
+    description: note.meta.description,
+    href: `${RouterPath.NOTES}/${note.slug}`,
+    id: `note-${note.slug}`,
+    title: note.meta.title,
+    type: 'note' as const,
+  }));
+
+  const mixedNodes: NeuralNode[] = [];
+  const maxLength = Math.max(postNodes.length, noteNodes.length);
+
+  for (let index = 0; index < maxLength; index++) {
+    if (postNodes[index]) mixedNodes.push(postNodes[index]);
+    if (noteNodes[index]) mixedNodes.push(noteNodes[index]);
+  }
+
+  return [...mixedNodes, ...SOCIAL_NODES];
+};
+
 export default function Home() {
   const posts = usePost();
   const notes = useNote();
+  const neuralNodes = combineNeuralNodes(posts, notes);
 
   return (
     <>
       <Header>
         <HeaderTitle>
-          <Link href={RouterPath.ABOUT} className="link">
-            <h1 className="font-serif font-semibold">박성오 · Raoun</h1>
-          </Link>
-
-          <HeaderSearch posts={posts} notes={notes} />
+          <h1 className="font-serif font-semibold">박성오 · Raoun</h1>
+          <div className="flex items-center gap-2">
+            <Link
+              href={RouterPath.ABOUT}
+              className="inline-flex h-9 items-center rounded-full border border-border/70 bg-background/80 px-3 text-sm text-foreground/80 transition-colors hover:bg-accent"
+            >
+              About
+            </Link>
+            <HeaderSearch posts={posts} notes={notes} />
+          </div>
         </HeaderTitle>
       </Header>
 
-      <div className="mb-16 mt-8 flex flex-col gap-6 text-left">
-        <div className="text-foreground">
-          <p>반복되는 일을 자동화하고, 더 나은 개발 환경과 사용자 경험을 개선해 나가는 과정을 좋아합니다.</p>
-          <p>효율적인 구조, 실용적인 접근을 바탕으로 틈틈이 실험하고 배운 것들을 기록하려 합니다.</p>
+      <div className="mt-5 overflow-x-clip">
+        <div className="relative">
+          <HomeNeuralMap nodes={neuralNodes} />
+
+          <details className="group absolute bottom-10 left-1/2 z-30 w-[calc(100%-2rem)] max-w-[22rem] -translate-x-1/2 rounded-2xl border border-border/70 bg-background/80 shadow-lg backdrop-blur-xl md:bottom-4 md:left-auto md:right-4 md:w-[min(88vw,22rem)] md:translate-x-0">
+            <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 text-sm font-medium text-foreground/85">
+              <span>Recent</span>
+              <ChevronDown className="h-4 w-4 text-foreground/65 transition-transform group-open:rotate-180" />
+            </summary>
+
+            <div className="grid gap-3 border-t border-border/60 px-3 pb-3 pt-2 sm:grid-cols-2">
+              <section>
+                <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground/60">Posts</h2>
+                <ul className="mt-1.5 space-y-1.5">
+                  {posts.slice(0, 3).map((post) => {
+                    if (post.meta.outlink && !post.meta.showFull) {
+                      return (
+                        <li key={post.slug}>
+                          <Link
+                            className="line-clamp-1 text-sm text-foreground/82 hover:underline"
+                            href={post.meta.outlink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {post.meta.title}
+                          </Link>
+                        </li>
+                      );
+                    }
+
+                    return (
+                      <li key={post.slug}>
+                        <Link className="line-clamp-1 text-sm text-foreground/82 hover:underline" href={`${RouterPath.POSTS}/${post.slug}`}>
+                          {post.meta.title}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+
+              <section>
+                <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground/60">Notes</h2>
+                <ul className="mt-1.5 space-y-1.5">
+                  {notes.slice(0, 3).map((note) => (
+                    <li key={note.slug}>
+                      <Link className="line-clamp-1 text-sm text-foreground/82 hover:underline" href={`${RouterPath.NOTES}/${note.slug}`}>
+                        {note.meta.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+          </details>
         </div>
-
-        <p>
-          현재{' '}
-          <a className="external-link" href="https://featuring.co" target="_blank">
-            Featuring
-          </a>
-          에서 <b>프론트엔드 개발자</b>로 일하고 있습니다.
-          <br />
-          궁금한 점이 있으시다면, 자유롭게{' '}
-          <Link href={RouterPath.GUESTBOOK} className="external-link">
-            방명록
-          </Link>
-          에 남겨주세요.
-        </p>
-
-        <div className="flex gap-1">
-          <LinkButton href="mailto:qkrtjddh1212@naver.com" variant="outline" size="icon">
-            <AtSignIcon />
-          </LinkButton>
-          <LinkButton href="https://www.instagram.com/park__55555/" target="_blank" variant="outline" size="icon">
-            <InstagramIcon />
-          </LinkButton>
-          <LinkButton href="https://github.com/Raoun4136" target="_blank" variant="outline" size="icon">
-            <GithubIcon />
-          </LinkButton>
-          <LinkButton href="https://www.linkedin.com/in/raoun4136/" target="_blank" variant="outline" size="icon">
-            <LinkedinIcon />
-          </LinkButton>
-        </div>
-      </div>
-
-      <div className="mb-10 flex flex-col gap-2">
-        <LinkButton variant="ghost" href={RouterPath.POSTS} className="group flex w-fit items-center gap-2">
-          <h2 className="text-md font-medium">글</h2>·
-          <p className="m-0 max-w-[30ch] text-sm opacity-70">경험을 바탕으로 나의 생각을 작성하는 공간</p>
-        </LinkButton>
-
-        <ul className="ml-4 flex flex-col items-start gap-4 rounded-md border-b border-l pb-4 pl-4">
-          {posts?.slice(0, 3).map((post) => {
-            if (post.meta?.outlink && !post.meta?.showFull) {
-              return (
-                <Link
-                  key={post.slug}
-                  href={post.meta?.outlink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full"
-                >
-                  <li className="flex w-full items-center gap-1 text-left text-sm hover:underline">
-                    {post.meta?.title}
-                  </li>
-                </Link>
-              );
-            }
-            return (
-              <Link key={post.slug} href={`${RouterPath.POSTS}/${post.slug}`} className="w-full">
-                <li className="text-left text-sm hover:underline">{post.meta?.title}</li>
-              </Link>
-            );
-          })}
-        </ul>
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <LinkButton variant="ghost" href={RouterPath.NOTES} className="group flex w-fit items-center gap-2">
-          <h2 className="text-md font-medium">노트</h2>·
-          <p className="m-0 max-w-[30ch] text-sm opacity-70">단순 기술 또는 배운 것들을 적는 공간</p>
-        </LinkButton>
-
-        <ul className="ml-4 flex flex-col items-start gap-4 rounded-md border-b border-l pb-4 pl-4">
-          {notes?.slice(0, 3).map((note) => (
-            <Link key={note.slug} href={`${RouterPath.NOTES}/${note.slug}`} className="w-full">
-              <li className="text-left text-sm hover:underline">{note.meta?.title}</li>
-            </Link>
-          ))}
-        </ul>
       </div>
     </>
   );

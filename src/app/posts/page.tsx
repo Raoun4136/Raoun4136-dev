@@ -22,13 +22,19 @@ export default function Posts() {
 
   return (
     <ul className="group/ul flex flex-col">
-      {blogs?.map((blog) => {
+      {blogs?.map((blog, index) => {
+        const revealStyle = {
+          animation: 'home-list-reveal 820ms cubic-bezier(0.22,1,0.36,1) forwards',
+          animationDelay: `${110 + index * 75}ms`,
+        };
+
         if (blog.meta.outlink && !blog.meta.showFull) {
           // 외부링크만 있는 경우
           return (
             <li
               key={blog.slug}
-              className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+              className="opacity-0 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+              style={revealStyle}
             >
               <PostOutlink {...blog.meta} />
             </li>
@@ -37,7 +43,8 @@ export default function Posts() {
         return (
           <li
             key={blog.slug}
-            className="opacity-100 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+            className="opacity-0 transition-opacity hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-70"
+            style={revealStyle}
           >
             <PostLi {...blog.meta} slug={blog.slug} />
           </li>

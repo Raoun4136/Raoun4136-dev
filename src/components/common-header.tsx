@@ -5,7 +5,7 @@ import { PostType, NoteType } from './lib/type';
 
 const Header = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <header className="w-full max-w-2xl" {...props}>
+    <header className="w-full" {...props}>
       {children}
     </header>
   );

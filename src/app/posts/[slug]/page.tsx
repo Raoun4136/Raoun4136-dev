@@ -15,6 +15,7 @@ import { notFound } from 'next/navigation';
 import { ResolvingMetadata } from 'next';
 import { mdxOptions } from '@/components/lib/mdx';
 import ImageZoomer from '@/components/ImageZoomer';
+import { MdxEntranceMotion } from '@/components/mdx-entrance-motion';
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
@@ -81,6 +82,7 @@ export default async function Post(props: PostPageProps) {
         </section>
         <section className="mdx">
           {await MDXRemote({ source: post.content, options: mdxOptions })}
+          <MdxEntranceMotion />
           <ImageZoomer />
           <GiscusComment />
           <TocHighlighter />

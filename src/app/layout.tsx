@@ -6,12 +6,13 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 import { cn } from '@/lib/utils';
-import LinkButton from '@/components/link-button';
-import { ModeToggle } from '@/components/mode-toggle';
-import { MessageCircle, Rss, User } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
 import { CommonMetaData } from '@/components/lib/constant';
+import useNote from '@/app/notes/_hook/useNote';
+import usePost from '@/app/posts/_hook/usePost';
+import FloatingNavDock from '@/components/floating-nav-dock';
+import AppFrame from '@/components/app-frame';
 
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -40,33 +41,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const posts = usePost();
+  const notes = useNote();
+
   return (
     <html lang="ko" suppressHydrationWarning>
       <body
         className={cn('min-h-dvh bg-background font-sans antialiased', sans.variable, serif.variable, mono.variable)}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <main className="flex h-full flex-col items-center justify-between px-4 py-12">
-            <div className="mb-16 mt-8 w-full max-w-2xl">{children}</div>
-          </main>
-          <footer className="fixed bottom-0 left-0 flex h-24 w-full items-end justify-center gap-2 bg-gradient-to-t from-white via-white pb-3 dark:from-black dark:via-black">
-            <LinkButton href="/about" variant="outline" size="icon">
-              <User className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
-              <span className="sr-only">About Me</span>
-            </LinkButton>
-
-            <LinkButton href="/guestbook" variant="outline" size="icon">
-              <MessageCircle className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
-              <span className="sr-only">Guestbook</span>
-            </LinkButton>
-
-            <ModeToggle />
-
-            <LinkButton href="/feed.xml" target="_blank" variant="outline" size="icon">
-              <Rss className='dark:scale-0" h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all' />
-              <span className="sr-only">Feed Link</span>
-            </LinkButton>
-          </footer>
+          <AppFrame>{children}</AppFrame>
+          <FloatingNavDock posts={posts} notes={notes} />
         </ThemeProvider>
 
         <Analytics />

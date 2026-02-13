@@ -16,13 +16,21 @@ import { NoteType, PostType } from './lib/type';
 import { RouterPath } from './lib/constant';
 import { format } from 'date-fns';
 
+type SearchMenuProps = {
+  notes: { meta: NoteType; slug: string }[];
+  posts: { meta: PostType; slug: string }[];
+  triggerClassName?: string;
+  triggerSize?: React.ComponentProps<typeof Button>['size'];
+  triggerVariant?: React.ComponentProps<typeof Button>['variant'];
+};
+
 const SearchMenu = ({
   posts,
   notes,
-}: {
-  posts: { meta: PostType; slug: string }[];
-  notes: { meta: NoteType; slug: string }[];
-}) => {
+  triggerClassName,
+  triggerSize = 'icon',
+  triggerVariant = 'outline',
+}: SearchMenuProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
@@ -56,7 +64,12 @@ const SearchMenu = ({
 
   return (
     <>
-      <Button variant="outline" size="icon" onClick={() => setOpen(true)}>
+      <Button
+        variant={triggerVariant}
+        size={triggerSize}
+        className={triggerClassName}
+        onClick={() => setOpen(true)}
+      >
         <SearchIcon />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
