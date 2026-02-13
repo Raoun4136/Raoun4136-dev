@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@config '../../tailwind.config.ts';
+@import 'tailwindcss';
 
 @layer base {
   :root {
@@ -78,8 +77,8 @@
 @layer base {
   * {
     @apply border-border;
-    @apply scroll-smooth;
-    @apply scroll-mt-32;
+    scroll-behavior: smooth;
+    scroll-margin-top: 8rem;
   }
   body {
     @apply bg-background text-foreground;

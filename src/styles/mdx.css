@@ -1,9 +1,10 @@
+@reference '../app/globals.css';
+
 .mdx {
   @apply w-full;
   @apply font-normal;
   @apply leading-7;
-  @apply text-black dark:text-white;
-  @apply text-opacity-80 !important;
+  @apply text-black/80 dark:text-white/80;
   word-break: auto-phrase;
 }
 
@@ -220,13 +221,13 @@
 [data-rehype-pretty-code-title] {
   @apply text-sm;
   @apply mb-1 mt-1;
-  @apply text-opacity-75;
+  opacity: 0.75;
 }
 
 [data-rehype-pretty-code-caption] {
   @apply text-sm;
   @apply mt-1;
-  @apply text-opacity-75;
+  opacity: 0.75;
 }
 
 [data-line] {

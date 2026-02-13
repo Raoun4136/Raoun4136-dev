@@ -1,8 +1,9 @@
 import type { Config } from 'tailwindcss';
-import { fontFamily } from 'tailwindcss/defaultTheme';
+import defaultTheme from 'tailwindcss/defaultTheme';
+import tailwindcssAnimate from 'tailwindcss-animate';
 
 const config = {
-  darkMode: ['class'],
+  darkMode: 'class',
   content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}'],
   prefix: '',
   theme: {
@@ -15,9 +16,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
-        serif: ['var(--font-serif)', ...fontFamily.serif],
-        mono: ['var(--font-mono)', ...fontFamily.mono],
+        sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
+        serif: ['var(--font-serif)', ...defaultTheme.fontFamily.serif],
+        mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -93,7 +94,7 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
 
 export default config;
