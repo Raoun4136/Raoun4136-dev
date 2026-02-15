@@ -15,6 +15,8 @@ import ImageZoomer from '@/components/ImageZoomer';
 import { MdxEntranceMotion } from '@/components/mdx-entrance-motion';
 import { NoteType } from '@/components/lib/type';
 import Link from 'next/link';
+import JsonLd from '@/components/json-ld';
+import { CommonMetaData } from '@/components/lib/constant';
 
 type NotePageProps = {
   params: Promise<{ slug: string }>;
@@ -88,52 +90,91 @@ export default async function Note(props: NotePageProps) {
 
   const previousNote = notes[currentIndex + 1];
   const nextNote = notes[currentIndex - 1];
+  const siteUrl = CommonMetaData.metadataBase.toString().replace(/\/$/, '');
+  const pageUrl = new URL(`/notes/${params.slug}`, CommonMetaData.metadataBase).toString();
+  const publishedAt = new Date(note.frontMatter.date).toISOString();
+  const noteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    '@id': `${pageUrl}#article`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': pageUrl,
+    },
+    headline: note.frontMatter.title,
+    description: note.frontMatter.description ?? '',
+    datePublished: publishedAt,
+    dateModified: publishedAt,
+    inLanguage: 'ko-KR',
+    articleSection: 'Notes',
+    author: {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      name: '박성오',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Raoun.me',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/images/og-image.png`,
+      },
+    },
+    isPartOf: {
+      '@id': `${siteUrl}/#website`,
+    },
+    url: pageUrl,
+  };
 
   return (
-    <article>
-      <section className="mb-12 text-opacity-90">
-        <h1 className="text-md font-semibold">{note.frontMatter.title}</h1>
-        <h2 className="text-sm font-light opacity-70">{note.frontMatter.description}</h2>
-        <span className="text-xs font-light opacity-70">{format(note.frontMatter.date, 'yyyy-MM-dd')}</span>
-      </section>
-      <section className="mdx" data-motion-state="pending">
-        {await MDXRemote({ source: note.content, options: mdxOptions })}
-        <nav className="mt-12 grid grid-cols-2 gap-3 border-t pt-6">
-          {previousNote ? (
-            <Link
-              href={`/notes/${previousNote.slug}`}
-              className="group flex min-h-24 flex-col justify-between rounded-lg border border-border/70 px-4 py-3 transition-colors hover:bg-secondary/50"
-            >
-              <span className="text-xs opacity-70">이전 노트</span>
-              <p className="mt-1 line-clamp-2 text-sm font-medium group-hover:underline">{previousNote.meta.title}</p>
-            </Link>
-          ) : (
-            <div
-              aria-hidden
-              className="min-h-24 rounded-lg border border-border/40 bg-secondary/10 opacity-50"
-            />
-          )}
-          {nextNote ? (
-            <Link
-              href={`/notes/${nextNote.slug}`}
-              className="group flex min-h-24 flex-col justify-between rounded-lg border border-border/70 px-4 py-3 text-right transition-colors hover:bg-secondary/50"
-            >
-              <span className="text-xs opacity-70">다음 노트</span>
-              <p className="mt-1 line-clamp-2 text-sm font-medium group-hover:underline">{nextNote.meta.title}</p>
-            </Link>
-          ) : (
-            <div
-              aria-hidden
-              className="min-h-24 rounded-lg border border-border/40 bg-secondary/10 opacity-50"
-            />
-          )}
-        </nav>
-        <MdxEntranceMotion />
-        <ImageZoomer />
-        <GiscusComment />
-        <TocHighlighter />
-      </section>
-    </article>
+    <>
+      <JsonLd id={`note-jsonld-${params.slug}`} data={noteJsonLd} />
+      <article>
+        <section className="mb-12 text-opacity-90">
+          <h1 className="text-md font-semibold">{note.frontMatter.title}</h1>
+          <h2 className="text-sm font-light opacity-70">{note.frontMatter.description}</h2>
+          <span className="text-xs font-light opacity-70">{format(note.frontMatter.date, 'yyyy-MM-dd')}</span>
+        </section>
+        <section className="mdx" data-motion-state="pending">
+          {await MDXRemote({ source: note.content, options: mdxOptions })}
+          <nav className="mt-12 grid grid-cols-2 gap-3 border-t pt-6">
+            {previousNote ? (
+              <Link
+                href={`/notes/${previousNote.slug}`}
+                className="group flex min-h-24 flex-col justify-between rounded-lg border border-border/70 px-4 py-3 transition-colors hover:bg-secondary/50"
+              >
+                <span className="text-xs opacity-70">이전 노트</span>
+                <p className="mt-1 line-clamp-2 text-sm font-medium group-hover:underline">{previousNote.meta.title}</p>
+              </Link>
+            ) : (
+              <div
+                aria-hidden
+                className="min-h-24 rounded-lg border border-border/40 bg-secondary/10 opacity-50"
+              />
+            )}
+            {nextNote ? (
+              <Link
+                href={`/notes/${nextNote.slug}`}
+                className="group flex min-h-24 flex-col justify-between rounded-lg border border-border/70 px-4 py-3 text-right transition-colors hover:bg-secondary/50"
+              >
+                <span className="text-xs opacity-70">다음 노트</span>
+                <p className="mt-1 line-clamp-2 text-sm font-medium group-hover:underline">{nextNote.meta.title}</p>
+              </Link>
+            ) : (
+              <div
+                aria-hidden
+                className="min-h-24 rounded-lg border border-border/40 bg-secondary/10 opacity-50"
+              />
+            )}
+          </nav>
+          <MdxEntranceMotion />
+          <ImageZoomer />
+          <GiscusComment />
+          <TocHighlighter />
+        </section>
+      </article>
+    </>
   );
 }
 

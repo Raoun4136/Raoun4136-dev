@@ -14,6 +14,7 @@ import usePost from '@/app/posts/_hook/usePost';
 import FloatingNavDock from '@/components/floating-nav-dock';
 import AppFrame from '@/components/app-frame';
 import SiteTopHeader from '@/components/site-top-header';
+import JsonLd from '@/components/json-ld';
 
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -44,6 +45,32 @@ export default function RootLayout({
 }>) {
   const posts = usePost();
   const notes = useNote();
+  const siteUrl = CommonMetaData.metadataBase.toString().replace(/\/$/, '');
+  const siteJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
+        url: siteUrl,
+        name: 'Raoun.me',
+        description: CommonMetaData.description,
+        inLanguage: 'ko-KR',
+      },
+      {
+        '@type': 'Person',
+        '@id': `${siteUrl}/#person`,
+        name: '박성오',
+        alternateName: 'Raoun',
+        url: siteUrl,
+        sameAs: [
+          'https://github.com/Raoun4136',
+          'https://www.linkedin.com/in/raoun4136/',
+          'https://www.instagram.com/park__55555/',
+        ],
+      },
+    ],
+  };
 
   return (
     <html lang="ko" suppressHydrationWarning>
@@ -55,6 +82,7 @@ export default function RootLayout({
           <AppFrame>{children}</AppFrame>
           <FloatingNavDock />
         </ThemeProvider>
+        <JsonLd id="site-jsonld" data={siteJsonLd} />
 
         <Analytics />
         {/* Google Analytics 설정 */}

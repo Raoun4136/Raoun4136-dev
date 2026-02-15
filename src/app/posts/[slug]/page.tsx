@@ -17,6 +17,8 @@ import { mdxOptions } from '@/components/lib/mdx';
 import ImageZoomer from '@/components/ImageZoomer';
 import { MdxEntranceMotion } from '@/components/mdx-entrance-motion';
 import { PostType } from '@/components/lib/type';
+import JsonLd from '@/components/json-ld';
+import { CommonMetaData } from '@/components/lib/constant';
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
@@ -90,9 +92,46 @@ export default async function Post(props: PostPageProps) {
 
   const previousPost = posts[currentIndex + 1];
   const nextPost = posts[currentIndex - 1];
+  const siteUrl = CommonMetaData.metadataBase.toString().replace(/\/$/, '');
+  const pageUrl = new URL(`/posts/${params.slug}`, CommonMetaData.metadataBase).toString();
+  const publishedAt = new Date(post.frontMatter.date).toISOString();
+  const postJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${pageUrl}#article`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': pageUrl,
+    },
+    headline: post.frontMatter.title,
+    description: post.frontMatter.description ?? '',
+    datePublished: publishedAt,
+    dateModified: publishedAt,
+    inLanguage: 'ko-KR',
+    articleSection: 'Posts',
+    author: {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      name: '박성오',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Raoun.me',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/images/og-image.png`,
+      },
+    },
+    isPartOf: {
+      '@id': `${siteUrl}/#website`,
+    },
+    url: pageUrl,
+  };
 
   return (
     <>
+      <JsonLd id={`post-jsonld-${params.slug}`} data={postJsonLd} />
       <article>
         <section className="mb-12 opacity-90">
           <h1 className="text-md font-semibold">{post.frontMatter.title}</h1>
