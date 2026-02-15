@@ -13,6 +13,7 @@ import useNote from '@/app/notes/_hook/useNote';
 import usePost from '@/app/posts/_hook/usePost';
 import FloatingNavDock from '@/components/floating-nav-dock';
 import AppFrame from '@/components/app-frame';
+import SiteTopHeader from '@/components/site-top-header';
 
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -50,8 +51,9 @@ export default function RootLayout({
         className={cn('min-h-dvh bg-background font-sans antialiased', sans.variable, serif.variable, mono.variable)}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <SiteTopHeader posts={posts} notes={notes} />
           <AppFrame>{children}</AppFrame>
-          <FloatingNavDock posts={posts} notes={notes} />
+          <FloatingNavDock />
         </ThemeProvider>
 
         <Analytics />

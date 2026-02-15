@@ -19,6 +19,7 @@ import { format } from 'date-fns';
 type SearchMenuProps = {
   notes: { meta: NoteType; slug: string }[];
   posts: { meta: PostType; slug: string }[];
+  enableKeyboardShortcut?: boolean;
   triggerClassName?: string;
   triggerSize?: React.ComponentProps<typeof Button>['size'];
   triggerVariant?: React.ComponentProps<typeof Button>['variant'];
@@ -27,6 +28,7 @@ type SearchMenuProps = {
 const SearchMenu = ({
   posts,
   notes,
+  enableKeyboardShortcut = false,
   triggerClassName,
   triggerSize = 'icon',
   triggerVariant = 'outline',
@@ -35,15 +37,18 @@ const SearchMenu = ({
   const [value, setValue] = useState('');
 
   useEffect(() => {
+    if (!enableKeyboardShortcut) return;
+
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        if (e.repeat) return;
+        setOpen(true);
       }
     };
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
-  }, []);
+  }, [enableKeyboardShortcut]);
 
   /**
    * 텍스트 내에서 검색어(value)에 해당하는 부분을 <mark>로 감싸 React 요소 배열로 반환합니다.

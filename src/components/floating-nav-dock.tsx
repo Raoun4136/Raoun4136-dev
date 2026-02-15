@@ -19,15 +19,8 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { RouterPath } from '@/components/lib/constant';
-import SearchMenu from '@/components/search-menu';
 import { ModeToggle } from '@/components/mode-toggle';
 import { cn } from '@/lib/utils';
-import { NoteType, PostType } from '@/components/lib/type';
-
-type FloatingNavDockProps = {
-  notes: { meta: NoteType; slug: string }[];
-  posts: { meta: PostType; slug: string }[];
-};
 
 type DockLink = {
   href: string;
@@ -60,7 +53,7 @@ const isActivePath = (pathname: string, href: string) => {
   return pathname === href || pathname.startsWith(`${href}/`);
 };
 
-export default function FloatingNavDock({ notes, posts }: FloatingNavDockProps) {
+export default function FloatingNavDock() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dockRef = useRef<HTMLDivElement | null>(null);
@@ -113,16 +106,6 @@ export default function FloatingNavDock({ notes, posts }: FloatingNavDockProps) 
             </motion.div>
           );
         })}
-
-        <motion.div whileHover={{ y: -2, scale: 1.14 }} whileTap={{ scale: 0.96 }}>
-          <SearchMenu
-            posts={posts}
-            notes={notes}
-            triggerClassName="h-10 w-10 rounded-full border-0 bg-transparent text-foreground/75 shadow-none transition-all hover:bg-accent/80 hover:text-foreground"
-            triggerSize="icon"
-            triggerVariant="ghost"
-          />
-        </motion.div>
 
         <motion.button
           type="button"
