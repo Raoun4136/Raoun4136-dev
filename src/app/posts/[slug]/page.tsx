@@ -110,7 +110,7 @@ export default async function Post(props: PostPageProps) {
             </Link>
           )}
         </section>
-        <section className="mdx">
+        <section className="mdx" data-motion-state="pending">
           {await MDXRemote({ source: post.content, options: mdxOptions })}
           <nav className="mt-12 grid grid-cols-2 gap-3 border-t pt-6">
             {previousPost ? (

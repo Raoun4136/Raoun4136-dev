@@ -1,4 +1,5 @@
-import HomeNeuralMap, { NeuralNode } from '@/components/home-neural-map';
+import HomeNeuralMapShell from '@/components/home-neural-map-shell';
+import type { NeuralNode } from '@/components/home-neural-map';
 import usePost from '@/app/posts/_hook/usePost';
 import useNote from '@/app/notes/_hook/useNote';
 import { RouterPath } from '@/components/lib/constant';
@@ -80,7 +81,7 @@ export default function Home() {
 
   return (
     <div className="h-full w-full overflow-hidden">
-      <HomeNeuralMap nodes={neuralNodes} fullBleed />
+      <HomeNeuralMapShell nodes={neuralNodes} fullBleed />
     </div>
   );
 }

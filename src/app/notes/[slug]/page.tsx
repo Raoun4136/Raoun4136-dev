@@ -96,7 +96,7 @@ export default async function Note(props: NotePageProps) {
         <h2 className="text-sm font-light opacity-70">{note.frontMatter.description}</h2>
         <span className="text-xs font-light opacity-70">{format(note.frontMatter.date, 'yyyy-MM-dd')}</span>
       </section>
-      <section className="mdx">
+      <section className="mdx" data-motion-state="pending">
         {await MDXRemote({ source: note.content, options: mdxOptions })}
         <nav className="mt-12 grid grid-cols-2 gap-3 border-t pt-6">
           {previousNote ? (

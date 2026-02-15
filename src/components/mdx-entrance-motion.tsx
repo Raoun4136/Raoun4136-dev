@@ -1,15 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
 export function MdxEntranceMotion() {
   const pathname = usePathname();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const roots = document.querySelectorAll<HTMLElement>('.mdx');
 
     roots.forEach((root) => {
+      if (root.dataset.motionState !== 'pending') return;
+      root.dataset.motionState = 'running';
+
       const blocks = Array.from(root.children) as HTMLElement[];
       const toc = root.querySelector<HTMLElement>('.toc');
       const links = toc ? Array.from(toc.querySelectorAll<HTMLElement>('a')) : [];
@@ -44,6 +47,8 @@ export function MdxEntranceMotion() {
         link.classList.add('toc-reveal-link');
         link.style.setProperty('--toc-reveal-delay', `${160 + index * 55}ms`);
       });
+
+      root.dataset.motionState = 'done';
     });
   }, [pathname]);
 

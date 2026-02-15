@@ -16,6 +16,15 @@
   @apply mb-6;
 }
 
+.mdx[data-motion-state='pending'] > * {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.mdx[data-motion-state='pending'] > .toc {
+  transform: translateY(8px);
+}
+
 .mdx .mdx-reveal-item {
   opacity: 0;
   animation: mdx-block-reveal 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -69,6 +78,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .mdx[data-motion-state='pending'] > *,
   .mdx .mdx-reveal-item,
   .mdx .toc.toc-reveal,
   .mdx .toc .toc-reveal-link {
