@@ -24,7 +24,7 @@ export default function Posts() {
     <ul className="group/ul flex flex-col">
       {blogs?.map((blog, index) => {
         const revealStyle = {
-          animation: 'home-list-reveal 620ms cubic-bezier(0.22, 1, 0.36, 1) both',
+          animation: 'home-list-reveal 620ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
           animationDelay: `${Math.min(index, 18) * 68}ms`,
         } as const;
 
@@ -33,7 +33,7 @@ export default function Posts() {
           return (
             <li
               key={blog.slug}
-              className="opacity-0 transition-opacity hover:opacity-100 motion-reduce:opacity-100 motion-reduce:[animation:none] [&:not(:hover)]:group-hover/ul:opacity-70"
+              className="transition-opacity duration-200 hover:opacity-100 motion-reduce:[animation:none] [&:not(:hover)]:group-hover/ul:opacity-50"
               style={revealStyle}
             >
               <PostOutlink {...blog.meta} />
@@ -43,7 +43,7 @@ export default function Posts() {
         return (
           <li
             key={blog.slug}
-            className="opacity-0 transition-opacity hover:opacity-100 motion-reduce:opacity-100 motion-reduce:[animation:none] [&:not(:hover)]:group-hover/ul:opacity-70"
+            className="transition-opacity duration-200 hover:opacity-100 motion-reduce:[animation:none] [&:not(:hover)]:group-hover/ul:opacity-50"
             style={revealStyle}
           >
             <PostLi {...blog.meta} slug={blog.slug} />
