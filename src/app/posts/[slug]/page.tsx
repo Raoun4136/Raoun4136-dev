@@ -16,9 +16,15 @@ import { ResolvingMetadata } from 'next';
 import { mdxOptions } from '@/components/lib/mdx';
 import ImageZoomer from '@/components/ImageZoomer';
 import { MdxEntranceMotion } from '@/components/mdx-entrance-motion';
+import { PostType } from '@/components/lib/type';
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
+};
+
+type PostEntry = {
+  meta: PostType;
+  slug: string;
 };
 
 export async function generateMetadata(props: PostPageProps, parent: ResolvingMetadata) {
@@ -51,15 +57,39 @@ function getPost({ slug }: { slug: string }) {
   const { data: frontMatter, content } = matter(markdownFile);
 
   return {
-    frontMatter,
+    frontMatter: frontMatter as PostType,
     slug,
     content,
   };
 }
 
+function getPostEntries() {
+  const files = fs.readdirSync(path.join('src/mdx/posts'));
+
+  return files
+    .map((filename) => {
+      const fileContent = fs.readFileSync(path.join('src/mdx/posts', filename), 'utf-8');
+      const { data: frontMatter } = matter(fileContent);
+
+      return {
+        meta: frontMatter as PostType,
+        slug: filename.replace('.mdx', ''),
+      } satisfies PostEntry;
+    })
+    .filter((post) => !post.meta.draft)
+    .sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
+}
+
 export default async function Post(props: PostPageProps) {
   const params = await props.params;
   const post = getPost(params);
+  const posts = getPostEntries();
+  const currentIndex = posts.findIndex((entry) => entry.slug === params.slug);
+
+  if (currentIndex === -1) notFound();
+
+  const previousPost = posts[currentIndex + 1];
+  const nextPost = posts[currentIndex - 1];
 
   return (
     <>
@@ -82,6 +112,36 @@ export default async function Post(props: PostPageProps) {
         </section>
         <section className="mdx">
           {await MDXRemote({ source: post.content, options: mdxOptions })}
+          <nav className="mt-12 grid grid-cols-2 gap-3 border-t pt-6">
+            {previousPost ? (
+              <Link
+                href={`/posts/${previousPost.slug}`}
+                className="group flex min-h-24 flex-col justify-between rounded-lg border border-border/70 px-4 py-3 transition-colors hover:bg-secondary/50"
+              >
+                <span className="text-xs opacity-70">이전 글</span>
+                <p className="mt-1 line-clamp-2 text-sm font-medium group-hover:underline">{previousPost.meta.title}</p>
+              </Link>
+            ) : (
+              <div
+                aria-hidden
+                className="min-h-24 rounded-lg border border-border/40 bg-secondary/10 opacity-50"
+              />
+            )}
+            {nextPost ? (
+              <Link
+                href={`/posts/${nextPost.slug}`}
+                className="group flex min-h-24 flex-col justify-between rounded-lg border border-border/70 px-4 py-3 text-right transition-colors hover:bg-secondary/50"
+              >
+                <span className="text-xs opacity-70">다음 글</span>
+                <p className="mt-1 line-clamp-2 text-sm font-medium group-hover:underline">{nextPost.meta.title}</p>
+              </Link>
+            ) : (
+              <div
+                aria-hidden
+                className="min-h-24 rounded-lg border border-border/40 bg-secondary/10 opacity-50"
+              />
+            )}
+          </nav>
           <MdxEntranceMotion />
           <ImageZoomer />
           <GiscusComment />
@@ -93,11 +153,7 @@ export default async function Post(props: PostPageProps) {
 }
 
 export async function generateStaticParams() {
-  const files = fs.readdirSync(path.join('src/mdx/posts'));
-
-  const paths = files.map((filename) => ({
-    slug: filename.replace('.mdx', ''),
+  return getPostEntries().map((post) => ({
+    slug: post.slug,
   }));
-
-  return paths;
 }

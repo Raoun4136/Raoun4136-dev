@@ -394,12 +394,10 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
 /* rehype-toc */
 
 .mdx .toc {
-  @apply fixed top-1/2 -translate-y-1/2 transition-all;
-  @apply max-xl:left-2 xl:left-7;
-  @apply max-xl:max-w-[150px] max-xl:pr-2 xl:max-w-[240px] xl:pr-4;
-  @apply max-lg:pointer-events-none max-lg:h-0 max-lg:select-none max-lg:opacity-0 lg:opacity-100;
-  @apply text-sm;
-  max-height: 70vh;
+  @apply fixed left-6 hidden pr-3 text-sm 2xl:block;
+  top: calc(var(--site-header-h, 3.75rem) + 1.25rem);
+  max-width: 220px;
+  max-height: calc(100dvh - var(--site-header-h, 3.75rem) - 2rem);
   overflow-y: auto;
 }
 

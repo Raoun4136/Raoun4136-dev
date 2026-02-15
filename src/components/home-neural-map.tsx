@@ -27,6 +27,7 @@ type PositionedNode = NeuralNode & {
   projectedX: number;
   projectedY: number;
   projectedZ: number;
+  reveal: number;
   size: number;
   x: number;
   y: number;
@@ -48,12 +49,15 @@ type EdgePair = {
 
 type NeuralEdge = {
   depth: number;
+  fromId?: string;
   id: string;
   maxOpacity: number;
   maxWidth: number;
   minOpacity: number;
   minWidth: number;
+  reveal: number;
   stroke: string;
+  toId?: string;
   twinkleDelay: number;
   twinkleDuration: number;
   x1: number;
@@ -70,14 +74,17 @@ type RenderedGraph = {
 type HomeNeuralMapProps = {
   nodes: NeuralNode[];
   overlay?: ReactNode;
+  fullBleed?: boolean;
 };
 
 const RADIAN = Math.PI / 180;
 const PERSPECTIVE = 940;
 const FRONT_INTERACTIVE_DEPTH = 0.44;
 const TAP_DISTANCE_THRESHOLD = 7;
-const INTRO_DURATION_MS = 950;
+const INTRO_DURATION_MS = 1280;
 const ROTATE_TO_NODE_MS = 520;
+const NODE_REVEAL_WINDOW = 0.42;
+const NODE_REVEAL_SPREAD = 0.66;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
@@ -103,6 +110,13 @@ const pseudoRandom = (seed: number) => {
 
 const hashSeed = (value: string) =>
   value.split('').reduce((accumulator, letter) => accumulator * 31 + letter.charCodeAt(0), 11);
+
+const getStaggeredRevealProgress = (introProgress: number, index: number, total: number) => {
+  if (total <= 1) return introProgress;
+  const step = Math.min(0.022, NODE_REVEAL_SPREAD / (total - 1));
+  const revealStart = index * step;
+  return clamp((introProgress - revealStart) / NODE_REVEAL_WINDOW, 0, 1);
+};
 
 const getNodePositions = (nodeCount: number, sphereRadius: number): NodePosition[] => {
   if (nodeCount === 0) return [];
@@ -209,25 +223,34 @@ const getStructuralPairs = (points: NodePosition[]): EdgePair[] => {
   return pairs;
 };
 
-const getLineAnimationStyle = (edge: NeuralEdge): CSSProperties =>
-  ({
-    '--line-max-opacity': edge.maxOpacity.toFixed(3),
-    '--line-max-width': `${edge.maxWidth.toFixed(2)}px`,
-    '--line-min-opacity': edge.minOpacity.toFixed(3),
-    '--line-min-width': `${edge.minWidth.toFixed(2)}px`,
+const getLineAnimationStyle = (
+  edge: NeuralEdge,
+  opacityScale = 1,
+  widthScale = 1,
+): CSSProperties => {
+  const maxOpacity = clamp(edge.maxOpacity * opacityScale, 0, 1);
+  const minOpacity = clamp(edge.minOpacity * opacityScale, 0, 1);
+
+  return {
+    '--line-max-opacity': maxOpacity.toFixed(3),
+    '--line-max-width': `${(edge.maxWidth * widthScale).toFixed(2)}px`,
+    '--line-min-opacity': minOpacity.toFixed(3),
+    '--line-min-width': `${(edge.minWidth * widthScale).toFixed(2)}px`,
     animationDelay: `${edge.twinkleDelay.toFixed(2)}s`,
     animationDuration: `${edge.twinkleDuration.toFixed(2)}s`,
-    filter: `drop-shadow(0 0 ${0.18 + edge.depth * 0.9}px hsl(var(--ring) / ${0.05 + edge.depth * 0.14}))`,
-  }) as CSSProperties;
+    animationPlayState: edge.reveal < 0.02 ? 'paused' : 'running',
+    filter: `drop-shadow(0 0 ${0.26 + edge.depth * 1.18}px hsl(var(--ring) / ${clamp((0.1 + edge.depth * 0.22) * edge.reveal * opacityScale, 0, 0.9)}))`,
+  } as CSSProperties;
+};
 
-export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
+export default function HomeNeuralMap({ nodes, overlay, fullBleed = false }: HomeNeuralMapProps) {
   const router = useRouter();
   const sectionRef = useRef<HTMLElement | null>(null);
   const interactionRef = useRef<HTMLDivElement | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [lockedNodeId, setLockedNodeId] = useState<string | null>(null);
   const [introProgress, setIntroProgress] = useState(0);
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState(() => (fullBleed ? 1.2 : 1));
   const [rotation, setRotation] = useState({ x: 340, y: 24 });
   const [isDragging, setIsDragging] = useState(false);
   const [isCtrlPressed, setIsCtrlPressed] = useState(false);
@@ -254,9 +277,17 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
 
   const graph = useMemo<RenderedGraph>(() => {
     const viewportShortSide = Math.min(viewport.width || 920, viewport.height || 640);
-    const adaptiveSphereRadius = clamp(viewportShortSide * 0.36, 165, 252);
-    const introTargetScale = clamp(viewportShortSide / 780, 0.74, 1.06);
-    const introStartScale = 0.04;
+    const adaptiveSphereRadius = clamp(
+      viewportShortSide * (fullBleed ? 0.4 : 0.36),
+      fullBleed ? 190 : 165,
+      fullBleed ? 298 : 252,
+    );
+    const introTargetScale = clamp(
+      viewportShortSide / (fullBleed ? 730 : 780),
+      fullBleed ? 0.88 : 0.74,
+      fullBleed ? 1.22 : 1.06,
+    );
+    const introStartScale = fullBleed ? 0.06 : 0.04;
     const introScale = (introStartScale + introProgress * (1 - introStartScale)) * introTargetScale;
     const positions = getNodePositions(nodes.length, adaptiveSphereRadius);
     const structuralPairs = getStructuralPairs(positions);
@@ -278,13 +309,16 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
       const rotatedY = worldY * cosX - rotatedZ * sinX;
       const finalZ = worldY * sinX + rotatedZ * cosX;
       const perspectiveScale = PERSPECTIVE / (PERSPECTIVE - finalZ);
-      const projectedX = rotatedX * perspectiveScale * introScale;
-      const projectedY = rotatedY * perspectiveScale * introScale;
+      const revealProgress = getStaggeredRevealProgress(introProgress, index, nodes.length);
+      const reveal = 1 - Math.pow(1 - revealProgress, 3);
+      const orbitSpread = 0.08 + reveal * 0.92;
+      const projectedX = rotatedX * perspectiveScale * introScale * orbitSpread;
+      const projectedY = rotatedY * perspectiveScale * introScale * orbitSpread;
       const rawDepth = clamp((finalZ + 335) / 670, 0, 1);
       const depth = Math.pow(rawDepth, 1.95);
-      const baseSize = node.type === 'post' ? 21 : 18;
+      const baseSize = node.type === 'post' ? 18 : 15;
       const zoomScale = clamp(Math.pow(zoom, 0.86), 0.74, 1.48);
-      const size = baseSize * (0.45 + depth * 0.76) * zoomScale;
+      const size = baseSize * (0.45 + depth * 0.76) * zoomScale * (0.45 + reveal * 0.55);
 
       return {
         ...node,
@@ -292,6 +326,7 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
         projectedX,
         projectedY,
         projectedZ: finalZ,
+        reveal,
         size,
         x: point.x,
         y: point.y,
@@ -304,19 +339,24 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
       .map((node, index) => {
         const seed = hashSeed(`center-${node.id}-${index}`);
         const sparkle = pseudoRandom(seed + 91);
-        const minOpacity = 0.012 + node.depth * 0.08;
-        const maxOpacity = minOpacity + 0.048 + sparkle * 0.04;
-        const minWidth = 0.18 + node.depth * 0.16;
-        const maxWidth = minWidth + 0.16 + sparkle * 0.08;
+        const reveal = node.reveal;
+        const baseMinOpacity = 0.028 + node.depth * 0.14;
+        const minOpacity = baseMinOpacity * reveal;
+        const maxOpacity = (baseMinOpacity + 0.08 + sparkle * 0.06) * reveal;
+        const minWidth = (0.32 + node.depth * 0.28) * (0.4 + reveal * 0.6);
+        const maxWidth = (minWidth + 0.26 + sparkle * 0.14) * (0.5 + reveal * 0.5);
 
         return {
           depth: node.depth * 0.72,
           id: `radial-${node.id}`,
+          fromId: undefined,
           maxOpacity,
           maxWidth,
           minOpacity,
           minWidth,
-          stroke: 'hsl(var(--border) / 0.5)',
+          reveal,
+          stroke: 'hsl(var(--ring) / 0.62)',
+          toId: node.id,
           twinkleDelay: pseudoRandom(seed + 31) * 4,
           twinkleDuration: 2.8 + pseudoRandom(seed + 47) * 2.6,
           x1: 0,
@@ -333,19 +373,24 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
       const seed = hashSeed(`synapse-${from.id}-${to.id}-${index}`);
       const sparkle = pseudoRandom(seed + 59);
       const ringBoost = pair.type === 'ring' ? 1 : 0.78;
-      const minOpacity = (0.02 + depth * 0.11) * ringBoost;
-      const maxOpacity = minOpacity + (0.06 + sparkle * 0.05) * ringBoost;
-      const minWidth = 0.22 + depth * 0.2;
-      const maxWidth = minWidth + (0.17 + sparkle * 0.12) * ringBoost;
+      const reveal = Math.min(from.reveal, to.reveal);
+      const baseMinOpacity = (0.034 + depth * 0.16) * ringBoost;
+      const minOpacity = baseMinOpacity * reveal;
+      const maxOpacity = (baseMinOpacity + (0.09 + sparkle * 0.06) * ringBoost) * reveal;
+      const minWidth = (0.34 + depth * 0.26) * (0.4 + reveal * 0.6);
+      const maxWidth = (minWidth + (0.22 + sparkle * 0.16) * ringBoost) * (0.5 + reveal * 0.5);
 
       return {
         depth,
+        fromId: from.id,
         id: `${pair.type}-${from.id}-${to.id}`,
         maxOpacity,
         maxWidth,
         minOpacity,
         minWidth,
-        stroke: pair.type === 'ring' ? 'hsl(var(--border) / 0.68)' : 'hsl(var(--border) / 0.52)',
+        reveal,
+        stroke: pair.type === 'ring' ? 'hsl(var(--ring) / 0.78)' : 'hsl(var(--ring) / 0.56)',
+        toId: to.id,
         twinkleDelay: pseudoRandom(seed + 17) * 4.4,
         twinkleDuration:
           pair.type === 'ring'
@@ -362,12 +407,22 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
       edges: [...centerEdges, ...synapseEdges].sort((a, b) => a.depth - b.depth),
       nodes: projectedNodes.sort((a, b) => a.projectedZ - b.projectedZ),
     };
-  }, [introProgress, nodes, rotation.x, rotation.y, viewport.height, viewport.width, zoom]);
+  }, [fullBleed, introProgress, nodes, rotation.x, rotation.y, viewport.height, viewport.width, zoom]);
 
   const activeNode = useMemo(
     () => graph.nodes.find((node) => node.id === activeNodeId) ?? null,
     [graph.nodes, activeNodeId],
   );
+  const mapDiameter = useMemo(
+    () =>
+      clamp(
+        Math.max(viewport.width || 1080, viewport.height || 680) * (fullBleed ? 1.56 : 1.34),
+        fullBleed ? 1200 : 980,
+        fullBleed ? 2400 : 1860,
+      ),
+    [fullBleed, viewport.height, viewport.width],
+  );
+  const mapHalf = mapDiameter / 2;
 
   useEffect(() => {
     isDraggingRef.current = isDragging;
@@ -504,8 +559,8 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
 
       if (!isDraggingRef.current && !inertiaActiveRef.current && !isPreviewingRef.current && !aligningRef.current) {
         setRotation((current) => ({
-          x: normalizeAngle(current.x + Math.sin(timestamp * 0.00025) * 0.0025 * delta),
-          y: normalizeAngle(current.y - 0.0052 * delta),
+          x: normalizeAngle(current.x + Math.sin(timestamp * 0.00025) * 0.0018 * delta),
+          y: normalizeAngle(current.y - 0.0039 * delta),
         }));
       }
 
@@ -562,12 +617,12 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
       if (!event.ctrlKey) return;
       event.preventDefault();
       const delta = event.deltaY < 0 ? 0.08 : -0.08;
-      setZoom((previous) => clamp(previous + delta, 0.62, 1.72));
+      setZoom((previous) => clamp(previous + delta, fullBleed ? 0.84 : 0.62, fullBleed ? 1.96 : 1.72));
     };
 
     container.addEventListener('wheel', handleWheel, { passive: false });
     return () => container.removeEventListener('wheel', handleWheel);
-  }, []);
+  }, [fullBleed]);
 
   useEffect(() => {
     const element = sectionRef.current;
@@ -609,13 +664,14 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
     <section
       ref={sectionRef}
       className={cn(
-        'relative h-full w-full overflow-hidden rounded-[1.6rem] border border-border/60',
-        'bg-[radial-gradient(circle_at_18%_20%,hsl(var(--secondary))_0%,transparent_42%),radial-gradient(circle_at_85%_12%,hsl(var(--accent)/0.42)_0%,transparent_45%),radial-gradient(circle_at_50%_80%,hsl(var(--muted)/0.9)_0%,transparent_52%),hsl(var(--background))]',
+        'relative h-full w-full overflow-hidden',
+        fullBleed ? 'rounded-none border-0' : 'min-h-[56dvh] rounded-[1.15rem] border border-border/55',
+        'bg-[radial-gradient(circle_at_18%_20%,hsl(var(--secondary))_0%,transparent_44%),radial-gradient(circle_at_85%_12%,hsl(var(--accent)/0.28)_0%,transparent_48%),radial-gradient(circle_at_52%_80%,hsl(var(--muted)/0.85)_0%,transparent_58%),hsl(var(--background))]',
       )}
     >
       {overlay && <div className="absolute inset-x-0 top-0 z-40">{overlay}</div>}
 
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.18)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.18)_1px,transparent_1px)] bg-[size:54px_54px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.09)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.09)_1px,transparent_1px)] bg-[size:56px_56px]" />
 
       <div
         ref={interactionRef}
@@ -670,7 +726,7 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
             const distance = getPinchDistance();
             if (distance) {
               const nextZoom = pinchStateRef.current.zoom * (distance / pinchStateRef.current.distance);
-              setZoom(clamp(nextZoom, 0.62, 1.72));
+              setZoom(clamp(nextZoom, fullBleed ? 0.84 : 0.62, fullBleed ? 1.96 : 1.72));
             }
             return;
           }
@@ -743,52 +799,70 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
           }
         }}
       >
-        <div className="absolute left-1/2 top-1/2 h-[1220px] w-[1220px] -translate-x-1/2 -translate-y-1/2 will-change-transform">
-          <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="-610 -610 1220 1220">
-            {graph.edges.map((edge) => (
-              <line
-                key={edge.id}
-                className="neural-line-twinkle"
-                style={getLineAnimationStyle(edge)}
-                stroke={edge.stroke}
-                x1={edge.x1}
-                x2={edge.x2}
-                y1={edge.y1}
-                y2={edge.y2}
-              />
-            ))}
+        <div
+          className="absolute left-1/2 top-1/2 will-change-transform"
+          style={{
+            height: `${mapDiameter}px`,
+            transform: 'translate(-50%, -50%)',
+            width: `${mapDiameter}px`,
+          }}
+        >
+          <svg
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            viewBox={`${-mapHalf} ${-mapHalf} ${mapDiameter} ${mapDiameter}`}
+          >
+            {graph.edges.map((edge) => {
+              const hasFocusedNode = activeNodeId !== null;
+              const isEdgeConnected =
+                activeNodeId !== null && (edge.fromId === activeNodeId || edge.toId === activeNodeId);
+              const opacityScale = hasFocusedNode ? (isEdgeConnected ? 1.28 : 0.48) : 1;
+              const widthScale = hasFocusedNode ? (isEdgeConnected ? 1.12 : 0.86) : 1;
+
+              return (
+                <line
+                  key={edge.id}
+                  className="neural-line-twinkle"
+                  style={getLineAnimationStyle(edge, opacityScale, widthScale)}
+                  stroke={edge.stroke}
+                  x1={edge.x1}
+                  x2={edge.x2}
+                  y1={edge.y1}
+                  y2={edge.y2}
+                />
+              );
+            })}
           </svg>
 
-          <div className="pointer-events-none absolute left-1/2 top-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border/60 bg-background/85 shadow-[0_0_0_5px_hsl(var(--background)/0.55)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-foreground/70" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 flex h-3 w-3 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border/55 bg-background/72">
+            <span className="h-1 w-1 rounded-full bg-foreground/75" />
           </div>
 
           {graph.nodes.map((node) => {
-            const isFrontInteractive = node.depth >= FRONT_INTERACTIVE_DEPTH;
+            const isFrontInteractive = node.depth >= FRONT_INTERACTIVE_DEPTH && node.reveal > 0.55;
             const isExternalNode = Boolean(node.isExternal);
             const isSocialNode = node.category === 'social';
             const isPinned = lockedNodeId === node.id;
             const isHot = activeNodeId === node.id;
             const hasFocus = activeNodeId !== null;
-            const fadeOutFactor = hasFocus && !isHot ? 0.2 : 1;
+            const fadeOutFactor = hasFocus && !isHot ? 0.16 : 1;
             const fillColor = isSocialNode
-              ? 'hsl(var(--chart-5) / 0.16)'
+              ? 'hsl(var(--chart-5) / 0.1)'
               : isExternalNode
-                ? 'hsl(var(--chart-4) / 0.16)'
-                : 'hsl(var(--chart-2) / 0.18)';
+                ? 'hsl(var(--chart-4) / 0.1)'
+                : 'hsl(var(--chart-2) / 0.11)';
             const borderColor = isSocialNode
-              ? 'hsl(var(--chart-5) / 0.68)'
+              ? 'hsl(var(--chart-5) / 0.52)'
               : isExternalNode
-                ? 'hsl(var(--chart-4) / 0.68)'
-                : 'hsl(var(--chart-2) / 0.66)';
+                ? 'hsl(var(--chart-4) / 0.52)'
+                : 'hsl(var(--chart-2) / 0.54)';
             const shadowColor = isSocialNode
-              ? 'hsl(var(--chart-5) / 0.34)'
+              ? 'hsl(var(--chart-5) / 0.24)'
               : isExternalNode
-                ? 'hsl(var(--chart-4) / 0.34)'
-                : 'hsl(var(--chart-2) / 0.3)';
+                ? 'hsl(var(--chart-4) / 0.24)'
+                : 'hsl(var(--chart-2) / 0.22)';
             const twinkleSeed = pseudoRandom(hashSeed(`node-twinkle-${node.id}`));
-            const twinkleDuration = 9.5 + twinkleSeed * 6.5;
-            const displaySize = node.size + 8 + (isPinned ? 6 : 0);
+            const twinkleDuration = 12 + twinkleSeed * 8;
+            const displaySize = node.size + 6 + (isPinned ? 5 : 0);
 
             return (
               <motion.button
@@ -799,8 +873,8 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
                 aria-label={node.title}
                 initial={false}
                 animate={{
-                  opacity: (0.1 + node.depth * 0.9) * fadeOutFactor,
-                  scale: isPinned ? 1.18 : isHot ? 1.08 : 1,
+                  opacity: (0.1 + node.depth * 0.9) * fadeOutFactor * node.reveal,
+                  scale: (isPinned ? 1.16 : isHot ? 1.05 : 1) * (0.45 + node.reveal * 0.55),
                   x: node.projectedX,
                   y: node.projectedY,
                 }}
@@ -910,11 +984,16 @@ export default function HomeNeuralMap({ nodes, overlay }: HomeNeuralMapProps) {
               exit={{ opacity: 0, scale: 0.94, y: 10 }}
               transition={{ duration: 0.18, ease: 'easeOut' }}
               style={{ zIndex: 500 }}
-              className="absolute inset-x-0 bottom-5 flex justify-center px-4"
+              className={cn(
+                'absolute z-[500] flex px-4',
+                fullBleed
+                  ? 'left-1/2 top-4 w-[calc(100%-1.5rem)] -translate-x-1/2 justify-center md:top-5 md:px-0'
+                  : 'inset-x-0 bottom-5 justify-center',
+              )}
             >
               <button
                 type="button"
-                className="w-full max-w-[28rem] rounded-2xl border border-border/75 bg-background/92 px-4 py-3 text-left shadow-xl backdrop-blur-xl"
+                className="w-full max-w-[26rem] rounded-2xl border border-border/75 bg-background/92 px-4 py-3 text-left shadow-xl backdrop-blur-xl"
                 onPointerEnter={() => {
                   clearHoverTimer();
                   isPreviewingRef.current = true;
