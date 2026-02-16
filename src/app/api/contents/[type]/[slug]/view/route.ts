@@ -1,7 +1,8 @@
 import { createHash } from 'crypto';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { trackContentView } from '@/db/queries/views';
 import { isVercelProduction } from '@/lib/runtime-env';
+import { isStudioSessionTokenValid, STUDIO_AUTH_COOKIE } from '@/lib/studio-auth';
 
 type RouteContext = {
   params: Promise<{
@@ -29,9 +30,14 @@ const buildVisitorKey = (request: Request) => {
   return createHash('sha256').update(rawIdentity).digest('hex');
 };
 
-export async function POST(request: Request, context: RouteContext) {
+export async function POST(request: NextRequest, context: RouteContext) {
   if (!isVercelProduction) {
     return NextResponse.json({ ok: true, tracked: false, reason: 'non-production' });
+  }
+
+  const studioSessionToken = request.cookies.get(STUDIO_AUTH_COOKIE)?.value;
+  if (isStudioSessionTokenValid(studioSessionToken)) {
+    return NextResponse.json({ ok: true, tracked: false, reason: 'studio-session' });
   }
 
   const params = await context.params;
