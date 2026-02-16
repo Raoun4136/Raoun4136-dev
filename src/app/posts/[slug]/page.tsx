@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import '@/styles/mdx.css';
 
 import { MDXRemote } from 'next-mdx-remote-client/rsc';
@@ -16,29 +13,28 @@ import { ResolvingMetadata } from 'next';
 import { mdxOptions } from '@/components/lib/mdx';
 import ImageZoomer from '@/components/ImageZoomer';
 import { MdxEntranceMotion } from '@/components/mdx-entrance-motion';
-import { PostType } from '@/components/lib/type';
 import JsonLd from '@/components/json-ld';
 import { CommonMetaData } from '@/components/lib/constant';
+import { getPostBySlug, getPostEntries } from '@/db/queries/contents';
+import ContentViewTracker from '@/components/content-view-tracker';
+import { StudioEditContentButton } from '@/components/studio/studio-entry-actions';
+import { isVercelProduction } from '@/lib/runtime-env';
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
-};
-
-type PostEntry = {
-  meta: PostType;
-  slug: string;
 };
 
 export async function generateMetadata(props: PostPageProps, parent: ResolvingMetadata) {
   const params = await props.params;
   const parentData = await parent;
 
-  const post = getPost(params);
+  const post = await getPostBySlug(params.slug);
+  if (!post) return {};
 
   return {
     ...parentData.openGraph,
-    title: post.frontMatter.title,
-    description: (post.frontMatter.description ?? '') + (post.content?.slice(0, 100) ?? '') + '...',
+    title: post.meta.title,
+    description: (post.meta.description ?? '') + (post.content?.slice(0, 100) ?? '') + '...',
     alternates: {
       canonical: `/posts/${params.slug}`,
     },
@@ -49,43 +45,13 @@ export async function generateMetadata(props: PostPageProps, parent: ResolvingMe
   };
 }
 
-function getPost({ slug }: { slug: string }) {
-  let markdownFile;
-  try {
-    markdownFile = fs.readFileSync(path.join('src/mdx/posts', slug + '.mdx'), 'utf-8');
-  } catch {
-    notFound();
-  }
-  const { data: frontMatter, content } = matter(markdownFile);
-
-  return {
-    frontMatter: frontMatter as PostType,
-    slug,
-    content,
-  };
-}
-
-function getPostEntries() {
-  const files = fs.readdirSync(path.join('src/mdx/posts'));
-
-  return files
-    .map((filename) => {
-      const fileContent = fs.readFileSync(path.join('src/mdx/posts', filename), 'utf-8');
-      const { data: frontMatter } = matter(fileContent);
-
-      return {
-        meta: frontMatter as PostType,
-        slug: filename.replace('.mdx', ''),
-      } satisfies PostEntry;
-    })
-    .filter((post) => !post.meta.draft)
-    .sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
-}
-
 export default async function Post(props: PostPageProps) {
   const params = await props.params;
-  const post = getPost(params);
-  const posts = getPostEntries();
+  const post = await getPostBySlug(params.slug);
+  const posts = await getPostEntries();
+
+  if (!post) notFound();
+
   const currentIndex = posts.findIndex((entry) => entry.slug === params.slug);
 
   if (currentIndex === -1) notFound();
@@ -94,7 +60,14 @@ export default async function Post(props: PostPageProps) {
   const nextPost = posts[currentIndex - 1];
   const siteUrl = CommonMetaData.metadataBase.toString().replace(/\/$/, '');
   const pageUrl = new URL(`/posts/${params.slug}`, CommonMetaData.metadataBase).toString();
-  const publishedAt = new Date(post.frontMatter.date).toISOString();
+  const publishedAt = new Date(post.meta.date).toISOString();
+  const postMetaLine = [
+    format(post.meta.date, 'yyyy-MM-dd'),
+    post.meta.readTimeMin ? `${post.meta.readTimeMin}분` : null,
+    `조회 ${post.meta.viewCount ?? 0}`,
+  ]
+    .filter(Boolean)
+    .join(' · ');
   const postJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -103,10 +76,10 @@ export default async function Post(props: PostPageProps) {
       '@type': 'WebPage',
       '@id': pageUrl,
     },
-    headline: post.frontMatter.title,
-    description: post.frontMatter.description ?? '',
+    headline: post.meta.title,
+    description: post.meta.description ?? '',
     datePublished: publishedAt,
-    dateModified: publishedAt,
+    dateModified: new Date(post.meta.update ?? post.meta.date).toISOString(),
     inLanguage: 'ko-KR',
     articleSection: 'Posts',
     author: {
@@ -134,11 +107,16 @@ export default async function Post(props: PostPageProps) {
       <JsonLd id={`post-jsonld-${params.slug}`} data={postJsonLd} />
       <article>
         <section className="mb-12 opacity-90">
-          <h1 className="text-md font-semibold">{post.frontMatter.title}</h1>
-          <h2 className="text-sm font-light opacity-70">{post.frontMatter.description}</h2>
-          <span className="text-xs font-light opacity-70">{format(post.frontMatter.date, 'yyyy-MM-dd')}</span>
-          {post.frontMatter.outlink && (
-            <Link href={post.frontMatter.outlink} target="_blank" rel="noopener noreferrer">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <h1 className="text-md font-semibold">{post.meta.title}</h1>
+              <h2 className="text-sm font-light opacity-70">{post.meta.description}</h2>
+              <span className="text-xs font-light opacity-70">{postMetaLine}</span>
+            </div>
+            <StudioEditContentButton contentId={post.id} />
+          </div>
+          {post.meta.outlink && (
+            <Link href={post.meta.outlink} target="_blank" rel="noopener noreferrer">
               <Alert className="my-6 transition-colors hover:bg-secondary/80">
                 <ArrowUpRightFromSquareIcon className="h-4 w-4" />
                 <AlertTitle>외부 링크 안내</AlertTitle>
@@ -185,6 +163,7 @@ export default async function Post(props: PostPageProps) {
           <ImageZoomer />
           <GiscusComment />
           <TocHighlighter />
+          <ContentViewTracker type="post" slug={params.slug} enabled={isVercelProduction} />
         </section>
       </article>
     </>
@@ -192,7 +171,8 @@ export default async function Post(props: PostPageProps) {
 }
 
 export async function generateStaticParams() {
-  return getPostEntries().map((post) => ({
+  const posts = await getPostEntries();
+  return posts.map((post) => ({
     slug: post.slug,
   }));
 }

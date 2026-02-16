@@ -1,7 +1,5 @@
 import { MetadataRoute } from 'next';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { getAllPublishedEntries } from '@/db/queries/contents';
 
 const defaultSiteMap: MetadataRoute.Sitemap = [
   {
@@ -26,24 +24,21 @@ const defaultSiteMap: MetadataRoute.Sitemap = [
   },
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = fs.readdirSync(path.join('src/mdx/posts'));
-  const notes = fs.readdirSync(path.join('src/mdx/notes'));
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { posts, notes } = await getAllPublishedEntries();
 
   const sitemapFromPosts: MetadataRoute.Sitemap = posts.map((post) => {
-    const { data: frontMatter } = matter(fs.readFileSync(path.join('src/mdx/posts', post), 'utf-8'));
     return {
-      url: 'https://www.raoun.me/posts/' + post?.replace('.mdx', ''),
-      lastModified: new Date(frontMatter.update ?? frontMatter.date),
+      url: 'https://www.raoun.me/posts/' + post.slug,
+      lastModified: new Date(post.meta.update ?? post.meta.date),
       changeFrequency: 'daily',
     };
   });
 
   const sitemapFromNotes: MetadataRoute.Sitemap = notes.map((note) => {
-    const { data: frontMatter } = matter(fs.readFileSync(path.join('src/mdx/notes', note), 'utf-8'));
     return {
-      url: 'https://www.raoun.me/notes/' + note?.replace('.mdx', ''),
-      lastModified: new Date(frontMatter.update ?? frontMatter.date),
+      url: 'https://www.raoun.me/notes/' + note.slug,
+      lastModified: new Date(note.meta.update ?? note.meta.date),
       changeFrequency: 'daily',
     };
   });

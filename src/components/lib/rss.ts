@@ -1,10 +1,8 @@
 import RSS from 'rss';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import { CommonMetaData } from './constant';
+import { getAllPublishedEntries } from '@/db/queries/contents';
 
-export const generateRSS = () => {
+export const generateRSS = async () => {
   const feed = new RSS({
     title: CommonMetaData.title.default,
     description: CommonMetaData.description,
@@ -13,26 +11,23 @@ export const generateRSS = () => {
     pubDate: new Date(),
   });
 
-  const posts = fs.readdirSync(path.join('src/mdx/posts'));
-  const notes = fs.readdirSync(path.join('src/mdx/notes'));
+  const { posts, notes } = await getAllPublishedEntries();
 
-  posts.map((post) => {
-    const { data: frontMatter } = matter(fs.readFileSync(path.join('src/mdx/posts', post), 'utf-8'));
+  posts.forEach((post) => {
     feed.item({
-      title: frontMatter.title,
-      description: frontMatter.description,
-      url: CommonMetaData.metadataBase.toString() + `posts/${post.replace('.mdx', '')}`,
-      date: new Date(frontMatter.date),
+      title: post.meta.title,
+      description: post.meta.description,
+      url: CommonMetaData.metadataBase.toString() + `posts/${post.slug}`,
+      date: new Date(post.meta.date),
     });
   });
 
-  notes.map((note) => {
-    const { data: frontMatter } = matter(fs.readFileSync(path.join('src/mdx/notes', note), 'utf-8'));
+  notes.forEach((note) => {
     feed.item({
-      title: frontMatter.title,
-      description: frontMatter.description,
-      url: CommonMetaData.metadataBase.toString() + `notes/${note.replace('.mdx', '')}`,
-      date: new Date(frontMatter.date),
+      title: note.meta.title,
+      description: note.meta.description,
+      url: CommonMetaData.metadataBase.toString() + `notes/${note.slug}`,
+      date: new Date(note.meta.date),
     });
   });
 

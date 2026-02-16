@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import '@/styles/mdx.css';
 
 import { MDXRemote } from 'next-mdx-remote-client/rsc';
@@ -13,30 +10,29 @@ import { ResolvingMetadata } from 'next';
 import { mdxOptions } from '@/components/lib/mdx';
 import ImageZoomer from '@/components/ImageZoomer';
 import { MdxEntranceMotion } from '@/components/mdx-entrance-motion';
-import { NoteType } from '@/components/lib/type';
 import Link from 'next/link';
 import JsonLd from '@/components/json-ld';
 import { CommonMetaData } from '@/components/lib/constant';
+import { getNoteBySlug, getNoteEntries } from '@/db/queries/contents';
+import ContentViewTracker from '@/components/content-view-tracker';
+import { StudioEditContentButton } from '@/components/studio/studio-entry-actions';
+import { isVercelProduction } from '@/lib/runtime-env';
 
 type NotePageProps = {
   params: Promise<{ slug: string }>;
-};
-
-type NoteEntry = {
-  meta: NoteType;
-  slug: string;
 };
 
 export async function generateMetadata(props: NotePageProps, parent: ResolvingMetadata) {
   const params = await props.params;
   const parentData = await parent;
 
-  const note = getPost(params);
+  const note = await getNoteBySlug(params.slug);
+  if (!note) return {};
 
   return {
     ...parentData.openGraph,
-    title: note.frontMatter.title,
-    description: (note.frontMatter.description ?? '') + (note.content?.slice(0, 100) ?? '') + '...',
+    title: note.meta.title,
+    description: (note.meta.description ?? '') + (note.content?.slice(0, 100) ?? '') + '...',
     alternates: {
       canonical: `/notes/${params.slug}`,
     },
@@ -47,43 +43,13 @@ export async function generateMetadata(props: NotePageProps, parent: ResolvingMe
   };
 }
 
-function getPost({ slug }: { slug: string }) {
-  let markdownFile;
-  try {
-    markdownFile = fs.readFileSync(path.join('src/mdx/notes', slug + '.mdx'), 'utf-8');
-  } catch {
-    notFound();
-  }
-  const { data: frontMatter, content } = matter(markdownFile);
-
-  return {
-    frontMatter: frontMatter as NoteType,
-    slug,
-    content,
-  };
-}
-
-function getNoteEntries() {
-  const files = fs.readdirSync(path.join('src/mdx/notes'));
-
-  return files
-    .map((filename) => {
-      const fileContent = fs.readFileSync(path.join('src/mdx/notes', filename), 'utf-8');
-      const { data: frontMatter } = matter(fileContent);
-
-      return {
-        meta: frontMatter as NoteType,
-        slug: filename.replace('.mdx', ''),
-      } satisfies NoteEntry;
-    })
-    .filter((note) => !note.meta.draft)
-    .sort((a, b) => new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime());
-}
-
 export default async function Note(props: NotePageProps) {
   const params = await props.params;
-  const note = getPost(params);
-  const notes = getNoteEntries();
+  const note = await getNoteBySlug(params.slug);
+  const notes = await getNoteEntries();
+
+  if (!note) notFound();
+
   const currentIndex = notes.findIndex((entry) => entry.slug === params.slug);
 
   if (currentIndex === -1) notFound();
@@ -92,7 +58,14 @@ export default async function Note(props: NotePageProps) {
   const nextNote = notes[currentIndex - 1];
   const siteUrl = CommonMetaData.metadataBase.toString().replace(/\/$/, '');
   const pageUrl = new URL(`/notes/${params.slug}`, CommonMetaData.metadataBase).toString();
-  const publishedAt = new Date(note.frontMatter.date).toISOString();
+  const publishedAt = new Date(note.meta.date).toISOString();
+  const noteMetaLine = [
+    format(note.meta.date, 'yyyy-MM-dd'),
+    note.meta.readTimeMin ? `${note.meta.readTimeMin}분` : null,
+    `조회 ${note.meta.viewCount ?? 0}`,
+  ]
+    .filter(Boolean)
+    .join(' · ');
   const noteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
@@ -101,10 +74,10 @@ export default async function Note(props: NotePageProps) {
       '@type': 'WebPage',
       '@id': pageUrl,
     },
-    headline: note.frontMatter.title,
-    description: note.frontMatter.description ?? '',
+    headline: note.meta.title,
+    description: note.meta.description ?? '',
     datePublished: publishedAt,
-    dateModified: publishedAt,
+    dateModified: new Date(note.meta.update ?? note.meta.date).toISOString(),
     inLanguage: 'ko-KR',
     articleSection: 'Notes',
     author: {
@@ -132,9 +105,14 @@ export default async function Note(props: NotePageProps) {
       <JsonLd id={`note-jsonld-${params.slug}`} data={noteJsonLd} />
       <article>
         <section className="mb-12 text-opacity-90">
-          <h1 className="text-md font-semibold">{note.frontMatter.title}</h1>
-          <h2 className="text-sm font-light opacity-70">{note.frontMatter.description}</h2>
-          <span className="text-xs font-light opacity-70">{format(note.frontMatter.date, 'yyyy-MM-dd')}</span>
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <h1 className="text-md font-semibold">{note.meta.title}</h1>
+              <h2 className="text-sm font-light opacity-70">{note.meta.description}</h2>
+              <span className="text-xs font-light opacity-70">{noteMetaLine}</span>
+            </div>
+            <StudioEditContentButton contentId={note.id} />
+          </div>
         </section>
         <section className="mdx" data-motion-state="pending">
           {await MDXRemote({ source: note.content, options: mdxOptions })}
@@ -172,6 +150,7 @@ export default async function Note(props: NotePageProps) {
           <ImageZoomer />
           <GiscusComment />
           <TocHighlighter />
+          <ContentViewTracker type="note" slug={params.slug} enabled={isVercelProduction} />
         </section>
       </article>
     </>
@@ -179,7 +158,8 @@ export default async function Note(props: NotePageProps) {
 }
 
 export async function generateStaticParams() {
-  return getNoteEntries().map((note) => ({
+  const notes = await getNoteEntries();
+  return notes.map((note) => ({
     slug: note.slug,
   }));
 }

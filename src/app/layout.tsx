@@ -15,6 +15,8 @@ import FloatingNavDock from '@/components/floating-nav-dock';
 import AppFrame from '@/components/app-frame';
 import SiteTopHeader from '@/components/site-top-header';
 import JsonLd from '@/components/json-ld';
+import { isVercelProduction } from '@/lib/runtime-env';
+import { Toaster } from '@/components/ui/sonner';
 
 const sans = localFont({
   src: '../static/fonts/PretendardVariable.woff2',
@@ -38,13 +40,17 @@ export const metadata: Metadata = {
   ...CommonMetaData,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const posts = usePost();
-  const notes = useNote();
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const naverWaId = process.env.NEXT_PUBLIC_NAVER_WA_ID;
+  const umamiId = process.env.NEXT_PUBLIC_UMAMI_ID;
+  const enableAnalytics = isVercelProduction;
+
+  const [posts, notes] = await Promise.all([usePost(), useNote()]);
   const siteUrl = CommonMetaData.metadataBase.toString().replace(/\/$/, '');
   const siteJsonLd = {
     '@context': 'https://schema.org',
@@ -81,32 +87,43 @@ export default function RootLayout({
           <SiteTopHeader posts={posts} notes={notes} />
           <AppFrame>{children}</AppFrame>
           <FloatingNavDock />
+          <Toaster richColors closeButton />
         </ThemeProvider>
         <JsonLd id="site-jsonld" data={siteJsonLd} />
 
-        <Analytics />
-        {/* Google Analytics 설정 */}
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        {enableAnalytics && (
+          <>
+            <Analytics />
+            {/* Google Analytics 설정 */}
+            {gaId && <GoogleAnalytics gaId={gaId} />}
 
-        {/* Naver Analytics 설정 */}
-        <Script strategy="beforeInteractive" src="//wcs.naver.net/wcslog.js" />
-        <Script id="wcs" strategy="afterInteractive">
-          {`
-            if (!wcs_add) var wcs_add = {};
-            wcs_add["wa"] = "${process.env.NEXT_PUBLIC_NAVER_WA_ID}";
-            if (window.wcs) {
-              wcs_do();
-            }
-          `}
-        </Script>
+            {/* Naver Analytics 설정 */}
+            {naverWaId && (
+              <>
+                <Script strategy="beforeInteractive" src="//wcs.naver.net/wcslog.js" />
+                <Script id="wcs" strategy="afterInteractive">
+                  {`
+                    if (!wcs_add) var wcs_add = {};
+                    wcs_add["wa"] = "${naverWaId}";
+                    if (window.wcs) {
+                      wcs_do();
+                    }
+                  `}
+                </Script>
+              </>
+            )}
 
-        {/* Umami Analytics 설정 */}
-        <Script
-          id="umami"
-          src="https://cloud.umami.is/script.js"
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID}
-          strategy="afterInteractive"
-        />
+            {/* Umami Analytics 설정 */}
+            {umamiId && (
+              <Script
+                id="umami"
+                src="https://cloud.umami.is/script.js"
+                data-website-id={umamiId}
+                strategy="afterInteractive"
+              />
+            )}
+          </>
+        )}
       </body>
     </html>
   );

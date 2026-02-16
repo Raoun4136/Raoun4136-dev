@@ -10,9 +10,12 @@ import {
   House,
   Instagram,
   Linkedin,
+  LogIn,
+  LogOut,
   Menu,
   MessageCircle,
   NotebookText,
+  PenSquare,
   Rss,
   User,
   X,
@@ -27,6 +30,11 @@ type DockLink = {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   target?: '_blank';
+};
+
+type StudioAuthStatus = {
+  enabled: boolean;
+  isAuthenticated: boolean;
 };
 
 const PRIMARY_LINKS: DockLink[] = [
@@ -56,10 +64,41 @@ const isActivePath = (pathname: string, href: string) => {
 export default function FloatingNavDock() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [studioAuth, setStudioAuth] = useState<StudioAuthStatus>({
+    enabled: false,
+    isAuthenticated: false,
+  });
   const dockRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setIsMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadStudioStatus = async () => {
+      try {
+        const response = await fetch('/api/studio/auth/status', {
+          method: 'GET',
+          cache: 'no-store',
+          signal: controller.signal,
+        });
+
+        if (!response.ok) return;
+        const data = (await response.json()) as StudioAuthStatus;
+        if (controller.signal.aborted) return;
+        setStudioAuth({
+          enabled: Boolean(data.enabled),
+          isAuthenticated: Boolean(data.isAuthenticated),
+        });
+      } catch {
+        // Ignore request failures and keep studio controls hidden.
+      }
+    };
+
+    void loadStudioStatus();
+    return () => controller.abort();
   }, [pathname]);
 
   useEffect(() => {
@@ -77,15 +116,18 @@ export default function FloatingNavDock() {
     return () => window.removeEventListener('pointerdown', handleOutsidePointer);
   }, [isMenuOpen]);
 
+  const studioNextPath = pathname || '/';
+  const studioLoginHref = `/studio/login?next=${encodeURIComponent(studioNextPath)}`;
+
   return (
-    <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
+    <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 flex justify-center px-4">
       <motion.div
         ref={dockRef}
         initial={{ opacity: 0, y: 14, scaleX: 0.74, scaleY: 0.92 }}
         animate={{ opacity: 1, y: 0, scaleX: 1, scaleY: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: '50% 100%' }}
-        className="relative flex items-center gap-1 rounded-[1.4rem] border border-border/70 bg-background/78 p-1.5 shadow-[0_24px_52px_-28px_hsl(var(--foreground)/0.8)] backdrop-blur-2xl"
+        className="pointer-events-auto relative flex items-center gap-1 rounded-[1.4rem] border border-border/70 bg-background/78 p-1.5 shadow-[0_24px_52px_-28px_hsl(var(--foreground)/0.8)] backdrop-blur-2xl"
       >
         <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-foreground/35 to-transparent" />
         {PRIMARY_LINKS.map((item) => {
@@ -145,6 +187,40 @@ export default function FloatingNavDock() {
                   </Link>
                 );
               })}
+
+              {studioAuth.enabled && (
+                <div className="border-t border-border/70 pt-2">
+                  {studioAuth.isAuthenticated ? (
+                    <div className="space-y-1">
+                      <Link
+                        href="/studio"
+                        className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-accent"
+                      >
+                        <PenSquare className="h-4 w-4" />
+                        Studio
+                      </Link>
+                      <form action="/api/studio/auth/logout" method="post" className="w-full">
+                        <input type="hidden" name="next" value={studioNextPath} />
+                        <button
+                          type="submit"
+                          className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm hover:bg-accent"
+                        >
+                          <LogOut className="h-4 w-4" />
+                          Log out
+                        </button>
+                      </form>
+                    </div>
+                  ) : (
+                    <Link
+                      href={studioLoginHref}
+                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-accent"
+                    >
+                      <LogIn className="h-4 w-4" />
+                      Studio login
+                    </Link>
+                  )}
+                </div>
+              )}
 
               <div className="border-t border-border/70 pt-2">
                 <ModeToggle

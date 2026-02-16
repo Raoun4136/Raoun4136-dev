@@ -3,6 +3,7 @@ import type { NeuralNode } from '@/components/home-neural-map';
 import usePost from '@/app/posts/_hook/usePost';
 import useNote from '@/app/notes/_hook/useNote';
 import { RouterPath } from '@/components/lib/constant';
+import { NoteEntry, PostEntry } from '@/db/queries/contents';
 
 const SOCIAL_NODES: NeuralNode[] = [
   {
@@ -43,7 +44,7 @@ const SOCIAL_NODES: NeuralNode[] = [
   },
 ];
 
-const combineNeuralNodes = (posts: ReturnType<typeof usePost>, notes: ReturnType<typeof useNote>): NeuralNode[] => {
+const combineNeuralNodes = (posts: PostEntry[], notes: NoteEntry[]): NeuralNode[] => {
   const postNodes = posts.map((post) => ({
     category: 'content' as const,
     description: post.meta.description,
@@ -74,9 +75,8 @@ const combineNeuralNodes = (posts: ReturnType<typeof usePost>, notes: ReturnType
   return [...mixedNodes, ...SOCIAL_NODES];
 };
 
-export default function Home() {
-  const posts = usePost();
-  const notes = useNote();
+export default async function Home() {
+  const [posts, notes] = await Promise.all([usePost(), useNote()]);
   const neuralNodes = combineNeuralNodes(posts, notes);
 
   return (

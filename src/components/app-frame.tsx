@@ -11,6 +11,7 @@ type AppFrameProps = {
 export default function AppFrame({ children }: AppFrameProps) {
   const pathname = usePathname();
   const isHome = pathname === '/';
+  const isStudio = pathname.startsWith('/studio');
 
   return (
     <main
@@ -22,9 +23,11 @@ export default function AppFrame({ children }: AppFrameProps) {
       <div
         className={cn(
           'w-full',
-          isHome
-            ? 'h-full pt-[var(--site-header-h)]'
-            : 'mx-auto min-h-[calc(100dvh-var(--site-header-h))] max-w-[1024px] px-3 pb-24 pt-[calc(var(--site-header-h)+0.5rem)] sm:px-5 md:px-7 md:pt-[calc(var(--site-header-h)+0.9rem)]',
+          isStudio
+            ? 'mx-auto min-h-[calc(100dvh-var(--site-header-h))] max-w-[1600px] px-3 pt-[calc(var(--site-header-h)+0.7rem)] pb-24 sm:px-5 md:px-7 md:pt-[calc(var(--site-header-h)+0.9rem)]'
+            : isHome
+              ? 'h-full pt-[var(--site-header-h)]'
+              : 'mx-auto min-h-[calc(100dvh-var(--site-header-h))] max-w-[1024px] px-3 pt-[calc(var(--site-header-h)+0.5rem)] pb-24 sm:px-5 md:px-7 md:pt-[calc(var(--site-header-h)+0.9rem)]',
         )}
       >
         {children}

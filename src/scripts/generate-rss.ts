@@ -11,7 +11,7 @@ async function main() {
   console.log(cyan('📝  Generating RSS feeds...'), new Date().toLocaleString());
   console.log('\n');
 
-  const rss = generateRSS();
+  const rss = await generateRSS();
   const outputFeedPath = path.join(__dirname, '../../public/feed.xml');
   const outputRssPath = path.join(__dirname, '../../public/rss.xml');
 
