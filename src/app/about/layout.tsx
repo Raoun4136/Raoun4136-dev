@@ -1,9 +1,5 @@
 const AboutLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <section className="mx-auto w-full max-w-[860px]">
-      <div className="mb-4 mt-2 md:mt-4">{children}</div>
-    </section>
-  );
+  return <section className="mx-auto w-full max-w-[1024px]">{children}</section>;
 };
 
 export default AboutLayout;
