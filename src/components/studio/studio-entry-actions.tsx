@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Pencil } from 'lucide-react';
+import { Pencil, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -50,14 +50,36 @@ const useStudioAuthStatus = () => {
 type StudioNewContentButtonProps = {
   type: 'post' | 'note';
   className?: string;
+  mode?: 'button' | 'list-item';
 };
 
-export const StudioNewContentButton = ({ type, className }: StudioNewContentButtonProps) => {
+export const StudioNewContentButton = ({ type, className, mode = 'button' }: StudioNewContentButtonProps) => {
   const status = useStudioAuthStatus();
   if (!status.enabled || !status.isAuthenticated) return null;
 
   const href = `/studio/new/${type}` as const;
-  const label = type === 'post' ? '새 글 쓰기' : '새 노트 쓰기';
+  const label = type === 'post' ? '새 글 작성' : '새 노트 작성';
+
+  if (mode === 'list-item') {
+    return (
+      <li
+        className={cn(
+          'transition-opacity duration-200 hover:opacity-100 [&:not(:hover)]:group-hover/ul:opacity-50',
+          className,
+        )}
+      >
+        <Link href={href} className="group block">
+          <div className="flex items-center justify-between gap-2 py-4">
+            <p className="inline-flex items-center gap-1.5 text-base font-normal max-sm:text-sm">
+              <Plus className="h-4 w-4 opacity-70" />
+              <span className="group-hover:underline">{label}</span>
+            </p>
+            <span className="whitespace-nowrap text-xs font-light opacity-70 max-sm:text-xs">Studio</span>
+          </div>
+        </Link>
+      </li>
+    );
+  }
 
   return (
     <Link href={href} className={cn('inline-flex', className)}>

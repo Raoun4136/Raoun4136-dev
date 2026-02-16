@@ -23,14 +23,12 @@ export default async function Posts() {
 
   return (
     <section>
-      <div className="mb-2 flex justify-end">
-        <StudioNewContentButton type="post" />
-      </div>
       <ul className="group/ul flex flex-col">
+        <StudioNewContentButton type="post" mode="list-item" />
         {blogs?.map((blog, index) => {
           const revealStyle = {
             animation: 'home-list-reveal 620ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
-            animationDelay: `${Math.min(index, 18) * 68}ms`,
+            animationDelay: `${Math.min(index + 1, 19) * 68}ms`,
           } as const;
 
           if (blog.meta.outlink && !blog.meta.showFull) {

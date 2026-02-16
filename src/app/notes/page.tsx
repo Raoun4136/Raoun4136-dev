@@ -22,17 +22,15 @@ export default async function Notes() {
 
   return (
     <section>
-      <div className="mb-2 flex justify-end">
-        <StudioNewContentButton type="note" />
-      </div>
       <ul className="group/ul flex flex-col">
+        <StudioNewContentButton type="note" mode="list-item" />
         {notes?.map((note, index) => (
           <li
             key={note.slug}
             className="transition-opacity duration-200 hover:opacity-100 motion-reduce:[animation:none] [&:not(:hover)]:group-hover/ul:opacity-50"
             style={{
               animation: 'home-list-reveal 620ms cubic-bezier(0.22, 1, 0.36, 1) backwards',
-              animationDelay: `${Math.min(index, 18) * 68}ms`,
+              animationDelay: `${Math.min(index + 1, 19) * 68}ms`,
             }}
           >
             <NoteLi {...note.meta} slug={note.slug} />
